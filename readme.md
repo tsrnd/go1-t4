@@ -1,6 +1,12 @@
 ## Clone this repo into folder github.com by cmd:
 > git clone https://github.com/tsrnd/goweb4.git
 
+## How to run app:
+> 1. cd goweb4
+> 2. run command `go build` to build source
+> 3. run command ` ./goweb4`
+> 4. open `http://localhost:8080/` to see the index page
+
 ## If you have added new package, please modify this readme.md file by adding command to get this package here
 List packages:
 1. "github.com/gorilla/mux"
