@@ -7,9 +7,6 @@ import (
 	"github.com/goweb4/handlers"
 )
 
-var handler = handlers.UserHandler{}
-var orderHandler = handlers.OrderHandler{}
-
 // Route defines a route
 type Route struct {
 	Name        string
@@ -63,7 +60,7 @@ var routes = Routes{
 		"PUT",
 		"/{id}",
 		orderHandler.UpdateOrder,
-	}
+	},
 }
 
 //NewRouter configures a new router to the API
