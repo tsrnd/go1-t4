@@ -8,6 +8,7 @@ import (
 )
 
 var handler = handlers.UserHandler{}
+var orderHandler = handlers.OrderHandler{}
 
 // Route defines a route
 type Route struct {
@@ -44,7 +45,26 @@ var routes = Routes{
 		"DELETE",
 		"/{id}",
 		handler.DeleteUser,
-	}}
+	},
+	Route{
+		"AddOrder",
+		"GET",
+		"/",
+		orderHandler.AddOrder,
+	},
+	Route{
+		"EditOrder",
+		"GET",
+		"/{id}",
+		orderHandler.EditOrder,
+	},
+	Route{
+		"UpdateOrder",
+		"PUT",
+		"/{id}",
+		orderHandler.UpdateOrder,
+	}
+}
 
 //NewRouter configures a new router to the API
 func NewRouter() *mux.Router {
