@@ -2,11 +2,14 @@ package handlers
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
+	"path/filepath"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "need to implement ...")
+	t := template.Must(template.ParseFiles(filepath.Join("./templates", "index.html")))
+	t.Execute(w, nil)
 }
 
 func AddUser(w http.ResponseWriter, r *http.Request) {
