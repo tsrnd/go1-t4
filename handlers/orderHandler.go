@@ -1,12 +1,12 @@
 package handlers
 
 import (
-	"fmt"
-	"net/http"
+  "fmt"
+  "net/http"
 )
 
 /**
-  * User create new order 
+  * User crate new order 
   */
 func AddOrder(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Need to be implement");
@@ -16,7 +16,7 @@ func AddOrder(w http.ResponseWriter, r *http.Request) {
   * Show form order's edit 
   */
 func EditOrder(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Need to be implement");
+	fmt.Fprintln(w, "Need to be implements");
 }
 
 /**
