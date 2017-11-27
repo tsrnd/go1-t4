@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/goweb4/config"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello team 4");
-	})
-	
-	http.ListenAndServe(":8080", nil)
+	router := config.NewRouter()
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
