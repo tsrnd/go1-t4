@@ -3,6 +3,7 @@ package handlers
 import (
   "fmt"
   "net/http"
+  "github.com/goweb4/models"
 )
 
 /**
@@ -16,6 +17,8 @@ func AddOrder(w http.ResponseWriter, r *http.Request) {
   * Show form order's edit 
   */
 func EditOrder(w http.ResponseWriter, r *http.Request) {
+  models.TestDB()
+
 	fmt.Fprintln(w, "Need to be implements");
 }
 
