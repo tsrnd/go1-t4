@@ -10,6 +10,7 @@
 ## If you have added new package, please modify this readme.md file by adding command to get this package here
 List packages:
 1. "github.com/gorilla/mux"
+2. "github.com/joho/godotenv"
 ```
 go get -u github.com/gorilla/mux
 ```
