@@ -3,6 +3,14 @@
 
 ## How to run app:
 > 1. cd goweb4
+> 2. create `.env` file (password and db_user depend on your environment)
+```
+DB_USER=postgres
+DB_PASSWORD=123456
+DB_NAME=goweb4
+DB_HOST=127.0.0.1
+PORT=3306
+```
 > 2. run command `go build` to build source
 > 3. run command ` ./goweb4`
 > 4. open `http://localhost:8080/` to see the index page
