@@ -49,12 +49,12 @@ var routes = Routes{
 		"/",
 		handlers.AddOrder,
 	},
-	Route{
-		"EditOrder",
-		"GET",
-		"/{id}",
-		handlers.EditOrder,
-	},
+	// Route{
+	// 	"EditOrder",
+	// 	"GET",
+	// 	"/{id}",
+	// 	handlers.EditOrder,
+	// },
 	Route{
 		"UpdateOrder",
 		"PUT",

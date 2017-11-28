@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 	"github.com/goweb4/database"
 )
@@ -14,12 +13,9 @@ type Order struct {
 	Status     bool
 }
 
-func TestDB()  string {
-	if database.Db != nil {
-		//use db. query here
-		fmt.Println("DB is OKE")
-    } else {
-        fmt.Println("DB object is NULL")
-	}
-	return "Oke"
+func GetOrder(id int) (order Order, err error) {
+  order = Order{}
+  err = database.Db.Where("id = ?", id).Find(&order).Error
+
+  return order, err
 }
