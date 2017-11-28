@@ -19,7 +19,6 @@ type User struct {
 	Provider  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
 }
 
 var users = []User{}
