@@ -42,7 +42,26 @@ var routes = Routes{
 		"DELETE",
 		"/{id}",
 		handlers.DeleteUser,
-	}}
+	},
+	Route{
+		"AddOrder",
+		"GET",
+		"/",
+		handlers.AddOrder,
+	},
+	Route{
+		"EditOrder",
+		"GET",
+		"/{id}",
+		handlers.EditOrder,
+	},
+	Route{
+		"UpdateOrder",
+		"PUT",
+		"/{id}",
+		handlers.UpdateOrder,
+	},
+}
 
 //NewRouter configures a new router to the API
 func NewRouter() *mux.Router {
