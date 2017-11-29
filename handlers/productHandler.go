@@ -1,4 +1,4 @@
-package handlersAdmin
+package handlers
 
 import (
   "fmt"
@@ -53,6 +53,6 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 /**
   * Delete product
   */
-  func DestroyProduct(w http.ResponseWriter, r *http.Request) {
+func DestroyProduct(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Need to be implement");
 }
