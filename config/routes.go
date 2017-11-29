@@ -97,6 +97,12 @@ var routes = Routes{
 		"/product",
 		handlers.DestroyProduct,
 	},
+	Route{
+		"ShowProduct",
+		"GET",
+		"/product/{id}",
+		handlers.ShowProduct,
+	},
 }
 
 //NewRouter configures a new router to the API
