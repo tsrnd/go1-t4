@@ -2,7 +2,7 @@ package config
 
 import (
 	"net/http"
-	
+
 	"github.com/gorilla/mux"
 	"github.com/goweb4/handlers"
 )
@@ -27,14 +27,20 @@ var routes = Routes{
 	},
 	Route{
 		"AddUser",
+		"GET",
+		"/user/add",
+		handlers.AddOrder,
+	},
+	Route{
+		"CreateUser",
 		"POST",
-		"/",
+		"/user",
 		handlers.AddUser,
 	},
 	Route{
 		"UpdateUser",
 		"PUT",
-		"/",
+		"/user/{id}",
 		handlers.UpdateUser,
 	},
 	Route{

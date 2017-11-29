@@ -1,12 +1,14 @@
 package models
 
 import (
-	"fmt"
-	"github.com/jinzhu/gorm"
+	"log"
+	"time"
+
+	"github.com/goweb4/database"
 )
 
 type User struct {
-	gorm.Model
+	ID        int
 	UID       string
 	FirstName string
 	LastName  string
@@ -17,19 +19,73 @@ type User struct {
 	Avatar    string
 	Phone     string
 	Provider  string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 var users = []User{}
 
-func GetUsers() []User {
-	return users
+func GetUser(id int) (user User, err error) {
+	user = User{}
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+	err = db.Where("id = ?", id).Find(&user).Error
+
+	return user, err
 }
 
-func GetUserByID(ID uint) (*User, error) {
-	for _, user := range users {
-		if user.ID == ID {
-			return &user, nil
-		}
+func GetUsers() (users []User, err error) {
+	users = []User{}
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
 	}
-	return nil, fmt.Errorf(fmt.Sprintf("User with ID %v not found", ID))
+	defer db.Close()
+
+	err = db.Find(&users).Error
+
+	return users, err
+}
+
+func UpdateUser(id int, oldUser map[string]interface{}) error {
+	user := User{}
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+
+	errFindUser := db.Where("id = ?", id).Find(&user).Error
+	if errFindUser != nil {
+		return errFindUser
+	}
+	errUpdate := db.Model(&user).Updates(oldUser).Error
+	return errUpdate
+}
+
+func DeleteUser(id int) error {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+
+	err := db.Where("id = ?", id).Delete(&User{}).Error
+
+	return err
+}
+
+func CreateUser(user User) error {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+
+	err := db.Create(&user).Error
+
+	return err
 }
