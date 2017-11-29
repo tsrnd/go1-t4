@@ -1,7 +1,11 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 type Image struct {
-	ID   int
+	gorm.Model
 	Name string
 	URL  string
 }

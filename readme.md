@@ -21,21 +21,25 @@ List packages:
 1. "github.com/gorilla/mux"
 2. "github.com/joho/godotenv"
 ```
-go get -u github.com/gorilla/mux
+$ go get -u github.com/gorilla/mux
 ```
 2. "github.com/lib/pq"
 ```
-go get -u github.com/lib/pq
+$ go get -u github.com/lib/pq
 ```
 3. "http://jinzhu.me/gorm/"
 ```
-go get -u github.com/jinzhu/gorm
+$ go get -u github.com/jinzhu/gorm
 ```
 4. "github.com/joho/godotenv"
 ```
-go get github.com/joho/godotenv
+$ go get github.com/joho/godotenv
 ```
-
+5. "http://www.gorillatoolkit.org/pkg/schema"
+`Package gorilla/schema fills a struct with form values`
+```
+$ go get github.com/gorilla/schema
+```
 ## Install PostgreSQL
 Ubuntu:
 ```
