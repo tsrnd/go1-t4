@@ -49,7 +49,10 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
     log.Fatal(errMap)
   }
   
-  fmt.Println("Product: ", product)
+  errCreate := models.CreateProduct(product); if err != nil {
+    fmt.Fprintln(w, errCreate);
+  }
+  fmt.Fprintln(w, "Create Product Success");
 }
 
 /**

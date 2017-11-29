@@ -7,27 +7,29 @@ import (
 	"github.com/gorilla/schema"
 )
 
-func GenerateTemplate(writer http.ResponseWriter, file string) {
+func GenerateTemplate(writer http.ResponseWriter, fn ...string) {
+	var files []string
 
-	templates, err := template.ParseFiles(
-		"templates/frontend/header.html",
-		"templates/frontend/footer.html",
-		fmt.Sprintf("templates/frontend/%s.html", file),		
-	)
+	fn = append(fn, "header")
+	fn = append(fn, "footer")
+
+	for _, file := range fn {
+	files = append(files, fmt.Sprintf("templates/frontend/%s.html", file))
+	}
+	templates, err := template.ParseFiles(files...)
 
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	if err := templates.ExecuteTemplate(writer, file + ".html", ""); err != nil {
+	if err := templates.ExecuteTemplate(writer, fn[0] + ".html", ""); err != nil {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 	}
 }
 
 func MapFormValues(dst interface{}, r *http.Request) (error){
 	decoder := schema.NewDecoder()
-	errMapForm := decoder.Decode(dst, r.PostForm);
-	return errMapForm
+	err := decoder.Decode(dst, r.PostForm)
+	return err
 }
- 
