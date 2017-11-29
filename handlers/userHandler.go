@@ -7,7 +7,7 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	utils.GenerateTemplate(w, "layouts/main", "layouts/header", "layouts/footer", "home/index")
+	utils.GenerateTemplate(w, "index")
 }
 
 func AddUser(w http.ResponseWriter, r *http.Request) {

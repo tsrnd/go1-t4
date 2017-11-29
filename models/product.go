@@ -1,7 +1,11 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 type Product struct {
-	ID      int
+	gorm.Model
 	Size    string
 	Color   string
 	Price   float64

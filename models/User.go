@@ -2,11 +2,11 @@ package models
 
 import (
 	"fmt"
-	"time"
+	"github.com/jinzhu/gorm"
 )
 
 type User struct {
-	ID        int
+	gorm.Model
 	UID       string
 	FirstName string
 	LastName  string
@@ -17,8 +17,6 @@ type User struct {
 	Avatar    string
 	Phone     string
 	Provider  string
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 var users = []User{}
@@ -27,7 +25,7 @@ func GetUsers() []User {
 	return users
 }
 
-func GetUserByID(ID int) (*User, error) {
+func GetUserByID(ID uint) (*User, error) {
 	for _, user := range users {
 		if user.ID == ID {
 			return &user, nil
