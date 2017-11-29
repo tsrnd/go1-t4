@@ -29,6 +29,9 @@ func GenerateTemplate(writer http.ResponseWriter, fn ...string) {
 }
 
 func MapFormValues(dst interface{}, r *http.Request) (error){
+	errParse := r.ParseForm(); if errParse != nil {
+		return errParse
+	}
 	decoder := schema.NewDecoder()
 	err := decoder.Decode(dst, r.PostForm)
 	return err
