@@ -68,16 +68,10 @@ var routes = Routes{
 		handlers.UpdateOrder,
 	},
 	Route{
-		"ListProduct",
+		"CreateProduct",
 		"GET",
-		"/admin",
-		handlers.ListProduct,
-	},
-	Route{
-		"AddProduct",
-		"GET",
-		"/admin/createproduct",
-		handlers.AddProduct,
+		"/create/product",
+		handlers.CreateProduct,
 	},
 }
 
