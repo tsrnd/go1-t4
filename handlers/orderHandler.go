@@ -3,15 +3,16 @@ package handlers
 import (
   "fmt"
   "net/http"
-  // "github.com/goweb4/models"
+  "github.com/goweb4/models"
   "github.com/gorilla/mux"
+  "strconv"
 )
 
 /**
   * User create new order 
   */
 func AddOrder(w http.ResponseWriter, r *http.Request) {
-  fmt.Println("testt");
+  fmt.Println("testt")
 	fmt.Fprintln(w, "Need to be implement");
 }
 
@@ -20,10 +21,12 @@ func AddOrder(w http.ResponseWriter, r *http.Request) {
   */
 func EditOrder(w http.ResponseWriter, r *http.Request) {
   vars := mux.Vars(r)
-  orderId := vars["id"]
-  // models.GetOrder(r.FormValue("id"))
-  fmt.Println(orderId)
-	fmt.Fprintln(w, "Need to be implements");
+  orderId, _ := strconv.Atoi(vars["id"]);
+  order, err := models.GetOrder(orderId); if err != nil {
+    fmt.Fprintln(w, err);
+  }
+  
+	fmt.Fprintln(w, order);
 }
 
 /**

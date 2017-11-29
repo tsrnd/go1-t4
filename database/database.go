@@ -41,6 +41,10 @@ func DBConnection(dataSource string) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer Db.Close()
+	Db.SingularTable(true) //set table's name is singular
 	return &DB{Db}, nil
+}
+
+func main() {
+	defer Db.Close()
 }
