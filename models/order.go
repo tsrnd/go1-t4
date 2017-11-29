@@ -2,11 +2,12 @@ package models
 
 import (
 	"log"
-	"github.com/goweb4/database"
+  "github.com/goweb4/database"
+  "github.com/jinzhu/gorm"
 )
 
 type Order struct {
-	ID		   int
+	gorm.Model
 	UserID     int
 	TotalMoney float64
 	Status     bool
