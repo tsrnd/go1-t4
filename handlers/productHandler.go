@@ -3,6 +3,7 @@ package handlers
 import (
   "fmt"
   "net/http"
+  "html/template"
   // "github.com/goweb4/models"
   // "github.com/gorilla/mux"
   // "strconv"
@@ -26,7 +27,19 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
   * Show form create new product
   */
 func CreateProduct(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Need to be implement");
+	templates, err := template.ParseFiles(
+    "templates/admin/master.html",
+    fmt.Sprintf("templates/admin/add_product.html"),		
+  )
+
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+
+  if err := templates.ExecuteTemplate(w, "master", ""); err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+  }
 }
 
 /**

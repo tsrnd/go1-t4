@@ -1,0 +1,63 @@
+{{ define "content" }}
+<h1>Add Product</h1>
+<form class="col-md-12">
+    <div class="form-group col-md-6">
+      <label for="name">Name</label>
+      <input type="name" class="form-control" id="name" placeholder="Name..">
+      <small class="text-danger"></small>
+    </div>
+    <div class="clearfix"></div>
+    <!-- size -->
+    <div class="form-group col-md-2">
+      <label for="size">Size</label>
+      <select class="form-control" name="size" id="size">
+        <option value="">L</option>
+        <option value="">L</option>
+        <option value="">L</option>
+      </select>
+    </div>
+
+    <!-- color -->
+    <div class="form-group col-md-2">
+      <label for="color">Color</label>
+      <select class="form-control" name="color" id="color">
+        <option value="" style="background-color:blue"></option>
+        <option value="" style="background-color:red"></option>
+        <option value="" style="background-color:yellow"></option>
+      </select>
+      </div>
+
+<!-- instock -->
+    <div class="form-group col-md-2">
+        <label for="instock">Instock</label>
+        <select class="form-control" name="instock" id="instock">
+          <option value="" >2</option>
+          <option value="" >1</option>
+          <option value="" >3</option>
+        </select>
+        </div>
+      <div class="clearfix"></div>
+
+    <!-- price -->
+    <div class="form-group col-md-4">
+      <label for="price">Price</label>
+      <input type="text" class="form-control" placeholder="Ex: 10000">
+    </div>
+    <div class="clearfix"></div>
+    
+    <!-- group -->
+    <div class="form-group col-md-4">
+      <label for="group_id">Group</label>
+      <select class="form-control" name="group_id" id="group_id">
+        <option value="" ></option>
+        <option value="" ></option>
+        <option value="" ></option>
+      </select>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="col-md-6">
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+    </div>
+  </form>
+{{ end }}
