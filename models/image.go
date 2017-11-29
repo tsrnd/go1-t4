@@ -6,6 +6,7 @@ import (
 
 type Image struct {
 	gorm.Model
-	Name string
-	URL  string
+	Name 		string		`schema:"name"`
+	URL  		string		`schema:"url"`
+	ProductId	uint		`schema:"product_id"`
 }
