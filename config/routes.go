@@ -67,6 +67,36 @@ var routes = Routes{
 		"/order/{id}",
 		handlers.UpdateOrder,
 	},
+	Route{
+		"CreateProduct",
+		"GET",
+		"/product/add",
+		handlers.CreateProduct,
+	},
+	Route{
+		"StoreProduct",
+		"POST",
+		"/product",
+		handlers.StoreProduct,
+	},
+	Route{
+		"EditProduct",
+		"GET",
+		"/product/{id}/edit",
+		handlers.EditProduct,
+	},
+	Route{
+		"UpdateProduct",
+		"PUT",
+		"/product/{id}",
+		handlers.UpdateProduct,
+	},
+	Route{
+		"DeleteProduct",
+		"DELETE",
+		"/product",
+		handlers.DestroyProduct,
+	},
 }
 
 //NewRouter configures a new router to the API
