@@ -8,8 +8,7 @@ import (
 type User struct {
 	gorm.Model
 	UID       string	`schema:"uid"`
-	FirstName string	`schema:"first_name"`
-	LastName  string	`schema:"last_name"`
+	Username  string	`schema:"username"`
 	Password  string	`schema:"password"`
 	Email     string	`schema:"email"`
 	Gender    string	`schema:"gender"`

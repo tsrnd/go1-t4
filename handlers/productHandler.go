@@ -47,12 +47,14 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
   
   errMap := utils.MapFormValues(product, r); if errMap != nil {
     log.Fatal(errMap)
+    fmt.Fprintln(w, errMap);
   }
   
   errCreate := models.CreateProduct(product); if err != nil {
     fmt.Fprintln(w, errCreate);
+  } else {
+    fmt.Fprintln(w, "Create Product Success")
   }
-  fmt.Fprintln(w, "Create Product Success");
 }
 
 /**
