@@ -7,16 +7,16 @@ import (
 
 type User struct {
 	gorm.Model
-	UID       string
-	FirstName string
-	LastName  string
-	Password  string
-	Email     string
-	Gender    string
-	Role      string
-	Avatar    string
-	Phone     string
-	Provider  string
+	UID       string	`schema:"uid"`
+	FirstName string	`schema:"first_name"`
+	LastName  string	`schema:"last_name"`
+	Password  string	`schema:"password"`
+	Email     string	`schema:"email"`
+	Gender    string	`schema:"gender"`
+	Role      string	`schema:"role"`
+	Avatar    string	`schema:"avatar"`
+	Phone     string	`schema:"phone"`
+	Provider  string	`schema:"provider"`
 }
 
 var users = []User{}

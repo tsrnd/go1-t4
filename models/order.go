@@ -3,14 +3,14 @@ package models
 import (
 	"log"
   "github.com/goweb4/database"
-  "github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 )
 
 type Order struct {
 	gorm.Model
-	UserID     int
-	TotalMoney float64
-	Status     bool
+	UserID     uint 			`schema:"user_id"`
+	TotalMoney float64		`schema:"total_money"`
+	Status     bool				`schema:"status"`
 }
 
 func GetOrder(id int) (order Order, err error) {

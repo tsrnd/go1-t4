@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"github.com/gorilla/schema"
 )
 
 func GenerateTemplate(writer http.ResponseWriter, fn ...string) {
@@ -26,4 +27,9 @@ func GenerateTemplate(writer http.ResponseWriter, fn ...string) {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 	}
 }
- 
+
+func MapFormValues(dst interface{}, r *http.Request) (error){
+	decoder := schema.NewDecoder()
+	err := decoder.Decode(dst, r.PostForm)
+	return err
+}
