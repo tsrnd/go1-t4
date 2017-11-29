@@ -7,5 +7,4 @@ import (
 type ProductGroup struct {
 	gorm.Model	
 	Name    string		`schema:"name"`
-	ImageID string		`schema:"image_id"`
 }

@@ -11,7 +11,7 @@ type Product struct {
 	Size    string		`schema:"size"`
 	Color   string		`schema:"color"`
 	Price   float64		`schema:"price"`
-	ImageID uint		`schema:"image_id"`
+	Name 	string		`schema:"name"`
 	InStock uint		`schema:"in_stock"`
 	GroupID uint		`schema:"group_id"`
 }
