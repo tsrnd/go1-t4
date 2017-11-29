@@ -3,10 +3,11 @@ package models
 import (
 	"github.com/goweb4/database"
 	"log"
+	"github.com/jinzhu/gorm"
 )
 
 type Product struct {
-	ID      int
+	gorm.Model
 	Size    string
 	Color   string
 	Price   float64
