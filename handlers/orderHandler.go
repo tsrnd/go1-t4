@@ -4,12 +4,15 @@ import (
   "fmt"
   "net/http"
   "github.com/goweb4/models"
+  "github.com/gorilla/mux"
+  "strconv"
 )
 
 /**
-  * User crate new order 
+  * User create new order 
   */
 func AddOrder(w http.ResponseWriter, r *http.Request) {
+  fmt.Println("testt")
 	fmt.Fprintln(w, "Need to be implement");
 }
 
@@ -17,9 +20,13 @@ func AddOrder(w http.ResponseWriter, r *http.Request) {
   * Show form order's edit 
   */
 func EditOrder(w http.ResponseWriter, r *http.Request) {
-  models.TestDB()
-
-	fmt.Fprintln(w, "Need to be implements");
+  vars := mux.Vars(r)
+  orderId, _ := strconv.Atoi(vars["id"]);
+  order, err := models.GetOrder(orderId); if err != nil {
+    fmt.Fprintln(w, err);
+  }
+  
+	fmt.Fprintln(w, order);
 }
 
 /**

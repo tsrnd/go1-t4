@@ -1,25 +1,36 @@
 package models
 
 import (
-	"fmt"
-	"time"
+	"log"
 	"github.com/goweb4/database"
 )
 
 type Order struct {
-	ID         int
+	ID		   int
 	UserID     int
 	TotalMoney float64
-	OrderDate  time.Time
 	Status     bool
 }
 
-func TestDB()  string {
-	if database.Db != nil {
-		//use db. query here
-		fmt.Println("DB is OKE")
-    } else {
-        fmt.Println("DB object is NULL")
+func GetOrder(id int) (order Order, err error) {
+  order = Order{}
+  db, errConnection := database.DBConnection(); if errConnection != nil {
+	  log.Fatal(errConnection)
+  }
+  defer db.Close()
+  err = db.Where("id = ?", id).Find(&order).Error
+
+  return order, err
+}
+
+func GetOrdersByUser(id int) (orders []Order, err error) {
+	orders = []Order{}
+	db, errConnection := database.DBConnection(); if errConnection != nil {
+		log.Fatal(errConnection)
 	}
-	return "Oke"
+	defer db.Close()
+
+	err = db.Where("user_id = ?", id).Find(&orders).Error
+
+	return orders, err
 }
