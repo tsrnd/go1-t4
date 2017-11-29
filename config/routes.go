@@ -29,7 +29,7 @@ var routes = Routes{
 		"AddUser",
 		"GET",
 		"/user/add",
-		handlers.AddOrder,
+		handlers.AddUser,
 	},
 	Route{
 		"CreateUser",
@@ -48,6 +48,12 @@ var routes = Routes{
 		"DELETE",
 		"/{id}",
 		handlers.DeleteUser,
+	},
+	Route{
+		"Test",
+		"GET",
+		"/test",
+		handlers.Test,
 	},
 	Route{
 		"AddOrder",
