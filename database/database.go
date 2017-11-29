@@ -14,7 +14,7 @@ type DB struct{
 	*gorm.DB
 }
 
-var Db *DB
+var dbinfo string
 
 func init() {
 	err := godotenv.Load()
@@ -27,24 +27,14 @@ func init() {
 	user := os.Getenv("DB_USERNAME")
 	password := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_DATABASE")
-	dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", host, user, password, dbName)
-	
-	var connectionErr error
-	Db, connectionErr = DBConnection(dbinfo)
-	if connectionErr != nil {
-		log.Fatal(connectionErr)
-	}
+	dbinfo = fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", host, user, password, dbName)
 }
 
-func DBConnection(dataSource string) (*DB, error) {
-	Db, err := gorm.Open("postgres", dataSource)
+func DBConnection() (*DB, error) {
+	Db, err := gorm.Open("postgres", dbinfo)
 	if err != nil {
 		return nil, err
 	}
-	Db.SingularTable(true) //set table's name is singular
-	return &DB{Db}, nil
-}
 
-func main() {
-	defer Db.Close()
+	return &DB{Db}, nil
 }
