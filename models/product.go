@@ -51,12 +51,17 @@ func UpdateProduct(product *Product) (error) {
 }
 
 func DeleteProduct(id uint) (error) {
+	product := Product{}
 	db, errConnection := database.DBConnection(); if errConnection != nil {
 		log.Fatal(errConnection)
 	}
-	defer db.Close()
-
-	err := db.Where("id = ?", id).Delete(&Product{}).Error
+  defer db.Close()
+  
+	product, errGet := GetProduct(id); if errGet != nil {
+    return errGet
+  }
+	
+	err := db.Delete(&product).Error
 
 	return err
 }

@@ -58,10 +58,12 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
   errMap := utils.MapFormValues(product, r); if errMap != nil {
     log.Fatal(errMap)
     fmt.Fprintln(w, errMap);
+    return
   }
   
   errCreate := models.CreateProduct(product); if errCreate != nil {
     fmt.Fprintln(w, errCreate);
+    return
   } else {
     fmt.Fprintln(w, "Create Product Success")
   }
@@ -75,6 +77,7 @@ func EditProduct(w http.ResponseWriter, r *http.Request) {
   id, _ := strconv.ParseUint(vars["id"], 10, 32);
   product, err := models.GetProduct(uint(id)); if err != nil {
     fmt.Fprintln(w, err);
+    return
   }
   fmt.Fprintln(w, product)
 }
@@ -87,14 +90,17 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
   id, _ := strconv.ParseUint(vars["id"], 10, 32);
   product, err := models.GetProduct(uint(id)); if err != nil {
     fmt.Fprintln(w, err);
+    return
   }
   
   errMap := utils.MapFormValues(&product, r); if errMap != nil {
     log.Fatal(errMap)
     fmt.Fprintln(w, errMap);
+    return
   }
   errUpdate := models.UpdateProduct(&product); if errUpdate != nil {
     fmt.Fprintln(w, errUpdate)
+    return
   }
   fmt.Fprintln(w, "Update this product success")
 }
@@ -103,5 +109,12 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
   * Delete product
   */
 func DestroyProduct(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Need to be implement");
+	vars := mux.Vars(r)
+  id, _ := strconv.ParseUint(vars["id"], 10, 32);
+  err := models.DeleteProduct(uint(id)); if err != nil {
+    fmt.Fprintln(w, err);
+    return
+  } else {
+    fmt.Fprintln(w, "Delete this product success")
+  }
 }
