@@ -70,8 +70,38 @@ var routes = Routes{
 	Route{
 		"CreateProduct",
 		"GET",
-		"/create/product",
+		"/product/add",
 		handlers.CreateProduct,
+	},
+	Route{
+		"StoreProduct",
+		"POST",
+		"/product",
+		handlers.StoreProduct,
+	},
+	Route{
+		"EditProduct",
+		"GET",
+		"/product/{id}/edit",
+		handlers.EditProduct,
+	},
+	Route{
+		"UpdateProduct",
+		"PUT",
+		"/product/{id}",
+		handlers.UpdateProduct,
+	},
+	Route{
+		"DeleteProduct",
+		"DELETE",
+		"/product",
+		handlers.DestroyProduct,
+	},
+	Route{
+		"ShowProduct",
+		"GET",
+		"/product/{id}",
+		handlers.ShowProduct,
 	},
 }
 

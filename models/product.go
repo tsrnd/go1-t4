@@ -65,7 +65,7 @@ func DeleteProduct(id uint) (error) {
 	return err
 }
 
-func CreateProduct(product Product) (error){
+func CreateProduct(product *Product) (error){
 	db, errConnection := database.DBConnection(); if errConnection != nil {
 		log.Fatal(errConnection)
 	}

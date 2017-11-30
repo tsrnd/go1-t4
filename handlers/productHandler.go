@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"log"
   "fmt"
   "net/http"
+  "github.com/goweb4/models"
+  "github.com/gorilla/mux"
+  "strconv"
+  "github.com/goweb4/utils"
   "html/template"
-  // "github.com/goweb4/models"
-  // "github.com/gorilla/mux"
-  // "strconv"
 )
 
 /**
@@ -20,7 +22,12 @@ func IndexProduct(w http.ResponseWriter) {
   * Show product
   */
 func ShowProduct(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Need to be implement");
+	vars := mux.Vars(r)
+  id, _ := strconv.ParseUint(vars["id"], 10, 32);
+  product, err := models.GetProduct(uint(id)); if err != nil {
+    fmt.Fprintln(w, err);
+  }
+  fmt.Fprintln(w, product)
 }
 
 /**
@@ -46,7 +53,21 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
   * Admin create new product
   */
 func StoreProduct(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Need to be implement");
+  product := new(models.Product)
+  err := r.ParseForm(); if err != nil {
+    log.Fatal(err)
+  }
+  
+  errMap := utils.MapFormValues(product, r); if errMap != nil {
+    log.Fatal(errMap)
+    fmt.Fprintln(w, errMap);
+  }
+  
+  errCreate := models.CreateProduct(product); if err != nil {
+    fmt.Fprintln(w, errCreate);
+  } else {
+    fmt.Fprintln(w, "Create Product Success")
+  }
 }
 
 /**
