@@ -22,7 +22,7 @@ var routes = Routes{
 	Route{
 		"Index",
 		"GET",
-		"/",
+		"/index",
 		handlers.Index,
 	},
 	Route{
@@ -78,6 +78,12 @@ var routes = Routes{
 		"POST",
 		"/loginHandler",
 		handlers.LoginHandler,
+	},
+	Route{
+		"LogoutHandler",
+		"POST",
+		"/logout",
+		handlers.LogoutHandler,
 	},
 }
 

@@ -1,22 +1,23 @@
 package models
 
 import (
-	"fmt"
+	"log"
+
+	"github.com/goweb4/database"
 	"github.com/jinzhu/gorm"
 )
 
 type User struct {
 	gorm.Model
-	UID       string	`schema:"uid"`
-	FirstName string	`schema:"first_name"`
-	LastName  string	`schema:"last_name"`
-	Password  string	`schema:"password"`
-	Email     string	`schema:"email"`
-	Gender    string	`schema:"gender"`
-	Role      string	`schema:"role"`
-	Avatar    string	`schema:"avatar"`
-	Phone     string	`schema:"phone"`
-	Provider  string	`schema:"provider"`
+	Proid    string `schema:"proid"`
+	UserName string `schema:"username"`
+	Password string `schema:"password"`
+	Email    string `schema:"email"`
+	Gender   string `schema:"gender"`
+	Role     string `schema:"role"`
+	Avatar   string `schema:"avatar"`
+	Phone    string `schema:"phone"`
+	Provider string `schema:"provider"`
 }
 
 var users = []User{}
@@ -25,11 +26,12 @@ func GetUsers() []User {
 	return users
 }
 
-func GetUserByID(ID uint) (*User, error) {
-	for _, user := range users {
-		if user.ID == ID {
-			return &user, nil
-		}
+func GetUser(userInfo User) (user User) {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
 	}
-	return nil, fmt.Errorf(fmt.Sprintf("User with ID %v not found", ID))
+	defer db.Close()
+	db.Where(&userInfo).First(&user)
+	return user
 }
