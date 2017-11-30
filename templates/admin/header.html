@@ -1,4 +1,4 @@
-{{ define "master" }}
+{{ define "header" }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -33,41 +33,4 @@
         </span>
       </div>
   </div>
-        <!-- /. aside -->
-  <nav class="navbar-default navbar-side" role="navigation">
-    <div class="sidebar-collapse">
-      <ul class="nav" id="main-menu">
-        <li class="active-link">
-          <a href="index.html" ><i class="fa fa-desktop "></i>Product</a>
-        </li>
-        <li>
-          <a href="ui.html"><i class="fa fa-table "></i>User</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <!-- main -->
-  <div id="page-wrapper" >
-    <div id="page-inner">
-      <div class="row">
-        <div class="col-md-12">
-            {{ template "content" }}
-        </div>
-      </div> 
-    </div>
-  </div>             
-  <div class="footer">
-    <div class="row">
-      <div class="col-lg-12" >
-        &copy;  2014 yourdomain.com | Design by: <a href="http://binarytheme.com" style="color:#fff;" target="_blank">www.binarytheme.com</a>
-      </div>
-    </div>
-  </div>
-  <script src="/static/admin/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
-  <script src="/static/admin/js/bootstrap.min.js"></script>
-    <!-- CUSTOM SCRIPTS -->
-  <script src="/static/admin/js/custom.js"></script>
-</body>
-</html>
 {{ end }}
