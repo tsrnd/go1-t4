@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/goweb4/database"
 	"log"
-	"github.com/jinzhu/gorm"
+  "github.com/jinzhu/gorm"
 )
 
 type Product struct {
@@ -66,13 +66,16 @@ func DeleteProduct(id uint) (error) {
 	return err
 }
 
-func CreateProduct(product *Product) (error){
+func CreateProduct(product *Product) (uint, error){
 	db, errConnection := database.DBConnection(); if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
 
-	err := db.Create(&product).Error
+  newProduct := db.Create(&product)
+  err := newProduct.Error; if err == nil {
+    return product.ID, err
+  }
 	
-	return err
+	return 0, err
 }

@@ -8,7 +8,6 @@ import (
   "github.com/gorilla/mux"
   "strconv"
   "github.com/goweb4/utils"
-  "html/template"
 )
 
 /**
@@ -34,19 +33,11 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
   * Show form create new product
   */
 func CreateProduct(w http.ResponseWriter, r *http.Request) {
-	templates, err := template.ParseFiles(
-    "templates/admin/master.html",
-    fmt.Sprintf("templates/admin/add_product.html"),		
-  )
-
-  if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
+  productGroups, errGet := models.GetProductGroups(); if errGet != nil {
+    http.Error(w, errGet.Error(), http.StatusInternalServerError)
     return
   }
-
-  if err := templates.ExecuteTemplate(w, "master", ""); err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-  }
+  utils.GenerateTemplateAdmin(w, productGroups, "add_product")
 }
 
 /**
@@ -61,11 +52,11 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
     return
   }
   
-  errCreate := models.CreateProduct(product); if errCreate != nil {
+  id, errCreate := models.CreateProduct(product); if errCreate != nil {
     fmt.Fprintln(w, errCreate);
     return
   } else {
-    fmt.Fprintln(w, "Create Product Success")
+    http.Redirect(w, r, "/product/" + fmt.Sprint(id), http.StatusFound)
   }
 }
 
