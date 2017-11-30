@@ -81,7 +81,7 @@ var routes = Routes{
 	},
 	Route{
 		"LogoutHandler",
-		"POST",
+		"GET",
 		"/logout",
 		handlers.LogoutHandler,
 	},

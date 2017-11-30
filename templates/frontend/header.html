@@ -40,8 +40,13 @@
           <ul class="user-menu">				
             <li><a href="#">My Account</a></li>
             <li><a href="cart.html">Your Cart</a></li>
-            <li><a href="checkout.html">Checkout</a></li>					
-            <li><a href="/login">Login</a></li>		
+            <li><a href="checkout.html">Checkout</a></li>	
+            {{if .Name}}				
+              <li><a href="#" data-toggle="collapse" data-target="#demo">{{ .Name }}</a></li>
+              <li id="demo" class="collapse"> <a href="/logout">Logout</a></li>
+            {{else}}
+              <li><a href="/login">Login</a></li>
+            {{end}}
           </ul>
         </div>
       </div>
