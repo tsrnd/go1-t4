@@ -43,7 +43,17 @@ func GetProduct(id uint) (product Product, err error) {
 	return product, err
 }
 
-func UpdateProduct(id uint, oldProduct map[string]interface{}) error {
+func UpdateProduct(product *Product) error {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+	errUpdate := db.Save(&product).Error
+	return errUpdate
+}
+
+func DeleteProduct(id uint) error {
 	product := Product{}
 	db, errConnection := database.DBConnection()
 	if errConnection != nil {
@@ -51,34 +61,24 @@ func UpdateProduct(id uint, oldProduct map[string]interface{}) error {
 	}
 	defer db.Close()
 
-	errFindProduct := db.Where("id = ?", id).Find(&product).Error
-	if errFindProduct != nil {
-		return errFindProduct
+	product, errGet := GetProduct(id)
+	if errGet != nil {
+		return errGet
 	}
-	errUpdate := db.Model(&product).Updates(oldProduct).Error
-	return errUpdate
+	err := db.Delete(&product).Error
+	return err
 }
 
-func DeleteProduct(id uint) error {
+func CreateProduct(product *Product) (uint, error) {
 	db, errConnection := database.DBConnection()
 	if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
-
-	err := db.Where("id = ?", id).Delete(&Product{}).Error
-
-	return err
-}
-
-func CreateProduct(product Product) error {
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
+	newProduct := db.Create(&product)
+	err := newProduct.Error
+	if err == nil {
+		return product.ID, err
 	}
-	defer db.Close()
-
-	err := db.Create(&product).Error
-
-	return err
+	return 0, err
 }

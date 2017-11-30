@@ -1,0 +1,70 @@
+{{template "header" }}
+{{template "aside" }}
+  <div id="page-wrapper" >
+    <div id="page-inner">
+      <div class="row">
+        <div class="col-md-12">
+            <h1>Add Product</h1>
+            <form class="col-md-12" method="POST" action="/product">
+                <div class="form-group col-md-6">
+                  <label for="name">Name</label>
+                  <input type="name" class="form-control" id="name" placeholder="Name.." required>
+                  <small class="text-danger"></small>
+                </div>
+                <div class="clearfix"></div>
+                <!-- size -->
+                <div class="form-group col-md-2">
+                  <label for="size">Size</label>
+                  <select class="form-control" name="size" id="size">
+                    <option value="XXL">XXL</option>
+                    <option value="XL">XL</option>
+                    <option value="L">L</option>
+                    <option value="S">S</option>
+                    <option value="XS">XS</option>
+                  </select>
+                </div>
+            
+                <!-- color -->
+                <div class="form-group col-md-2">
+                  <label for="color">Color</label>
+                  <select class="form-control" name="color" id="color">
+                    <option value="blue" style="background-color:blue"></option>
+                    <option value="red" style="background-color:red"></option>
+                    <option value="yellow" style="background-color:yellow"></option>
+                  </select>
+                  </div>
+            
+            <!-- instock -->
+                <div class="form-group col-md-2">
+                    <label for="instock">Instock</label>
+                    <input type="number" class="form-control" min=1 name="in_stock" id="instock" required>
+                </div>
+                <div class="clearfix"></div>
+            
+                <!-- price -->
+                <div class="form-group col-md-4">
+                  <label for="price">Price</label>
+                  <input type="number" name="price" id="price" min=1 class="form-control" required>
+                </div>
+                <div class="clearfix"></div>
+                
+                <!-- group -->
+                <div class="form-group col-md-4">
+                  <label for="group_id">Group</label>
+                  <select class="form-control" name="group_id" id="group_id">
+                    {{range .}}
+                      <option value={{.ID}}>{{.Name}}</option>
+                    {{end}}
+                  </select>
+                </div>
+                <div class="clearfix"></div>
+            
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                </div>
+              </form>
+        </div>
+      </div> 
+    </div>
+  </div>             
+{{ template "footer" }}
