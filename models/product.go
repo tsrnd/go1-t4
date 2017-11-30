@@ -40,17 +40,13 @@ func GetProduct(id uint) (product Product, err error) {
 	return product, err
 }
 
-func UpdateProduct(id uint, oldProduct map[string]interface{}) (error) {
-	product := Product{}
+func UpdateProduct(product *Product) (error) {
 	db, errConnection := database.DBConnection(); if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
 
-	errFindProduct := db.Where("id = ?", id).Find(&product).Error; if errFindProduct != nil {
-		return errFindProduct
-	}
-	errUpdate := db.Model(&product).Updates(oldProduct).Error;
+	errUpdate := db.Save(&product).Error;
 	return errUpdate
 }
 
