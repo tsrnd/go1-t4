@@ -54,16 +54,13 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
   */
 func StoreProduct(w http.ResponseWriter, r *http.Request) {
   product := new(models.Product)
-  err := r.ParseForm(); if err != nil {
-    log.Fatal(err)
-  }
   
   errMap := utils.MapFormValues(product, r); if errMap != nil {
     log.Fatal(errMap)
     fmt.Fprintln(w, errMap);
   }
   
-  errCreate := models.CreateProduct(product); if err != nil {
+  errCreate := models.CreateProduct(product); if errCreate != nil {
     fmt.Fprintln(w, errCreate);
   } else {
     fmt.Fprintln(w, "Create Product Success")
@@ -74,14 +71,32 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
   * Show form product's edit 
   */
 func EditProduct(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprintln(w, "Need to be implement")
+  vars := mux.Vars(r)
+  id, _ := strconv.ParseUint(vars["id"], 10, 32);
+  product, err := models.GetProduct(uint(id)); if err != nil {
+    fmt.Fprintln(w, err);
+  }
+  fmt.Fprintln(w, product)
 }
 
 /**
   * User update product's infor
   */
 func UpdateProduct(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Need to be implement");
+	vars := mux.Vars(r)
+  id, _ := strconv.ParseUint(vars["id"], 10, 32);
+  product, err := models.GetProduct(uint(id)); if err != nil {
+    fmt.Fprintln(w, err);
+  }
+  
+  errMap := utils.MapFormValues(&product, r); if errMap != nil {
+    log.Fatal(errMap)
+    fmt.Fprintln(w, errMap);
+  }
+  errUpdate := models.UpdateProduct(&product); if errUpdate != nil {
+    fmt.Fprintln(w, errUpdate)
+  }
+  fmt.Fprintln(w, "Update this product success")
 }
 
 /**
