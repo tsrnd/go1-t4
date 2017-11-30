@@ -4,17 +4,18 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+
 	"github.com/gorilla/schema"
 )
 
-func GenerateTemplate(writer http.ResponseWriter, fn ...string) {
+func GenerateTemplate(writer http.ResponseWriter, i interface{}, fn ...string) {
 	var files []string
 
 	fn = append(fn, "header")
 	fn = append(fn, "footer")
 
 	for _, file := range fn {
-	files = append(files, fmt.Sprintf("templates/frontend/%s.html", file))
+		files = append(files, fmt.Sprintf("templates/frontend/%s.html", file))
 	}
 	templates, err := template.ParseFiles(files...)
 
@@ -23,20 +24,20 @@ func GenerateTemplate(writer http.ResponseWriter, fn ...string) {
 		return
 	}
 
-	if err := templates.ExecuteTemplate(writer, fn[0] + ".html", ""); err != nil {
+	if err := templates.ExecuteTemplate(writer, fn[0]+".html", i); err != nil {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 	}
 }
 
 func GenerateTemplateAdmin(writer http.ResponseWriter, i interface{}, fn ...string) {
 	var files []string
-	
+
 	fn = append(fn, "header")
 	fn = append(fn, "footer")
 	fn = append(fn, "aside")
 
 	for _, file := range fn {
-	files = append(files, fmt.Sprintf("templates/admin/%s.html", file))
+		files = append(files, fmt.Sprintf("templates/admin/%s.html", file))
 	}
 	templates, err := template.ParseFiles(files...)
 
@@ -45,13 +46,14 @@ func GenerateTemplateAdmin(writer http.ResponseWriter, i interface{}, fn ...stri
 		return
 	}
 
-	if err := templates.ExecuteTemplate(writer, fn[0] + ".html", i); err != nil {
+	if err := templates.ExecuteTemplate(writer, fn[0]+".html", i); err != nil {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func MapFormValues(dst interface{}, r *http.Request) (error){
-	errParse := r.ParseForm(); if errParse != nil {
+func MapFormValues(dst interface{}, r *http.Request) error {
+	errParse := r.ParseForm()
+	if errParse != nil {
 		return errParse
 	}
 	decoder := schema.NewDecoder()

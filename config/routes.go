@@ -2,7 +2,7 @@ package config
 
 import (
 	"net/http"
-	
+
 	"github.com/gorilla/mux"
 	"github.com/goweb4/handlers"
 )
@@ -22,7 +22,7 @@ var routes = Routes{
 	Route{
 		"Index",
 		"GET",
-		"/",
+		"/index",
 		handlers.Index,
 	},
 	Route{
@@ -66,6 +66,24 @@ var routes = Routes{
 		"PUT",
 		"/order/{id}",
 		handlers.UpdateOrder,
+	},
+	Route{
+		"Login",
+		"GET",
+		"/login",
+		handlers.Login,
+	},
+	Route{
+		"LoginHandler",
+		"POST",
+		"/loginHandler",
+		handlers.LoginHandler,
+	},
+	Route{
+		"LogoutHandler",
+		"GET",
+		"/logout",
+		handlers.LogoutHandler,
 	},
 	Route{
 		"CreateProduct",
