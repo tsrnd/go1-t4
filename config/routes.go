@@ -94,7 +94,7 @@ var routes = Routes{
 	Route{
 		"DeleteProduct",
 		"DELETE",
-		"/product",
+		"/product/{id}",
 		handlers.DestroyProduct,
 	},
 	Route{
