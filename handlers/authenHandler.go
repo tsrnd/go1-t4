@@ -48,7 +48,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkCredential(info models.User) bool {
-	user := models.GetUsers(info)
+	user := models.GetUser(info)
 	if user == (models.User{}) {
 		return false
 	}

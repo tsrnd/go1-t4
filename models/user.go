@@ -20,7 +20,7 @@ type User struct {
 	Provider string `schema:"provider"`
 }
 
-func GetUsers(userInfo User) (user User) {
+func GetUser(userInfo User) (user User) {
 	db, errConnection := database.DBConnection()
 	if errConnection != nil {
 		log.Fatal(errConnection)
@@ -30,7 +30,7 @@ func GetUsers(userInfo User) (user User) {
 	return user
 }
 
-func GetUser(id uint) (user User, err error) {
+func GetUserById(id uint) (user User, err error) {
 	user = User{}
 	db, errConnection := database.DBConnection()
 	if errConnection != nil {
@@ -72,7 +72,7 @@ func DeleteUser(id uint) error {
 	}
 	defer db.Close()
 
-	user, errGet := GetUser(id)
+	user, errGet := GetUserById(id)
 	if errGet != nil {
 		return errGet
 	}
