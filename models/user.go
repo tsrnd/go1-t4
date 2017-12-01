@@ -17,6 +17,7 @@ type User struct {
 	Role     string `schema:"role"`
 	Avatar   string `schema:"avatar"`
 	Phone    string `schema:"phone"`
+	Address  string `schema:"address"`
 	Provider string `schema:"provider"`
 }
 

@@ -11,7 +11,8 @@ import (
 )
 
 type HomePageVars struct {
-	Name string
+	Name    string
+	Message string
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +27,10 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	utils.GenerateTemplate(w, "", "login_register", "login", "register")
+	var HomeVars HomePageVars
+	mess := utils.ShowMessage(w, r, "login")
+	HomeVars.Message = mess
+	utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,6 +42,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		if checkCredential(info) {
 			setSession(info.UserName, w)
 			http.Redirect(w, r, "/index", http.StatusSeeOther)
+		} else {
+			mess := "Sorry, this does not match our records. Check your spelling and try again."
+			utils.SetMessage(w, mess, "login")
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 		}
 	}
 }

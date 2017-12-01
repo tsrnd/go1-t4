@@ -24,4 +24,7 @@
       </fieldset>
     </form>       
   </div>
+  {{if .Message}}
+  <p class="text-danger">{{.Message}}</p>
+  {{end}}
 {{ end }}
