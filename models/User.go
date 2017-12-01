@@ -2,25 +2,22 @@ package models
 
 import (
 	"log"
-	"time"
 
 	"github.com/goweb4/database"
+	"github.com/jinzhu/gorm"
 )
 
 type User struct {
-	ID        int
-	UID       string
-	FirstName string
-	LastName  string
-	Password  string
-	Email     string
-	Gender    string
-	Role      string
-	Avatar    string
-	Phone     string
-	Provider  string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	gorm.Model
+	UID      string `schema:"uid"`
+	UserName string `schema:"username"`
+	Password string `schema:"password"`
+	Email    string `schema:"email"`
+	Gender   string `schema:"gender"`
+	Role     string `schema:"role"`
+	Avatar   string `schema:"avatar"`
+	Phone    string `schema:"phone"`
+	Provider string `schema:"provider"`
 }
 
 var users = []User{}

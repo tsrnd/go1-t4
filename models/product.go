@@ -8,12 +8,12 @@ import (
 
 type Product struct {
 	gorm.Model
-	Size    string
-	Color   string
-	Price   float64
-	ImageID string
-	InStock int
-	GroupID int
+	Size    string		`schema:"size"`
+	Color   string		`schema:"color"`
+	Price   float64		`schema:"price"`
+	Name 	string		`schema:"name"`
+	InStock uint		`schema:"in_stock"`
+	GroupID uint		`schema:"group_id"`
 }
 
 func GetProducts() (products []Product, err error){
