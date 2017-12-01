@@ -22,7 +22,7 @@ var routes = Routes{
 	Route{
 		"Index",
 		"GET",
-		"/",
+		"/index",
 		handlers.Index,
 	},
 	Route{
@@ -50,12 +50,6 @@ var routes = Routes{
 		handlers.DeleteUser,
 	},
 	Route{
-		"Test",
-		"GET",
-		"/test",
-		handlers.Test,
-	},
-	Route{
 		"AddOrder",
 		"GET",
 		"/order/add",
@@ -78,6 +72,60 @@ var routes = Routes{
 		"PUT",
 		"/order/{id}",
 		handlers.UpdateOrder,
+	},
+	Route{
+		"Login",
+		"GET",
+		"/login",
+		handlers.Login,
+	},
+	Route{
+		"LoginHandler",
+		"POST",
+		"/loginHandler",
+		handlers.LoginHandler,
+	},
+	Route{
+		"LogoutHandler",
+		"GET",
+		"/logout",
+		handlers.LogoutHandler,
+	},
+	Route{
+		"CreateProduct",
+		"GET",
+		"/product/add",
+		handlers.CreateProduct,
+	},
+	Route{
+		"StoreProduct",
+		"POST",
+		"/product",
+		handlers.StoreProduct,
+	},
+	Route{
+		"EditProduct",
+		"GET",
+		"/product/{id}/edit",
+		handlers.EditProduct,
+	},
+	Route{
+		"UpdateProduct",
+		"PUT",
+		"/product/{id}",
+		handlers.UpdateProduct,
+	},
+	Route{
+		"DeleteProduct",
+		"DELETE",
+		"/product/{id}",
+		handlers.DestroyProduct,
+	},
+	Route{
+		"ShowProduct",
+		"GET",
+		"/product/{id}",
+		handlers.ShowProduct,
 	},
 }
 

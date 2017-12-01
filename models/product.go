@@ -1,24 +1,26 @@
 package models
 
 import (
-	"github.com/goweb4/database"
 	"log"
+
+	"github.com/goweb4/database"
 	"github.com/jinzhu/gorm"
 )
 
 type Product struct {
 	gorm.Model
-	Size    string		`schema:"size"`
-	Color   string		`schema:"color"`
-	Price   float64		`schema:"price"`
-	Name 	string		`schema:"name"`
-	InStock uint		`schema:"in_stock"`
-	GroupID uint		`schema:"group_id"`
+	Size    string  `schema:"size"`
+	Color   string  `schema:"color"`
+	Price   float64 `schema:"price"`
+	Name    string  `schema:"name"`
+	InStock uint    `schema:"in_stock"`
+	GroupID uint    `schema:"group_id"`
 }
 
-func GetProducts() (products []Product, err error){
+func GetProducts() (products []Product, err error) {
 	products = []Product{}
-	db, errConnection := database.DBConnection(); if errConnection != nil {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
@@ -30,7 +32,8 @@ func GetProducts() (products []Product, err error){
 
 func GetProduct(id uint) (product Product, err error) {
 	product = Product{}
-	db, errConnection := database.DBConnection(); if errConnection != nil {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
@@ -40,38 +43,42 @@ func GetProduct(id uint) (product Product, err error) {
 	return product, err
 }
 
-func UpdateProduct(id uint, oldProduct map[string]interface{}) (error) {
-	product := Product{}
-	db, errConnection := database.DBConnection(); if errConnection != nil {
+func UpdateProduct(product *Product) error {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
-
-	errFindProduct := db.Where("id = ?", id).Find(&product).Error; if errFindProduct != nil {
-		return errFindProduct
-	}
-	errUpdate := db.Model(&product).Updates(oldProduct).Error;
+	errUpdate := db.Save(&product).Error
 	return errUpdate
 }
 
-func DeleteProduct(id uint) (error) {
-	db, errConnection := database.DBConnection(); if errConnection != nil {
+func DeleteProduct(id uint) error {
+	product := Product{}
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
 
-	err := db.Where("id = ?", id).Delete(&Product{}).Error
-
+	product, errGet := GetProduct(id)
+	if errGet != nil {
+		return errGet
+	}
+	err := db.Delete(&product).Error
 	return err
 }
 
-func CreateProduct(product Product) (error){
-	db, errConnection := database.DBConnection(); if errConnection != nil {
+func CreateProduct(product *Product) (uint, error) {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
 		log.Fatal(errConnection)
 	}
 	defer db.Close()
-
-	err := db.Create(&product).Error
-	
-	return err
+	newProduct := db.Create(&product)
+	err := newProduct.Error
+	if err == nil {
+		return product.ID, err
+	}
+	return 0, err
 }
