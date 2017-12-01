@@ -16,7 +16,3 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "need to implement ...")
 }
-
-func Register(w http.ResponseWriter, r *http.Request) {
-	// utils.MapFormValues(,r)
-}

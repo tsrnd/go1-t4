@@ -28,8 +28,8 @@ var routes = Routes{
 	Route{
 		"Register",
 		"POST",
-		"/",
-		handlers.Register,
+		"/register",
+		handlers.RegisterHandler,
 	},
 	Route{
 		"AddUser",

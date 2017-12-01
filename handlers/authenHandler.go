@@ -11,12 +11,13 @@ import (
 )
 
 type HomePageVars struct {
-	Name    string
-	Message string
+	Name         string
+	Message      string
+	RegisterInfo Register
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	var HomeVars HomePageVars
+	HomeVars := HomePageVars{}
 	if authCookie, err := r.Cookie("auth"); err == nil {
 		var cookieData interface{}
 		cookieData = objx.MustFromBase64(authCookie.Value)
