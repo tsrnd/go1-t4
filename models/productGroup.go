@@ -23,3 +23,18 @@ func GetProductGroups() (productGroups []ProductGroup, err error) {
 
 	return productGroups, err
 }
+
+
+func GetProductsByGroupID(id uint) (products []Product, err error) {
+	products = []Product{}
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+
+	err = db.Where("group_id = ?", id).Find(&products).Error
+	// db.Model(&user).Related(&emails)
+
+	return products, err
+}
