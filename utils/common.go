@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	// "image"
 
 	"github.com/gorilla/schema"
 )
