@@ -40,6 +40,15 @@ $ go get github.com/joho/godotenv
 ```
 $ go get github.com/gorilla/schema
 ```
+6. "github.com/nfnt/resize"
+`Package nfnt/resize resize a picture`
+```
+$ go get github.com/nfnt/resize
+```
+7. "github.com/stretchr/objx"
+```
+$ go get github.com/stretchr/objx
+```
 ## Install PostgreSQL
 Ubuntu:
 ```
