@@ -27,6 +27,7 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, err);
   }
   fmt.Fprintln(w, product)
+  // utils.GenerateTemplate(w, handlers.HomeVars)
 }
 
 /**

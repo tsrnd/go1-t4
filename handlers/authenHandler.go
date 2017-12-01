@@ -11,22 +11,33 @@ import (
 )
 
 type HomePageVars struct {
+	PageTitle string
 	Name string
+	ProductGroup []models.ProductGroup
+}
+
+/**
+  * HomePageVars constructor
+  */
+func NewHomePageVars(r *http.Request) HomePageVars {
+	var homePageVars HomePageVars
+	homePageVars.ProductGroup = GetProductGroups()
+	homePageVars.Name = GetAuthName(r)
+
+	return homePageVars
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	var HomeVars HomePageVars
-	if authCookie, err := r.Cookie("auth"); err == nil {
-		var cookieData interface{}
-		cookieData = objx.MustFromBase64(authCookie.Value)
-		name := cookieData.(objx.Map)["name"].(string)
-		HomeVars.Name = name
-	}
+	HomeVars := NewHomePageVars(r)
+	HomeVars.PageTitle = "Home Page"
 	utils.GenerateTemplate(w, HomeVars, "index")
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	utils.GenerateTemplate(w, "", "login_register", "login", "register")
+	HomeVars := NewHomePageVars(r)
+	HomeVars.PageTitle = "Login"
+
+	utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -73,4 +84,25 @@ func clearSession(response http.ResponseWriter) {
 		MaxAge:  -1,
 		Expires: time.Unix(1, 0),
 	})
+}
+
+/**
+  * Get product_group for header
+  */
+func GetProductGroups() []models.ProductGroup {
+	productGroups, err := models.GetProductGroups(); if err != nil {
+		fmt.Println("err")
+	}
+	return productGroups
+}
+
+func GetAuthName(r *http.Request) string {
+	var name string = ""
+	if authCookie, err := r.Cookie("auth"); err == nil {
+		var cookieData interface{}
+		cookieData = objx.MustFromBase64(authCookie.Value)
+		name = cookieData.(objx.Map)["name"].(string)		
+	}
+
+	return name	
 }
