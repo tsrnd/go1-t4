@@ -33,10 +33,10 @@
       <div class="box-body">
           <div class="row">
               <div class="col-md-6 col-md-offset-3">
-                  <form class="col-md-12" method="POST" action="/product">
+                  <form enctype="multipart/form-data" class="col-md-12" method="POST" action="/product">
                       <div class="form-group col-md-12">
                         <label for="name">Name</label>
-                        <input type="name" class="form-control" id="name" placeholder="Name.." required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name.." >
                         <small class="text-danger"></small>
                       </div>
                       <div class="clearfix"></div>
@@ -64,15 +64,15 @@
                   
                   <!-- instock -->
                       <div class="form-group col-md-12">
-                          <label for="instock">Instock</label>
-                          <input type="number" class="form-control" min=1 name="in_stock" id="instock" required>
+                          <label for="in_stock">Instock</label>
+                          <input type="number" class="form-control" min=1 name="in_stock" id="in_stock" >
                       </div>
                       <div class="clearfix"></div>
                   
                       <!-- price -->
                       <div class="form-group col-md-12">
                         <label for="price">Price</label>
-                        <input type="number" name="price" id="price" min=1 class="form-control" required>
+                        <input type="number" name="price" id="price" min=1 class="form-control" >
                       </div>
                       <div class="clearfix"></div>
                       
@@ -84,6 +84,12 @@
                             <option value={{.ID}}>{{.Name}}</option>
                           {{end}}
                         </select>
+                      </div>
+
+                      <!-- image -->
+                      <div class="form-group col-md-12">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" id="image" class="form-control">
                       </div>
                       <div class="clearfix"></div>
                   

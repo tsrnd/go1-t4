@@ -8,6 +8,7 @@ import (
   "github.com/gorilla/mux"
   "strconv"
   "github.com/goweb4/utils"
+  "strings"
 )
 
 /**
@@ -50,16 +51,29 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, errMap);
     return
   }
-
+  
   id, errCreate := models.CreateProduct(product); if errCreate != nil {
     fmt.Fprintln(w, errCreate);
     return
-  } else {
-    err := models.StoreImage(w, r, id); if err != nil {
-      http.Redirect(w, r, "/product/add", http.StatusBadRequest)
-    }
-    http.Redirect(w, r, "/product/" + fmt.Sprint(id), http.StatusFound)
   }
+  
+	//get image from form file request
+	file, header, err := r.FormFile("image"); if err == nil {
+      fileName, _, err := utils.HandleImage(file, header, id, models.IMG_BASE_URL); if err != nil {
+        http.Redirect(w, r, "/product/add", http.StatusBadRequest)
+        return
+      }
+      image := models.Image{}
+      image.Name = fileName
+      image.ProductId = id
+      image.URL = strings.Join([]string{models.IMG_BASE_URL, fileName + ".jpg"}, "/")
+      err = models.StoreImage(&image); if err != nil {
+        http.Redirect(w, r, "/product/add", http.StatusBadRequest)
+        return        
+      }
+	}
+
+  http.Redirect(w, r, "/product/" + fmt.Sprint(id), http.StatusFound)
 }
 
 /**
