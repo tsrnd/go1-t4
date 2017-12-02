@@ -11,14 +11,16 @@ import (
 )
 
 type HomePageVars struct {
-	PageTitle string
-	Name string
+	Name         string
+	Message      string
+	RegisterInfo RegisterInfo
+	PageTitle    string
 	ProductGroup []models.ProductGroup
 }
 
 /**
-  * HomePageVars constructor
-  */
+ * HomePageVars constructor
+ */
 func NewHomePageVars(r *http.Request) HomePageVars {
 	var homePageVars HomePageVars
 	homePageVars.ProductGroup = GetProductGroups()
@@ -34,10 +36,14 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	HomeVars := NewHomePageVars(r)
-	HomeVars.PageTitle = "Login"
-
-	utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+	if _, err := r.Cookie("auth"); err != nil {
+		HomeVars := NewHomePageVars(r)
+		HomeVars.Message = utils.ShowMessage(w, r, "login")
+		HomeVars.PageTitle = "Login"
+		utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+	} else {
+		http.Redirect(w, r, "/index", 302)
+	}
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -46,9 +52,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("cannot decode login info: ", err)
 	} else {
-		if checkCredential(info) {
+		if utils.CheckCredential(info) {
 			setSession(info.UserName, w)
 			http.Redirect(w, r, "/index", http.StatusSeeOther)
+		} else {
+			mess := "Sorry, this does not match our records. Check your spelling and try again."
+			utils.SetMessage(w, mess, "login")
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 		}
 	}
 }
@@ -56,14 +66,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	clearSession(w)
 	http.Redirect(w, r, "/login", 302)
-}
-
-func checkCredential(info models.User) bool {
-	user := models.GetUser(info)
-	if user == (models.User{}) {
-		return false
-	}
-	return true
 }
 
 func setSession(userName string, response http.ResponseWriter) {
@@ -87,22 +89,22 @@ func clearSession(response http.ResponseWriter) {
 }
 
 /**
-  * Get product_group for header
-  */
+ * Get product_group for header
+ */
 func GetProductGroups() []models.ProductGroup {
-	productGroups, err := models.GetProductGroups(); if err != nil {
+	productGroups, err := models.GetProductGroups()
+	if err != nil {
 		fmt.Println("err")
 	}
 	return productGroups
 }
 
 func GetAuthName(r *http.Request) string {
-	var name string = ""
+	name := ""
 	if authCookie, err := r.Cookie("auth"); err == nil {
 		var cookieData interface{}
 		cookieData = objx.MustFromBase64(authCookie.Value)
-		name = cookieData.(objx.Map)["name"].(string)		
+		name = cookieData.(objx.Map)["name"].(string)
 	}
-
-	return name	
+	return name
 }
