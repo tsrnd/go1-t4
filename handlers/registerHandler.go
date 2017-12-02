@@ -6,10 +6,11 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/goweb4/models"
 	"github.com/goweb4/utils"
 )
 
-type Register struct {
+type RegisterInfo struct {
 	UserName string `schema:"userName"`
 	Email    string `schema:"email"`
 	Phone    string `schema:"phoneNumber"`
@@ -18,24 +19,39 @@ type Register struct {
 	Errors   map[string]string
 }
 
+func Register(w http.ResponseWriter, r *http.Request) {
+	HomeVars := NewHomePageVars(r)
+	HomeVars.Message = utils.ShowMessage(w, r, "register")
+	HomeVars.PageTitle = "Login"
+	utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+}
+
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	var info Register
+	var info RegisterInfo
 	var HomeVars HomePageVars
 	err := utils.MapFormValues(&info, r)
 	if err != nil {
 		fmt.Println("cannot decode register info: ", err)
+	} else if info.Validate() == false {
+		HomeVars.RegisterInfo = info
+		utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+	} else if utils.CheckUserExist(info.UserName) {
+		mess := "User account already exist!!"
+		utils.SetMessage(w, mess, "register")
 	} else {
-		if info.Validate() == false {
-			HomeVars.RegisterInfo = info
-			utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+		user := SetUser(info)
+		err2 := models.CreateUser(user) // save user info
+		if err2 != nil {
+			fmt.Println("Error occur when creating user")
 		} else {
-			// save user info
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			mess := "register user successful"
+			utils.SetMessage(w, mess, "register")
 		}
 	}
+	http.Redirect(w, r, "/register", http.StatusSeeOther)
 }
 
-func (msg *Register) Validate() bool {
+func (msg *RegisterInfo) Validate() bool {
 	msg.Errors = make(map[string]string)
 
 	emailRegex := regexp.MustCompile(".+@.+\\..+")
@@ -63,4 +79,14 @@ func (msg *Register) Validate() bool {
 	}
 
 	return len(msg.Errors) == 0
+}
+
+func SetUser(userInfo RegisterInfo) (user models.User) {
+	user.UserName = userInfo.UserName
+	hashPass, _ := utils.HashPassword(userInfo.Password)
+	user.Password = hashPass
+	user.Address = userInfo.Address
+	user.Phone = userInfo.Phone
+	user.Email = userInfo.Email
+	return user
 }

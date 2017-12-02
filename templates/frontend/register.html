@@ -1,7 +1,7 @@
 {{ define "register"}}
 <div class="span7">         
   <h4 class="title"><span class="text"><strong>Register</strong> Form</span></h4>
-  <form action="/register" method="post" class="form-stacked">
+  <form action="/registerHandler" method="post" class="form-stacked">
     <fieldset>
       <div class="control-group">
         {{ if .RegisterInfo.Errors.Name }}
@@ -14,7 +14,7 @@
       </div>
       <div class="control-group">
         {{ if .RegisterInfo.Errors.Email }}
-        <p class="error">{{ .RegisterInfo.Errors.Email }}</p>
+        <p class="error text-danger">{{ .RegisterInfo.Errors.Email }}</p>
         {{ end }}
         <label class="control-label">Email address:</label>
         <div class="controls">

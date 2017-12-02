@@ -9,7 +9,7 @@ import (
 
 type User struct {
 	gorm.Model
-	Proid    string `schema:"proid"`
+	ProId    string `schema:"pro_id"`
 	UserName string `schema:"username"`
 	Password string `schema:"password"`
 	Email    string `schema:"email"`
@@ -40,6 +40,19 @@ func GetUserById(id uint) (user User, err error) {
 	defer db.Close()
 
 	err = db.Where("id = ?", id).Find(&user).Error
+
+	return user, err
+}
+
+func GetUserByUserName(name string) (user User, err error) {
+	user = User{}
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+
+	err = db.Where("user_name = ?", name).Find(&user).Error
 
 	return user, err
 }
