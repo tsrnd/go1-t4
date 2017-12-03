@@ -7,7 +7,7 @@ import (
 )
 
 type ProductGroup struct {
-	gorm.Model	
+	gorm.Model
 	Name    string		`schema:"name"`
 }
 
