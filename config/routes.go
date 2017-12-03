@@ -26,15 +26,33 @@ var routes = Routes{
 		handlers.Index,
 	},
 	Route{
-		"AddUser",
+		"Register",
+		"GET",
+		"/register",
+		handlers.Register,
+	},
+	Route{
+		"Register",
 		"POST",
-		"/",
+		"/registerHandler",
+		handlers.RegisterHandler,
+	},
+	Route{
+		"AddUser",
+		"GET",
+		"/user/add",
+		handlers.AddUser,
+	},
+	Route{
+		"CreateUser",
+		"POST",
+		"/user",
 		handlers.AddUser,
 	},
 	Route{
 		"UpdateUser",
 		"PUT",
-		"/",
+		"/user/{id}",
 		handlers.UpdateUser,
 	},
 	Route{
