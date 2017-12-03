@@ -27,7 +27,18 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
   product, err := models.GetProduct(uint(id)); if err != nil {
     fmt.Fprintln(w, err);
   }
-  fmt.Fprintln(w, product)
+  productGroup, err := models.GetProductGroup(product.GroupID); if err != nil {
+    fmt.Fprintln(w, err)
+  }
+  image, err := models.GetImageByProductId(product.ID); if err != nil {
+    fmt.Fprintln(w, err)
+  }
+  data := map[string]interface{} {
+    "Product": product,
+    "GroupName": productGroup.Name,
+    "Image": image,
+  }
+  utils.GenerateTemplateAdmin(w, data, "show_product")
 }
 
 /**

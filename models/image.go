@@ -27,3 +27,14 @@ func StoreImage(image *Image) (error){
 
 	return errCreateImage
 }
+
+func GetImageByProductId(productId uint) (image Image, err error) {
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+		return image, errConnection
+	}
+	defer db.Close()
+	err = db.Where("product_id = ?", productId).First(&image).Error
+	return
+}

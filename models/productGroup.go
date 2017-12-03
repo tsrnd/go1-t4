@@ -23,3 +23,14 @@ func GetProductGroups() (productGroups []ProductGroup, err error) {
 
 	return productGroups, err
 }
+
+func GetProductGroup(id uint) (productGroup ProductGroup, err error) {
+	db, errConnection := database.DBConnection(); if errConnection != nil {
+		log.Fatal(errConnection)
+		return productGroup, errConnection
+	}
+	defer db.Close()
+
+	err = db.Where("id = ?", id).Find(&productGroup).Error
+	return
+}
