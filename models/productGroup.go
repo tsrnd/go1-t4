@@ -34,3 +34,17 @@ func GetProductGroup(id uint) (productGroup ProductGroup, err error) {
 	err = db.Where("id = ?", id).Find(&productGroup).Error
 	return
 }
+
+func GetProductsByGroupID(id uint) (products []Product, err error) {
+	products = []Product{}
+	db, errConnection := database.DBConnection()
+	if errConnection != nil {
+		log.Fatal(errConnection)
+	}
+	defer db.Close()
+
+	err = db.Where("group_id = ?", id).Find(&products).Error
+	// db.Model(&user).Related(&emails)
+
+	return products, err
+}
