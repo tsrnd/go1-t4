@@ -1,6 +1,6 @@
 {{ template "header" . }}
 <section class="header_text sub">
-<img class="pageBanner" src="themes/images/pageBanner.png" alt="New products" >
+<img class="pageBanner" src="/static/css/themes/images/pageBanner.png" alt="New products" >
   <h4><span>New products</span></h4>
 </section>
 <section class="main-content">
@@ -12,7 +12,7 @@
           <li class="span3">
             <div class="product-box">
               <span class="sale_tag"></span>                        
-              <a href="/detail/{{ $product.ID }}"><img alt="" src="{{ if $product.Images }} {{ (index $product.Images 0).URL }} {{ end }}"></a><br/>
+              <a href="/detail/{{ $product.ID }}"><img alt="" src="{{ if $product.Images }} {{ (index $product.Images 0).URL }} {{ else }} /static/css/themes/images/ladies/6.jpg {{ end }}"></a><br/>
               <a href="/detail/{{ $product.ID }}" class="title">{{ $product.Name }}</a><br/>
               <a href="#" class="category">{{ $product.Size }}</a>
               <p class="price">{{ $product.Price }}$</p>
@@ -66,7 +66,7 @@
                 <li class="span3">
                   <div class="product-box">
                     <span class="sale_tag"></span>                        
-                    <img alt="" src="themes/images/ladies/1.jpg"><br/>
+                    <img alt="" src="/static/css/themes/images/ladies/1.jpg"><br/>
                     <a href="product_detail.html" class="title">Fusce id molestie massa</a><br/>
                     <a href="#" class="category">Suspendisse aliquet</a>
                     <p class="price">$261</p>
@@ -78,7 +78,7 @@
               <ul class="thumbnails listing-products">
                 <li class="span3">
                   <div class="product-box">                       
-                    <img alt="" src="themes/images/ladies/2.jpg"><br/>
+                    <img alt="" src="/static/css/themes/images/ladies/2.jpg"><br/>
                     <a href="product_detail.html" class="title">Tempor sem sodales</a><br/>
                     <a href="#" class="category">Urna nec lectus mollis</a>
                     <p class="price">$134</p>
@@ -94,13 +94,13 @@
         <ul class="small-product">
           <li>
             <a href="#" title="Praesent tempor sem sodales">
-              <img src="themes/images/ladies/3.jpg" alt="Praesent tempor sem sodales">
+              <img src="/static/css/themes/images/ladies/3.jpg" alt="Praesent tempor sem sodales">
             </a>
             <a href="#">Praesent tempor sem</a>
           </li>
           <li>
             <a href="#" title="Luctus quam ultrices rutrum">
-              <img src="themes/images/ladies/4.jpg" alt="Luctus quam ultrices rutrum">
+              <img src="/static/css/themes/images/ladies/4.jpg" alt="Luctus quam ultrices rutrum">
             </a>
             <a href="#">Luctus quam ultrices rutrum</a>
           </li>
