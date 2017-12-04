@@ -16,8 +16,8 @@ type HomePageVars struct {
 	RegisterInfo RegisterInfo
 	PageTitle    string
 	ProductGroup []models.ProductGroup
-	Products []models.Product
-	Paginator utils.Paginator
+	Products     []models.Product
+	Paginator    utils.Paginator
 }
 
 /**
