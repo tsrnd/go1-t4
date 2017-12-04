@@ -33,3 +33,14 @@ func CheckUserExist(name string) bool {
 	}
 	return true
 }
+
+func IsAdminRole(userName string) bool {
+	user, err := models.GetUserByUserName(userName)
+	if err != nil {
+		return false
+	}
+	if user.Role == "admin" {
+		return true
+	}
+	return false
+}
