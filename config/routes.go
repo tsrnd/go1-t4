@@ -145,6 +145,12 @@ var routes = Routes{
 		"/detail/{id}",
 		handlers.DetailProduct,
 	},
+	Route{
+		"ShowProductGroup",
+		"GET",
+		"/group/{id}",
+		handlers.ShowProductGroup,
+	},
 }
 
 //NewRouter configures a new router to the API

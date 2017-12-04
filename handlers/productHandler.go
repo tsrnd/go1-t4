@@ -32,6 +32,29 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 /**
+  * Show product by group
+  */
+  func ShowProductGroup(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id, _ := strconv.ParseUint(vars["id"], 10, 32);
+    query := r.URL.Query()
+    page, _ := strconv.ParseInt(query.Get("page"), 10, 32)
+
+    HomeVars := NewHomePageVars(r)
+
+    products, err := models.GetProductsByGroupID(uint(id)); if err != nil {
+      fmt.Fprintln(w, err);
+    }
+
+    paginator := utils.Paginate(len(products), 12, int(page))
+
+    HomeVars.Products = products[paginator.Start : paginator.End]
+    HomeVars.Paginator = paginator
+
+    utils.GenerateTemplate(w, HomeVars, "product")
+  }
+
+/**
   * Show form create new product
   */
 func CreateProduct(w http.ResponseWriter, r *http.Request) {
@@ -136,9 +159,14 @@ func DestroyProduct(w http.ResponseWriter, r *http.Request) {
     product, err := models.GetProduct(uint(id)); if err != nil {
       fmt.Fprintln(w, err);
     }
-    fmt.Fprintln(w, product)
+
+    products, err := models.GetProductsByGroupID(product.ID); if err != nil {
+      fmt.Fprintln(w, err);
+    }
+    // fmt.Fprintln(w, product)
 
     HomeVars := NewHomePageVars(r)
     HomeVars.Product = product
+    HomeVars.Products = products
     utils.GenerateTemplate(w, HomeVars, "product_detail")
   }

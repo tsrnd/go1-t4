@@ -53,3 +53,46 @@ func SetMessage(w http.ResponseWriter, message string, name string) {
 		Value: base64.URLEncoding.EncodeToString(msg)}
 	http.SetCookie(w, &c)
 }
+
+type Paginator struct {
+	Start int
+	End int
+	CurrentPage int
+	PerPage int
+	NextPage int
+	PrevPage int
+	PagePath []int
+}
+func Paginate(totalRecord int, perPage int, currentPage int) Paginator {
+	var paginator Paginator
+
+	if currentPage == 0 {
+		currentPage++
+	}
+
+	TotalPage := totalRecord/perPage + 1
+	paginator.Start = (currentPage - 1)*perPage
+	paginator.End = paginator.Start + perPage
+	if paginator.End > totalRecord {
+		paginator.End = paginator.Start + totalRecord - paginator.Start
+	}
+	for i := 1; i <= TotalPage; i++ {
+		paginator.PagePath = append(paginator.PagePath, i)
+	}
+
+	if currentPage >= TotalPage {
+		paginator.NextPage = TotalPage
+	} else {
+		paginator.NextPage =  currentPage + 1
+	}
+
+	if currentPage <= 0 {
+		paginator.PrevPage = 1
+	} else { 
+		paginator.PrevPage = currentPage - 1
+	}
+	paginator.PerPage = perPage
+	paginator.CurrentPage = currentPage
+
+	return paginator
+}
