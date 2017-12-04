@@ -160,13 +160,14 @@ func DestroyProduct(w http.ResponseWriter, r *http.Request) {
       fmt.Fprintln(w, err);
     }
 
-    products, err := models.GetProductsByGroupID(product.ID); if err != nil {
+    products, err := models.GetProductsByGroupID(product.GroupID); if err != nil {
       fmt.Fprintln(w, err);
     }
-    // fmt.Fprintln(w, product)
+    fmt.Println(product)
+    fmt.Println(products)
 
     HomeVars := NewHomePageVars(r)
     HomeVars.Product = product
-    HomeVars.Products = products
+    HomeVars.Products = products[:3]
     utils.GenerateTemplate(w, HomeVars, "product_detail")
   }
