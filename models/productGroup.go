@@ -6,8 +6,9 @@ import (
 )
 
 type ProductGroup struct {
-	gorm.Model
-	Name string `schema:"name"`
+	gorm.Model	
+	Name    	string		`schema:"name"`
+	Products	[]Product	//has many products
 }
 
 func GetProductGroups() (productGroups []ProductGroup, err error) {
