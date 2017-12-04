@@ -39,9 +39,11 @@
                     </div>
                     <div class="box-body">
                         <div class="col-md-4 text-center">
-                            <img alt="{{.Image.Name}}" title="{{.Image.Name}}" class="img-circle img-thumbnail isTooltip"
-                                 src="/{{.Image.URL}}"
+                            {{range .Product.Images}}
+                            <img alt="{{.Name}}" title="{{.Name}}" class="img-circle img-thumbnail isTooltip"
+                                 src="/{{.URL}}"
                                  data-original-title="Usuario">
+                            {{end}}
                         </div>
                         <div class="col-md-8">
                             <div class="table-responsive">
@@ -125,7 +127,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            {{.GroupName}}
+                                            {{.Product.ProductGroup.Name}}
                                         </td>
                                     </tr>
                                     <tr>

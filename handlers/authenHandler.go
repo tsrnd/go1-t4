@@ -16,6 +16,8 @@ type HomePageVars struct {
 	RegisterInfo RegisterInfo
 	PageTitle    string
 	ProductGroup []models.ProductGroup
+	Products []models.Product
+	Paginator utils.Paginator
 }
 
 /**
@@ -96,6 +98,7 @@ func GetProductGroups() []models.ProductGroup {
 	if err != nil {
 		fmt.Println("err")
 	}
+
 	return productGroups
 }
 

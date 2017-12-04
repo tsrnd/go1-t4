@@ -59,7 +59,7 @@
           <nav id="menu" class="pull-right">
             <ul>
                 {{ range $val := .ProductGroup }}
-                  <li><a href="">{{ $val.Name }}</a>					
+                  <li><a href="/group/{{ $val.ID }}">{{ $val.Name }}</a>					
                 {{ end }}
             </ul>
           </nav>

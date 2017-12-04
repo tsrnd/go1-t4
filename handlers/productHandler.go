@@ -22,24 +22,45 @@ func IndexProduct(w http.ResponseWriter) {
   * Show product
   */
 func ShowProduct(w http.ResponseWriter, r *http.Request) {
+  var productModel models.Model
 	vars := mux.Vars(r)
   id, _ := strconv.ParseUint(vars["id"], 10, 32);
   product, err := models.GetProduct(uint(id)); if err != nil {
     fmt.Fprintln(w, err);
   }
-  productGroup, err := models.GetProductGroup(product.GroupID); if err != nil {
-    fmt.Fprintln(w, err)
-  }
-  image, err := models.GetImageByProductId(product.ID); if err != nil {
-    fmt.Fprintln(w, err)
-  }
+  productModel = &product
+
+  models.GetRelatedData(productModel, "Images")
+  models.GetRelatedData(productModel, "ProductGroup")
   data := map[string]interface{} {
     "Product": product,
-    "GroupName": productGroup.Name,
-    "Image": image,
   }
+
   utils.GenerateTemplateAdmin(w, data, "show_product")
 }
+
+/**
+  * Show product by group
+  */
+  func ShowProductGroup(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id, _ := strconv.ParseUint(vars["id"], 10, 32);
+    query := r.URL.Query()
+    page, _ := strconv.ParseInt(query.Get("page"), 10, 32)
+
+    HomeVars := NewHomePageVars(r)
+
+    products, err := models.GetProductsByGroupID(uint(id)); if err != nil {
+      fmt.Fprintln(w, err);
+    }
+
+    paginator := utils.Paginate(len(products), 12, int(page))
+
+    HomeVars.Products = products[paginator.Start : paginator.End]
+    HomeVars.Paginator = paginator
+
+    utils.GenerateTemplate(w, HomeVars, "product")
+  }
 
 /**
   * Show form create new product
