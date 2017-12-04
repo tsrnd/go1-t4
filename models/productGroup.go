@@ -11,6 +11,13 @@ type ProductGroup struct {
 	Products	[]Product	//has many products
 }
 
+func (productGroup *ProductGroup) GetRelationship() map[string]interface{}{
+	relationship := map[string]interface{} {
+		"Products": &productGroup.Products,
+	}
+	return relationship
+}
+
 func GetProductGroups() (productGroups []ProductGroup, err error) {
 	WithConnectionDB(func(db *database.DB) {
 		err = db.Find(&productGroups).Error
