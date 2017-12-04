@@ -14,6 +14,14 @@ type Order struct {
 	User					User						//belong to user
 }
 
+func (order *Order) GetRelationship() map[string]interface{}{
+	relationship := map[string]interface{} {
+		"OrderProducts": &order.OrderProducts,
+		"User": &order.User,
+	}
+	return relationship
+}
+
 func GetOrder(id int) (order Order, err error) {
 	WithConnectionDB(func(db *database.DB) {
 		err = db.Where("id = ?", id).Find(&order).Error

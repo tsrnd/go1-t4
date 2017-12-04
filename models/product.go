@@ -13,9 +13,18 @@ type Product struct {
 	Name    		string  		`schema:"name"`
 	InStock 		uint    		`schema:"in_stock"`
 	GroupID 		uint    		`schema:"group_id"`
-	ProductGroup	ProductGroup	//belong To Product Group
+	ProductGroup	ProductGroup	`gorm:"ForeignKey:GroupId"`//belong To Product Group
 	OrderProducts	[]OrderProduct	//has many order products
 	Images			[]Image			//has many image
+}
+
+func (product *Product) GetRelationship() map[string]interface{}{
+	relationship := map[string]interface{} {
+		"Images": &product.Images,
+		"ProductGroup": &product.ProductGroup,
+		"OrderProducts": &product.OrderProducts,
+	}
+	return relationship
 }
 
 func GetProducts() (products []Product, err error) {
@@ -28,7 +37,9 @@ func GetProducts() (products []Product, err error) {
 func GetProduct(id uint) (product Product, err error) {
 	WithConnectionDB(func(db *database.DB) {
 		err = db.Where("id = ?", id).Find(&product).Error
+		db.Model(&product).Association("Images").Find(&product.Images)
 	})
+	
 	return product, err
 }
 

@@ -19,6 +19,7 @@ type HomePageVars struct {
 	Products     []models.Product
 	Paginator    utils.Paginator
 	User         models.User
+	Product      models.Product
 }
 
 /**
@@ -38,14 +39,18 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	utils.GenerateTemplate(w, HomeVars, "index")
 }
 
+func IndexAdmin(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/product/add", http.StatusSeeOther)
+}
+
 func Login(w http.ResponseWriter, r *http.Request) {
+	HomeVars := NewHomePageVars(r)
 	if _, err := r.Cookie("auth"); err != nil {
-		HomeVars := NewHomePageVars(r)
 		HomeVars.Message = utils.ShowMessage(w, r, "login")
 		HomeVars.PageTitle = "Login"
 		utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
-	} else {
-		http.Redirect(w, r, "/index", 302)
+	} else if utils.IsAdminRole(HomeVars.Name) {
+		http.Redirect(w, r, "/adminIndex", 302)
 	}
 }
 
@@ -56,8 +61,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("cannot decode login info: ", err)
 	} else {
 		if utils.CheckCredential(info) {
-			setSession(info.UserName, w)
-			http.Redirect(w, r, "/index", http.StatusSeeOther)
+			if utils.IsAdminRole(info.UserName) {
+				setSession(info.UserName, w)
+				http.Redirect(w, r, "/adminIndex", http.StatusSeeOther)
+			} else {
+				setSession(info.UserName, w)
+				http.Redirect(w, r, "/index", http.StatusSeeOther)
+			}
 		} else {
 			mess := "Sorry, this does not match our records. Check your spelling and try again."
 			utils.SetMessage(w, mess, "login")
