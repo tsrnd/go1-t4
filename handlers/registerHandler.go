@@ -75,7 +75,7 @@ func (msg *RegisterInfo) Validate() bool {
 	phoneRegex := regexp.MustCompile("^[0-9]{10}")
 	phoneMatched := phoneRegex.Match([]byte(msg.Phone))
 	if phoneMatched == false {
-		msg.Errors["Phone"] = "Please enter a valid phone number(with number only and 9 digits)"
+		msg.Errors["Phone"] = "Please enter a valid phone number(with number only and 10 digits)"
 	}
 
 	return len(msg.Errors) == 0

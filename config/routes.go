@@ -26,6 +26,12 @@ var routes = Routes{
 		handlers.Index,
 	},
 	Route{
+		"AdminIndex",
+		"GET",
+		"/adminIndex",
+		handlers.IndexAdmin,
+	},
+	Route{
 		"Register",
 		"GET",
 		"/register",
