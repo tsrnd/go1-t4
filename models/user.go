@@ -20,6 +20,13 @@ type User struct {
 	Orders	 []Order	//has many order
 }
 
+func (user *User) GetRelationship() map[string]interface{}{
+	relationship := map[string]interface{} {
+		"Orders": &user.Orders,
+	}
+	return relationship
+}
+
 func GetUser(userInfo User) (user User) {
 	WithConnectionDB(func(db *database.DB) {
 		db.Where(&userInfo).First(&user)

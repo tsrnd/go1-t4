@@ -23,14 +23,22 @@ func IndexProduct(w http.ResponseWriter) {
  * Show product
  */
 func ShowProduct(w http.ResponseWriter, r *http.Request) {
+  var productModel models.Model
 	vars := mux.Vars(r)
-	id, _ := strconv.ParseUint(vars["id"], 10, 32)
-	product, err := models.GetProduct(uint(id))
-	if err != nil {
-		fmt.Fprintln(w, err)
-	}
-	fmt.Fprintln(w, product)
-	// utils.GenerateTemplate(w, handlers.HomeVars)
+  id, _ := strconv.ParseUint(vars["id"], 10, 32);
+  product, err := models.GetProduct(uint(id)); if err != nil {
+    fmt.Fprintln(w, err);
+    return
+  }
+  productModel = &product
+
+  models.GetRelatedData(productModel, "Images")
+  models.GetRelatedData(productModel, "ProductGroup")
+  data := map[string]interface{} {
+    "Product": product,
+  }
+
+  utils.GenerateTemplateAdmin(w, data, "show_product")
 }
 
 /**
