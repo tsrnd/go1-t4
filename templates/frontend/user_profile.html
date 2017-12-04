@@ -1,23 +1,21 @@
-{{ template "header" }}
+{{ template "header" .}}
 
 <section class="main-content"> 
     <h4 class="title"><span class="text">My <strong>Account</strong> Profile</span></h4>
   <div class="row">       
     <div class="span10">
-      <div>
-        <p>
-          <strong>UserName:</strong>&nbsp;?<br>
-          <strong>Email:</strong>&nbsp;<a href="#">vien.dinh@asiantech.vn</a><br>
-          <strong>Gender:</strong>&nbsp; ? <br>
-          <strong>Phone Number:</strong>&nbsp; ? <br>
-          <strong>Address:</strong>&nbsp; ? <br>
-          <strong>Avatar:</strong>&nbsp; ? <br>
-        </p>
-        <br/>
-      </div>
+      <p>
+        <strong>UserName:</strong> {{ .User.UserName }}<br>
+        <strong>Email:</strong><a href="#"> {{ .User.Email }}</a><br>
+        <strong>Gender:</strong> {{ .User.Gender }} <br>
+        <strong>Phone Number:</strong> {{ .User.Phone }} <br>
+        <strong>Address:</strong> {{ .User.Address }} <br>
+         <strong>Avatar:</strong> {{ .User.Avatar }} <br>
+       </p>
+       <br/>
     </div>
     
   </div>
 </section> 
-     
+
 {{ template "footer" }}

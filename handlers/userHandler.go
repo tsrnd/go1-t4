@@ -4,11 +4,18 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/goweb4/models"
 	"github.com/goweb4/utils"
 )
 
 func UserProfile(w http.ResponseWriter, r *http.Request) {
-	utils.GenerateTemplate(w, "", "user_profile")
+	user, err := models.GetUserByUserName(GetAuthName(r))
+	HomeVars := NewHomePageVars(r)
+	HomeVars.User = user
+	if err != nil {
+		fmt.Fprintln(w, err)
+	}
+	utils.GenerateTemplate(w, HomeVars, "user_profile")
 }
 
 func AddUser(w http.ResponseWriter, r *http.Request) {
