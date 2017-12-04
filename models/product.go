@@ -28,7 +28,9 @@ func GetProducts() (products []Product, err error) {
 func GetProduct(id uint) (product Product, err error) {
 	WithConnectionDB(func(db *database.DB) {
 		err = db.Where("id = ?", id).Find(&product).Error
+		db.Model(&product).Association("Images").Find(&product.Images)
 	})
+	
 	return product, err
 }
 

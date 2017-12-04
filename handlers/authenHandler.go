@@ -18,6 +18,7 @@ type HomePageVars struct {
 	ProductGroup []models.ProductGroup
 	Products     []models.Product
 	Paginator    utils.Paginator
+	Product      models.Product
 }
 
 /**

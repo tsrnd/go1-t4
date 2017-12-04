@@ -146,6 +146,12 @@ var routes = Routes{
 		handlers.ShowProduct,
 	},
 	Route{
+		"DetailProduct",
+		"GET",
+		"/detail/{id}",
+		handlers.DetailProduct,
+	},
+	Route{
 		"ShowProductGroup",
 		"GET",
 		"/group/{id}",
