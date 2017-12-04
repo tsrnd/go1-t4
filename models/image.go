@@ -28,10 +28,3 @@ func StoreImage(image *Image) (errCreateImage error) {
 	})
 	return errCreateImage
 }
-
-func GetImageByProductId(productId uint) (image Image, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Where("product_id = ?", productId).First(&image).Error
-	})
-	return
-}

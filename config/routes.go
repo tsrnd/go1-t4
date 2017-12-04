@@ -26,6 +26,12 @@ var routes = Routes{
 		handlers.Index,
 	},
 	Route{
+		"AdminIndex",
+		"GET",
+		"/adminIndex",
+		handlers.IndexAdmin,
+	},
+	Route{
 		"Register",
 		"GET",
 		"/register",
@@ -138,6 +144,12 @@ var routes = Routes{
 		"GET",
 		"/product/{id}",
 		handlers.ShowProduct,
+	},
+	Route{
+		"DetailProduct",
+		"GET",
+		"/detail/{id}",
+		handlers.DetailProduct,
 	},
 	Route{
 		"ShowProductGroup",

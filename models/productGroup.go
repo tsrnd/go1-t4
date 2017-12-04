@@ -25,16 +25,12 @@ func GetProductGroups() (productGroups []ProductGroup, err error) {
 	return productGroups, err
 }
 
-func GetProductGroup(id uint) (productGroup ProductGroup, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Where("id = ?", id).Find(&productGroup).Error
-	})
-	return
-}
-
 func GetProductsByGroupID(id uint) (products []Product, err error) {
 	WithConnectionDB(func(db *database.DB) {
 		err = db.Where("group_id = ?", id).Find(&products).Error
+		for i, _ := range products {
+			db.Model(products[i]).Related(&products[i].Images)
+		}
 	})
 	return products, err
 }
