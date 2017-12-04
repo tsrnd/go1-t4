@@ -126,3 +126,19 @@ func DestroyProduct(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "Delete this product success")
   }
 }
+
+ /**
+  * Detail product
+  */
+  func DetailProduct(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id, _ := strconv.ParseUint(vars["id"], 10, 32);
+    product, err := models.GetProduct(uint(id)); if err != nil {
+      fmt.Fprintln(w, err);
+    }
+    fmt.Fprintln(w, product)
+
+    HomeVars := NewHomePageVars(r)
+    HomeVars.Product = product
+    utils.GenerateTemplate(w, HomeVars, "product_detail")
+  }

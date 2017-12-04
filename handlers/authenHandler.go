@@ -16,6 +16,7 @@ type HomePageVars struct {
 	RegisterInfo RegisterInfo
 	PageTitle    string
 	ProductGroup []models.ProductGroup
+	Product 		 models.Product
 }
 
 /**
