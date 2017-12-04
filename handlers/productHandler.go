@@ -56,6 +56,11 @@ func ShowProductGroup(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintln(w, err)
 	}
+	var productModel models.Model
+	for i:=0; i<len(products); i++ {
+		productModel = &products[i]
+		models.GetRelatedData(productModel, "Images")
+	}
 
 	paginator := utils.Paginate(len(products), 12, int(page))
 
