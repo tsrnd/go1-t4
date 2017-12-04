@@ -8,9 +8,11 @@ import (
 
 type Order struct {
 	gorm.Model
-	UserID     uint 			`schema:"user_id"`
-	TotalMoney float64		`schema:"total_money"`
-	Status     bool				`schema:"status"`
+	UserID     		uint 							`schema:"user_id"`
+	TotalMoney 		float64						`schema:"total_money"`
+	Status     		bool							`schema:"status"`
+	OrderProducts	[]OrderProduct		//has many order products
+	User					User							//belong to user
 }
 
 func GetOrder(id int) (order Order, err error) {

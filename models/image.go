@@ -11,6 +11,7 @@ type Image struct {
 	Name 		string		`schema:"name"`
 	URL  		string		`schema:"url"`
 	ProductId	uint		`schema:"product_id"`
+	Product		Product		//belong to Product
 }
 
 const IMG_BASE_URL = "uploads/images"
