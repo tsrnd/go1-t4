@@ -22,7 +22,7 @@ var routes = Routes{
 	Route{
 		"Index",
 		"GET",
-		"/index",
+		"/",
 		handlers.Index,
 	},
 	Route{

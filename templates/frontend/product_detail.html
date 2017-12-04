@@ -84,7 +84,7 @@
                     <li class="span3">
                       <div class="product-box">
                         <span class="sale_tag"></span>                        
-                        <a href="/detail/{{ $product.ID }}"><img alt="" src="{{ if $product.Images }} {{ (index $product.Images 0).URL }} {{ else }} /static/css/themes/images/ladies/6.jpg {{ end }}"></a><br/>
+                        <a href="/detail/{{ $product.ID }}"><img alt="" src="/{{ if $product.Images }}{{ (index $product.Images 0).URL }}{{ else }}static/css/themes/images/ladies/6.jpg {{ end }}"></a><br/>
                         <a href="/detail/{{ $product.ID }}" class="title">{{ $product.Name }}</a><br/>
                         <a href="#" class="category">{{ $product.Size }}</a>
                         <p class="price">{{ $product.Price }}$</p>
@@ -180,24 +180,5 @@
       </div>
     </div>
   </div>
-  <script>
-			$(function () {
-				$('#myTab a:first').tab('show');
-				$('#myTab a').click(function (e) {
-					e.preventDefault();
-					$(this).tab('show');
-				})
-			})
-			$(document).ready(function() {
-				$('.thumbnail').fancybox({
-					openEffect  : 'none',
-					closeEffect : 'none'
-				});
-				
-				$('#myCarousel-2').carousel({
-                    interval: 2500
-                });								
-			});
-		</script>
 </section>      
 {{ template "footer" }}
