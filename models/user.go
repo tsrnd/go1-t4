@@ -1,8 +1,6 @@
 package models
 
 import (
-	"log"
-
 	"github.com/goweb4/database"
 	"github.com/jinzhu/gorm"
 )
@@ -23,74 +21,47 @@ type User struct {
 }
 
 func GetUser(userInfo User) (user User) {
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-	}
-	defer db.Close()
-	db.Where(&userInfo).First(&user)
+	WithConnectionDB(func(db *database.DB) {
+		db.Where(&userInfo).First(&user)
+	})
 	return user
 }
 
 func GetUserById(id uint) (user User, err error) {
-	user = User{}
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-	}
-	defer db.Close()
-
-	err = db.Where("id = ?", id).Find(&user).Error
-
+	WithConnectionDB(func(db *database.DB) {
+		err = db.Where("id = ?", id).Find(&user).Error
+	})
 	return user, err
 }
 
 func GetUserByUserName(name string) (user User, err error) {
-	user = User{}
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-	}
-	defer db.Close()
-
-	err = db.Where("user_name = ?", name).Find(&user).Error
-
+	WithConnectionDB(func(db *database.DB) {
+		err = db.Where("user_name = ?", name).Find(&user).Error
+	})
 	return user, err
 }
 
-func CreateUser(user User) error {
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-	}
-	defer db.Close()
-
-	err := db.Create(&user).Error
+func CreateUser(user User) (err error) {
+	WithConnectionDB(func(db *database.DB) {
+		err = db.Create(&user).Error
+	})
 	return err
 }
 
-func UpdateUser(user *User) error {
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-	}
-	defer db.Close()
-	errUpdate := db.Save(&user).Error
+func UpdateUser(user *User) (errUpdate error) {
+	WithConnectionDB(func(db *database.DB) {
+		errUpdate = db.Save(&user).Error
+	})
 	return errUpdate
 }
 
-func DeleteUser(id uint) error {
+func DeleteUser(id uint) (err error) {
 	user := User{}
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-	}
-	defer db.Close()
-
-	user, errGet := GetUserById(id)
-	if errGet != nil {
-		return errGet
-	}
-	err := db.Delete(&user).Error
+	WithConnectionDB(func(db *database.DB) {
+		user, err = GetUserById(id)
+		if err == nil {
+			err = db.Delete(&user).Error
+		}
+	})
 	return err
 }
