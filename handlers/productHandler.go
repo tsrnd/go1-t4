@@ -149,3 +149,25 @@ func DestroyProduct(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "Delete this product success")
   }
 }
+
+ /**
+  * Detail product
+  */
+  func DetailProduct(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id, _ := strconv.ParseUint(vars["id"], 10, 32);
+    product, err := models.GetProduct(uint(id)); if err != nil {
+      fmt.Fprintln(w, err);
+    }
+
+    products, err := models.GetProductsByGroupID(product.GroupID); if err != nil {
+      fmt.Fprintln(w, err);
+    }
+    fmt.Println(product)
+    fmt.Println(products)
+
+    HomeVars := NewHomePageVars(r)
+    HomeVars.Product = product
+    HomeVars.Products = products[:3]
+    utils.GenerateTemplate(w, HomeVars, "product_detail")
+  }

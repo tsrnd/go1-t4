@@ -12,8 +12,8 @@
           <li class="span3">
             <div class="product-box">
               <span class="sale_tag"></span>                        
-              <a href=""><img alt="" src=""></a><br/>
-              <a href="" class="title">{{ $product.Name }}</a><br/>
+              <a href="/detail/{{ $product.ID }}"><img alt="" src="{{ if $product.Images }} {{ (index $product.Images 0).URL }} {{ end }}"></a><br/>
+              <a href="/detail/{{ $product.ID }}" class="title">{{ $product.Name }}</a><br/>
               <a href="#" class="category">{{ $product.Size }}</a>
               <p class="price">{{ $product.Price }}$</p>
             </div>
