@@ -1,40 +1,25 @@
 package models
 
 import (
-	"log"
-	"github.com/jinzhu/gorm"
 	"github.com/goweb4/database"
+	"github.com/jinzhu/gorm"
 )
 
 type ProductGroup struct {
 	gorm.Model
-	Name    string		`schema:"name"`
+	Name string `schema:"name"`
 }
 
 func GetProductGroups() (productGroups []ProductGroup, err error) {
-	productGroups = []ProductGroup{}
-	db, errConnection := database.DBConnection(); if errConnection != nil {
-		log.Fatal(errConnection)
-		return productGroups, errConnection
-	}
-	defer db.Close()
-
-	err = db.Find(&productGroups).Error
-
+	WithConnectionDB(func(db *database.DB) {
+		err = db.Find(&productGroups).Error
+	})
 	return productGroups, err
 }
 
-
 func GetProductsByGroupID(id uint) (products []Product, err error) {
-	products = []Product{}
-	db, errConnection := database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-	}
-	defer db.Close()
-
-	err = db.Where("group_id = ?", id).Find(&products).Error
-	// db.Model(&user).Related(&emails)
-
+	WithConnectionDB(func(db *database.DB) {
+		err = db.Where("group_id = ?", id).Find(&products).Error
+	})
 	return products, err
 }
