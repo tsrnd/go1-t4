@@ -7,16 +7,17 @@ import (
 
 type User struct {
 	gorm.Model
-	ProId    string `schema:"pro_id"`
-	UserName string `schema:"username"`
-	Password string `schema:"password"`
-	Email    string `schema:"email"`
-	Gender   string `schema:"gender"`
-	Role     string `schema:"role"`
-	Avatar   string `schema:"avatar"`
-	Phone    string `schema:"phone"`
-	Address  string `schema:"address"`
-	Provider string `schema:"provider"`
+	ProId    string 	`schema:"pro_id"`
+	UserName string 	`schema:"username"`
+	Password string 	`schema:"password"`
+	Email    string 	`schema:"email"`
+	Gender   string 	`schema:"gender"`
+	Role     string 	`schema:"role"`
+	Avatar   string 	`schema:"avatar"`
+	Phone    string 	`schema:"phone"`
+	Address  string 	`schema:"address"`
+	Provider string 	`schema:"provider"`
+	Orders	 []Order	//has many order
 }
 
 func GetUser(userInfo User) (user User) {
