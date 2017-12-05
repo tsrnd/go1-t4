@@ -163,6 +163,12 @@ var routes = Routes{
 		"/cart",
 		handlers.ShowCart,
 	},
+	Route{
+		"Checkout",
+		"GET",
+		"/checkout",
+		handlers.Checkout,
+	},
 }
 
 //NewRouter configures a new router to the API

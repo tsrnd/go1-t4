@@ -2,7 +2,7 @@ $(document).ready(function() {
   hiddenButtonAdd()
   showNumberInCart()
   showCart()
-  console.log( "ready!" );
+  showCheckout()
   $('#js-btn-add-cart').on('click', function(){
     addCart()
   });
@@ -10,10 +10,8 @@ $(document).ready(function() {
 
 function addCart(){
       var OldCart = new Array
-      console.log("sss")
-      console.log(OldCart)
-      
       var product = new Object()
+
       product.Name = $('#js-pr-name').html()
       product.Id = $('#js-pr-id').html()
       product.Price = $('#js-pr-price').html()
@@ -57,7 +55,6 @@ function hiddenButtonAdd(){
     } else {
       $('#js-btn-add-cart').removeAttr('disabled')
     }
-    console.log($('#js-pr-quantity').val())
   });
 }
 
@@ -84,28 +81,12 @@ function showCart(){
       rs += '<td>$'+ item.Price*item.Quantity +'</td>'
       rs += '<td><button class="btn btn-danger pull-right" onClick="removeItemInCart('+ item.Id +')">X</button></td>'
       rs += '</tr>'
-
-      // create form
-      var e1 = document.createElement('input')
-      var e2 = document.createElement('input')
-      e1.name = 'product_id'
-      e2.name = 'quantity'
-      e1.value = item.Id
-      e2.value = item.Quantity
-      form.append(e1)
-      form.append(e2)
     })
   }
-  $('#checkout').on('click', function(){
-    $('#js-form-sbm').submit()
-    // console.log(JSON.parse(JSON.stringify(jQuery($('#js-form-sbm').serializeArray()))))
-  })
-  console.log(rs)
   $('#js-show-cart').html(rs)
 }
 
 function removeItemInCart(id){
-  console.log(id)
   OldCart = getCart()
   OldCart.forEach(function(item){
     if (getCart() != null){
@@ -121,4 +102,53 @@ function removeItemInCart(id){
     showNumberInCart()
     showCart()
     })
+}
+
+function hiddenButtonAdd(){
+  if ($('#js-pr-quantity').val() < 1) {
+    $('#js-btn-add-cart').attr("disabled","disabled")
+  }
+  $('#js-pr-quantity').on('input', function(){
+    if ($('#js-pr-quantity').val() < 1) {
+      $('#js-btn-add-cart').attr("disabled","disabled")
+    } else {
+      $('#js-btn-add-cart').removeAttr('disabled')
+    }
+    console.log($('#js-pr-quantity').val())
+  });
+}
+
+function showNumberInCart(){
+  var Cart = getCart()
+  if(Cart != null){
+    $('#js-cart-count').html(Cart.length)    
+  }
+}
+
+function showCheckout(){
+  var rs = ""
+  var Total = 0
+  var products = getCart()
+  if (products == null){
+    $('#js-list-product').html('<h4>Your cart is empty<h4>')
+  } else {
+    products.forEach(function(item){
+  
+      var p = document.createElement('p')
+      p.append('Product: '+item.Name+ '---Quantity: ' + item.Quantity + '---Total Money: '+item.Quantity*item.Price)
+      Total += item.Quantity*item.Price
+
+      // create form
+      var e1 = document.createElement('input')
+      var e2 = document.createElement('input')
+      e1.name = 'product_id'; e1.hidden = 'hidden'
+      e2.name = 'quantity'; e2.hidden = 'hidden'
+      e1.value = item.Id
+      e2.value = item.Quantity
+      $('#js-list-product').append(e1)
+      $('#js-list-product').append(e2)
+      $('#js-list-product').append(p)
+    })
+    $('#total_money').val(Total)
+  }
 }

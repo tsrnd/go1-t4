@@ -5,6 +5,8 @@ import (
   "net/http"
   "github.com/goweb4/models"
   "github.com/gorilla/mux"
+  "github.com/goweb4/utils"
+  
   "strconv"
 )
 
@@ -34,3 +36,14 @@ func EditOrder(w http.ResponseWriter, r *http.Request) {
 func UpdateOrder(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Need to be implement");
 }
+
+/**
+  * User update order's infor
+  */
+  func Checkout(w http.ResponseWriter, r *http.Request) {
+    if GetAuthName(r) == "" {
+      http.Redirect(w, r, "/login", 302)      
+    }
+    utils.GenerateTemplate(w, NewHomePageVars(r), "checkout")
+    // fmt.Fprintln(w, "Need to be implement");
+  }
