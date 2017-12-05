@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
+	"strconv"
 	"github.com/gorilla/schema"
 )
 
@@ -95,4 +95,10 @@ func Paginate(totalRecord int, perPage int, currentPage int) Paginator {
 	paginator.CurrentPage = currentPage
 
 	return paginator
+}
+
+func ConvertStrToUint(value string) (uint, error) {
+	var result uint64
+	result, err := strconv.ParseUint(value, 10, 32)
+	return uint(result), err
 }

@@ -35,3 +35,14 @@ func GetOrdersByUser(id int) (orders []Order, err error) {
 	})
 	return orders, err
 }
+
+func CreateOrder(order Order) (orderID uint, err error) {
+	WithConnectionDB(func(db *database.DB) {
+		err = db.Create(&order).Error
+		if orderID == 0 && err == nil {
+			orderID = order.ID
+		}
+	})
+
+	return orderID, err
+}
