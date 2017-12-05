@@ -39,7 +39,8 @@
         <div class="account pull-right">
           <ul class="user-menu">				
             <li><a href="#">My Account</a></li>
-            <li><a href="cart.html">Your Cart</a></li>
+            <li><a href="/cart">Your Cart
+                <sup id="js-cart-count" class="badge" style="background-color: red;margin-left: 1px"></sup></a></li>
             <li><a href="checkout.html">Checkout</a></li>	
             {{if .Name}}				
               <li><a href="#" data-toggle="collapse" data-target="#demo">{{ .Name }}</a></li>
