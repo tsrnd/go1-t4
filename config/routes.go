@@ -68,16 +68,16 @@ var routes = Routes{
 		handlers.DeleteUser,
 	},
 	Route{
-		"AddOrder",
+		"CreateOrder",
 		"GET",
 		"/order/add",
-		handlers.AddOrder,
+		handlers.CreateOrder,
 	},
 	Route{
-		"CreateOrder",
+		"StoreOrder",
 		"POST",
 		"/order",
-		handlers.AddOrder,
+		handlers.StoreOrder,
 	},
 	Route{
 		"EditOrder",

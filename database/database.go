@@ -16,6 +16,7 @@ type DB struct{
 
 var dbinfo string
 var DBCon *DB
+var Tx	  *gorm.DB
 
 func init() {
 	err := godotenv.Load()
