@@ -23,8 +23,6 @@ func (image *Image) GetRelationship() map[string]interface{}{
 const IMG_BASE_URL = "uploads/images"
 
 func StoreImage(image *Image) (errCreateImage error) {
-	WithConnectionDB(func(db *database.DB) {
-		errCreateImage = db.Create(&image).Error
-	})
+	errCreateImage = database.DBCon.Create(&image).Error
 	return errCreateImage
 }

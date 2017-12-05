@@ -6,6 +6,7 @@
 <section class="main-content">
   <div class="row">
     <div class="span12">
+        <h4 id="js-message" class="text-center">{{ .Message }}</h4>                    
       <div class="accordion" id="accordion2">
         <div class="accordion-group">
           <div class="accordion-heading">
@@ -45,5 +46,6 @@
       </div>        
     </div>
   </div>
-</section>      
-{{ template "footer" }}
+</section>
+
+{{ template "footer" .}}

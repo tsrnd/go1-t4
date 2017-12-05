@@ -3,6 +3,7 @@ $(document).ready(function() {
   showNumberInCart()
   showCart()
   showCheckout()
+  showModalMessage()
   $('#js-btn-add-cart').on('click', function(){
     addCart()
   });
@@ -151,4 +152,10 @@ function showCheckout(){
     })
     $('#total_money').val(Total)
   }
+}
+function showModalMessage(){
+  if ($('#js-message').html() == 'Order succeed'){
+    localStorage.removeItem('cart')
+  }
+  showNumberInCart()
 }
