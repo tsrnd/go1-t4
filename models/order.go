@@ -33,7 +33,7 @@ func GetOrdersByUser(id int) (orders []Order, err error) {
 }
 
 func CreateOrder(order Order) (orderID uint, err error) {
-	err = database.Tx.Create(&order).Error;
+	err = database.DBCon.Create(&order).Error;
 	if orderID == 0 && err == nil {
 		orderID = order.ID
 	}
