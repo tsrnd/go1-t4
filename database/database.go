@@ -15,7 +15,7 @@ type DB struct{
 }
 
 var dbinfo string
-var DBCon DB
+var DBCon *DB
 
 func init() {
 	err := godotenv.Load()

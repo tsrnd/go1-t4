@@ -35,10 +35,8 @@ func GetProducts() (products []Product, err error) {
 }
 
 func GetProduct(id uint) (product Product, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Where("id = ?", id).Find(&product).Error
-		db.Model(&product).Association("Images").Find(&product.Images)
-	})
+	err = database.DBCon.Where("id = ?", id).Find(&product).Error
+	database.DBCon.Model(&product).Association("Images").Find(&product.Images)
 	
 	return product, err
 }
@@ -62,11 +60,9 @@ func DeleteProduct(id uint) (errGet error) {
 }
 
 func CreateProduct(product *Product) (proId uint, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Create(&product).Error
-		if proId = 0; err == nil {
-			proId = product.ID
-		}
-	})
+	err = database.DBCon.Create(&product).Error
+	if proId = 0; err == nil {
+		proId = product.ID
+	}
 	return proId, err
 }
