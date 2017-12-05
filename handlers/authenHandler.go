@@ -34,7 +34,14 @@ func NewHomePageVars(r *http.Request) HomePageVars {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
+	products, err := models.GetProducts()
+	if err != nil {
+		fmt.Fprintln(w, err)
+	}
+	fmt.Println(products)
+
 	HomeVars := NewHomePageVars(r)
+	HomeVars.Products = products[len(products)-4:]
 	HomeVars.PageTitle = "Home Page"
 	utils.GenerateTemplate(w, HomeVars, "index")
 }
