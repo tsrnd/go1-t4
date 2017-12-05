@@ -13,6 +13,13 @@ type Image struct {
 	Product		Product	//belong to Product
 }
 
+func (image *Image) GetRelationship() map[string]interface{}{
+	relationship := map[string]interface{} {
+		"Product": &image.Product,
+	}
+	return relationship
+}
+
 const IMG_BASE_URL = "uploads/images"
 
 func StoreImage(image *Image) (errCreateImage error) {
