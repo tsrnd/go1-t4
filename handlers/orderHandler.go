@@ -12,9 +12,7 @@ import (
   * User create new order 
   */
 func AddOrder(w http.ResponseWriter, r *http.Request) {
-  fmt.Println("testt")
-  fmt.Fprintln(w, "Need to be implement");
-  
+  fmt.Fprintln(w, r.FormValue("product_id"));
 }
 
 /**

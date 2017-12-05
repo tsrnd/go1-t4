@@ -71,6 +71,7 @@ function showNumberInCart(){
 
 function showCart(){
   var rs = ""
+  var form = $('#js-form-sbm')
   var products = getCart()
   if (products == null){
     $('#js-show-cart').html('<h4>Your cart is empty<h4>')
@@ -84,8 +85,23 @@ function showCart(){
       rs += '<td>$'+ item.Price*item.Quantity +'</td>'
       rs += '<td><button class="btn btn-danger pull-right" onClick="removeItemInCart('+ item.Id +')">X</button></td>'
       rs += '</tr>'
+
+      // create form
+      var e1 = document.createElement('input')
+      var e2 = document.createElement('input')
+      e1.name = 'product_id'
+      e2.name = 'quantity'
+      e1.value = item.Id
+      e2.value = item.Quantity
+      form.append(e1)
+      form.append(e2)
     })
   }
+  $('#checkout').on('click', function(){
+    $('#js-form-sbm').submit()
+  
+    console.log(JSON.parse(JSON.stringify(jQuery($('#js-form-sbm').serializeArray()))))
+  })
   console.log(rs)
   $('#js-show-cart').html(rs)
 }
