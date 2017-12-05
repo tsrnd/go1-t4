@@ -19,18 +19,14 @@ func (productGroup *ProductGroup) GetRelationship() map[string]interface{}{
 }
 
 func GetProductGroups() (productGroups []ProductGroup, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Find(&productGroups).Error
-	})
+	err = database.DBCon.Find(&productGroups).Error
 	return productGroups, err
 }
 
 func GetProductsByGroupID(id uint) (products []Product, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Where("group_id = ?", id).Find(&products).Error
-		for i, _ := range products {
-			db.Model(products[i]).Related(&products[i].Images)
-		}
-	})
+	err = database.DBCon.Where("group_id = ?", id).Find(&products).Error
+	for i, _ := range products {
+		database.DBCon.Model(products[i]).Related(&products[i].Images)
+	}
 	return products, err
 }
