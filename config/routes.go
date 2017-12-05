@@ -44,10 +44,10 @@ var routes = Routes{
 		handlers.RegisterHandler,
 	},
 	Route{
-		"AddUser",
+		"UserProfile",
 		"GET",
-		"/user/add",
-		handlers.AddUser,
+		"/userProfile",
+		handlers.UserProfile,
 	},
 	Route{
 		"CreateUser",
