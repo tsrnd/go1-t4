@@ -20,48 +20,52 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 /**
   * User create new order 
   */
-  func StoreOrder(w http.ResponseWriter, r *http.Request) {
-    r.ParseForm()
-
-    order := models.Order{}
-    userRequest, err := models.GetUserByUserName(r.FormValue("username")); if err != nil {
-      fmt.Fprintln(w, err);
-      return
-    }
-    order.UserID = userRequest.ID
-    order.TotalMoney, err = strconv.ParseFloat(r.FormValue("total_money"), 64); if err != nil {
-      fmt.Fprintln(w, err)
-      return
-    }
-
-    orderID, err := models.CreateOrder(order); if err != nil {
-      fmt.Println(w, err)
-      return
-    }
-
-    checkLastItem := false  //check last item of order product to commit transaction
-    for index, value := range r.PostForm["product_id"] {
-      orderProduct := new(models.OrderProduct)
-      orderProduct.OrderID = orderID
-      orderProduct.ProductID, err = utils.ConvertStrToUint(value); if err != nil {
-        fmt.Fprintln(w, err)
-        return
-      }
-      orderProduct.Quantity, err = utils.ConvertStrToUint(r.PostForm["quantity"][index]); if err != nil {
-        fmt.Fprintln(w, err)
-        return
-      }
-
-      if (index == len(r.PostForm["product_id"]) - 1) {
-        checkLastItem = true
-      }
-      _, err = models.CreateOrderProduct(orderProduct, checkLastItem); if err != nil {
-        fmt.Fprintln(w, err)
-        return
-      }
-    }
-  
+func StoreOrder(w http.ResponseWriter, r *http.Request) {
+  r.ParseForm()
+  order := models.Order{}
+  userRequest, err := models.GetUserByUserName(r.FormValue("username")); if err != nil {
+    fmt.Fprintln(w, err);
+    return
   }
+  order.UserID = userRequest.ID
+  order.TotalMoney, err = strconv.ParseFloat(r.FormValue("total_money"), 64); if err != nil {
+    fmt.Fprintln(w, err)
+    return
+  }
+  //begin transaction
+  database.Tx = database.DBCon.Begin()
+  orderID, err := models.CreateOrder(order); if err != nil {
+    fmt.Println(w, err)
+    return
+  }
+  status := true
+  for index, value := range r.PostForm["product_id"] {
+    orderProduct := new(models.OrderProduct)
+    orderProduct.OrderID = orderID
+    orderProduct.ProductID, err = utils.ConvertStrToUint(value); if err != nil {
+      fmt.Fprintln(w, err)
+      status = false
+      break
+    }
+    orderProduct.Quantity, err = utils.ConvertStrToUint(r.PostForm["quantity"][index]); if err != nil {
+      fmt.Fprintln(w, err)
+      status = false
+      break
+    }
+    _, err = models.CreateOrderProduct(orderProduct); if err != nil {
+      fmt.Fprintln(w, err)
+      status = false
+      break
+    }
+  }
+  if !status {
+    database.Tx.Rollback()
+    fmt.Fprintln(w, err);
+    return
+  }
+  database.Tx.Commit()
+  fmt.Fprintln(w, "Order succeed")
+}
 
 /**
   * Show form order's edit 

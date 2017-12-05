@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/goweb4/database"
 )
@@ -23,12 +22,12 @@ func (orderProduct *OrderProduct) GetRelationship() map[string]interface{}{
 	return relationship
 }
 
-func CreateOrderProduct(orderProduct *OrderProduct, lastItem bool) (orderProID uint, err error){
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Create(&orderProduct).Error
-		if orderProID == 0 && err == nil {
-			orderProID = orderProduct.ID
-		}
-	})
+func CreateOrderProduct(orderProduct *OrderProduct) (orderProID uint, err error){
+	err = database.Tx.Create(&orderProduct).Error; if err != nil {
+		database.Tx.Rollback()
+	}
+	if orderProID == 0 {
+		orderProID = orderProduct.ID
+	}
 	return orderProID, err
 }
