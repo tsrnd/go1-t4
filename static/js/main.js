@@ -5,7 +5,6 @@ $(document).ready(function() {
   console.log( "ready!" );
   $('#js-btn-add-cart').on('click', function(){
     addCart()
-
   });
 });
 
@@ -99,8 +98,7 @@ function showCart(){
   }
   $('#checkout').on('click', function(){
     $('#js-form-sbm').submit()
-  
-    console.log(JSON.parse(JSON.stringify(jQuery($('#js-form-sbm').serializeArray()))))
+    // console.log(JSON.parse(JSON.stringify(jQuery($('#js-form-sbm').serializeArray()))))
   })
   console.log(rs)
   $('#js-show-cart').html(rs)
