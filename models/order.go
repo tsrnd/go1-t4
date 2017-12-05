@@ -23,15 +23,11 @@ func (order *Order) GetRelationship() map[string]interface{}{
 }
 
 func GetOrder(id int) (order Order, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Where("id = ?", id).Find(&order).Error
-	})
+	err = database.DBCon.Where("id = ?", id).Find(&order).Error
 	return order, err
 }
 
 func GetOrdersByUser(id int) (orders []Order, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Where("user_id = ?", id).Find(&orders).Error
-	})
+	err = database.DBCon.Where("user_id = ?", id).Find(&orders).Error
 	return orders, err
 }

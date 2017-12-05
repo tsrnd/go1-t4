@@ -28,9 +28,7 @@ func (product *Product) GetRelationship() map[string]interface{}{
 }
 
 func GetProducts() (products []Product, err error) {
-	WithConnectionDB(func(db *database.DB) {
-		err = db.Find(&products).Error
-	})
+	err = database.DBCon.Find(&products).Error
 	return products, err
 }
 
@@ -42,20 +40,16 @@ func GetProduct(id uint) (product Product, err error) {
 }
 
 func UpdateProduct(product *Product) (errUpdate error) {
-	WithConnectionDB(func(db *database.DB) {
-		errUpdate = db.Save(&product).Error
-	})
+	errUpdate = database.DBCon.Save(&product).Error
 	return errUpdate
 }
 
 func DeleteProduct(id uint) (errGet error) {
 	product := Product{}
-	WithConnectionDB(func(db *database.DB) {
-		product, errGet = GetProduct(id)
-		if errGet == nil {
-			errGet = db.Delete(&product).Error
-		}
-	})
+	product, errGet = GetProduct(id)
+	if errGet == nil {
+		errGet = database.DBCon.Delete(&product).Error
+	}
 	return errGet
 }
 
