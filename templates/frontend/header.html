@@ -38,7 +38,7 @@
       <div class="span8">
         <div class="account pull-right">
           <ul class="user-menu">				
-            <li><a href="#">My Account</a></li>
+            <li><a href="/userProfile">My Account</a></li>
             <li><a href="cart.html">Your Cart</a></li>
             <li><a href="checkout.html">Checkout</a></li>	
             {{if .Name}}				
@@ -55,7 +55,7 @@
   <div id="wrapper" class="container">
       <section class="navbar main-menu">
         <div class="navbar-inner main-menu">				
-          <a href="index.html" class="logo pull-left"><img src="/static/css/themes/images/logo.png" class="site_logo" alt=""></a>
+          <a href="/" class="logo pull-left"><img src="/static/css/themes/images/logo.png" class="site_logo" alt=""></a>
           <nav id="menu" class="pull-right">
             <ul>
                 {{ range $val := .ProductGroup }}

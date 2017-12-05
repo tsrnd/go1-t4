@@ -44,10 +44,10 @@ var routes = Routes{
 		handlers.RegisterHandler,
 	},
 	Route{
-		"AddUser",
+		"UserProfile",
 		"GET",
-		"/user/add",
-		handlers.AddUser,
+		"/userProfile",
+		handlers.UserProfile,
 	},
 	Route{
 		"CreateUser",
@@ -156,6 +156,12 @@ var routes = Routes{
 		"GET",
 		"/group/{id}",
 		handlers.ShowProductGroup,
+	},
+	Route{
+		"ContactUs",
+		"GET",
+		"/contact",
+		handlers.ContactUs,
 	},
 }
 
