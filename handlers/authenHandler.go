@@ -65,7 +65,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 				http.Redirect(w, r, "/adminIndex", http.StatusSeeOther)
 			} else {
 				setSession(info.UserName, w)
-				http.Redirect(w, r, "/index", http.StatusSeeOther)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
 			}
 		} else {
 			mess := "Sorry, this does not match our records. Check your spelling and try again."
@@ -120,4 +120,8 @@ func GetAuthName(r *http.Request) string {
 		name = cookieData.(objx.Map)["name"].(string)
 	}
 	return name
+}
+
+func ContactUs(w http.ResponseWriter, r *http.Request) {
+	utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
 }
