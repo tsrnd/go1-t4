@@ -1,0 +1,66 @@
+{
+	"ImportPath": "github.com/goweb4",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.5.0-6-g7625a85",
+			"Rev": "7625a85c14e615274a4ee4bc8654f72310a563e4"
+		},
+		{
+			"ImportPath": "github.com/gorilla/schema",
+			"Rev": "e6c82218a8b3ed3cbeb5407429849c0b0b597d40"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/gorm",
+			"Comment": "v1.0-176-g0a51f6c",
+			"Rev": "0a51f6cdc55d1650d9ed3b4c13026cfa9133b01e"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/gorm/dialects/postgres",
+			"Comment": "v1.0-176-g0a51f6c",
+			"Rev": "0a51f6cdc55d1650d9ed3b4c13026cfa9133b01e"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/inflection",
+			"Rev": "1c35d901db3da928c72a72d8458480cc9ade058f"
+		},
+		{
+			"ImportPath": "github.com/joho/godotenv",
+			"Comment": "v1.2.0-4-g6d367c1",
+			"Rev": "6d367c18edf6ca7fd004efd6863e4c5728fa858e"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Comment": "go1.0-cutoff-183-g30d59ea",
+			"Rev": "30d59eaf01528a141f560f34f0208e0ec5218e75"
+		},
+		{
+			"ImportPath": "github.com/lib/pq/hstore",
+			"Comment": "go1.0-cutoff-183-g30d59ea",
+			"Rev": "30d59eaf01528a141f560f34f0208e0ec5218e75"
+		},
+		{
+			"ImportPath": "github.com/lib/pq/oid",
+			"Comment": "go1.0-cutoff-183-g30d59ea",
+			"Rev": "30d59eaf01528a141f560f34f0208e0ec5218e75"
+		},
+		{
+			"ImportPath": "github.com/nfnt/resize",
+			"Rev": "891127d8d1b52734debe1b3c3d7e747502b6c366"
+		},
+		{
+			"ImportPath": "github.com/stretchr/objx",
+			"Rev": "1a9d0bb9f541897e62256577b352fdbc1fb4fd94"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/bcrypt",
+			"Rev": "2509b142fb2b797aa7587dad548f113b2c0f20ce"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "2509b142fb2b797aa7587dad548f113b2c0f20ce"
+		}
+	]
+}

@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"github.com/goweb4/database"
 	"github.com/goweb4/config"
 )
@@ -15,5 +16,5 @@ func main() {
 	}
 	defer database.DBCon.Close()
 	router := config.NewRouter()
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
 }
