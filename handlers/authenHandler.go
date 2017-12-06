@@ -11,15 +11,18 @@ import (
 )
 
 type HomePageVars struct {
-	Name         string
-	Message      string
-	RegisterInfo RegisterInfo
-	PageTitle    string
-	ProductGroup []models.ProductGroup
-	Products     []models.Product
-	Paginator    utils.Paginator
-	User         models.User
-	Product      models.Product
+	Name          string
+	Message       string
+	RegisterInfo  RegisterInfo
+	PageTitle     string
+	ProductGroup  []models.ProductGroup
+	Products      []models.Product
+	LatesProducts []models.Product
+	BestSeller    []models.Product
+	Paginator     utils.Paginator
+	User          models.User
+	Product       models.Product
+	Payments      []models.Payment
 }
 
 /**
@@ -34,14 +37,11 @@ func NewHomePageVars(r *http.Request) HomePageVars {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	products, err := models.GetProducts()
-	if err != nil {
-		fmt.Fprintln(w, err)
-	}
-	fmt.Println(products)
+	products := models.GetProducts()
 
 	HomeVars := NewHomePageVars(r)
-	HomeVars.Products = products[len(products)-4:]
+	HomeVars.LatesProducts = products[len(products)-4:]
+	HomeVars.BestSeller = models.GetTrendProducts()
 	HomeVars.PageTitle = "Home Page"
 	utils.GenerateTemplate(w, HomeVars, "index")
 }

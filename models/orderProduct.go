@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"github.com/jinzhu/gorm"
 	"github.com/goweb4/database"
 )
@@ -28,4 +29,16 @@ func CreateOrderProduct(orderProduct *OrderProduct) (orderProID uint, err error)
 		orderProID = orderProduct.ID
 	}
 	return orderProID, err
+}
+
+func (op *OrderProduct) AfterCreate(tx *gorm.DB) (err error) {
+	product := new(Product)
+	database.DBCon.Where("id = ?", op.ProductID).First(&product)
+	if op.Quantity > product.InStock {
+		err = errors.New("This product is not enough quantity in stock")
+	} else {
+		product.InStock -= op.Quantity
+		tx.Save(&product)
+	}
+	return err
 }

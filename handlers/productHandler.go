@@ -23,22 +23,23 @@ func IndexProduct(w http.ResponseWriter) {
  * Show product
  */
 func ShowProduct(w http.ResponseWriter, r *http.Request) {
-  var productModel models.Model
+	var productModel models.Model
 	vars := mux.Vars(r)
-  id, _ := strconv.ParseUint(vars["id"], 10, 32);
-  product, err := models.GetProduct(uint(id)); if err != nil {
-    fmt.Fprintln(w, err);
-    return
-  }
-  productModel = &product
+	id, _ := strconv.ParseUint(vars["id"], 10, 32)
+	product, err := models.GetProduct(uint(id))
+	if err != nil {
+		fmt.Fprintln(w, err)
+		return
+	}
+	productModel = &product
 
-  models.GetRelatedData(productModel, "Images")
-  models.GetRelatedData(productModel, "ProductGroup")
-  data := map[string]interface{} {
-    "Product": product,
-  }
+	models.GetRelatedData(productModel, "Images")
+	models.GetRelatedData(productModel, "ProductGroup")
+	data := map[string]interface{}{
+		"Product": product,
+	}
 
-  utils.GenerateTemplateAdmin(w, data, "show_product")
+	utils.GenerateTemplateAdmin(w, data, "show_product")
 }
 
 /**
@@ -57,7 +58,7 @@ func ShowProductGroup(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, err)
 	}
 	var productModel models.Model
-	for i:=0; i<len(products); i++ {
+	for i := 0; i < len(products); i++ {
 		productModel = &products[i]
 		models.GetRelatedData(productModel, "Images")
 	}
@@ -177,24 +178,26 @@ func DestroyProduct(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
- /**
-  * Detail product
-  */
-  func DetailProduct(w http.ResponseWriter, r *http.Request) {
-    vars := mux.Vars(r)
-    id, _ := strconv.ParseUint(vars["id"], 10, 32);
-    product, err := models.GetProduct(uint(id)); if err != nil {
-      fmt.Fprintln(w, err);
-    }
+/**
+ * Detail product
+ */
+func DetailProduct(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.ParseUint(vars["id"], 10, 32)
+	product, err := models.GetProduct(uint(id))
+	if err != nil {
+		fmt.Fprintln(w, err)
+	}
 
-    products, err := models.GetProductsByGroupID(product.GroupID); if err != nil {
-      fmt.Fprintln(w, err);
-    }
-    fmt.Println(product)
-    fmt.Println(products)
+	products, err := models.GetProductsByGroupID(product.GroupID)
+	if err != nil {
+		fmt.Fprintln(w, err)
+	}
+	fmt.Println(product)
+	fmt.Println(products)
 
-    HomeVars := NewHomePageVars(r)
-    HomeVars.Product = product
-    HomeVars.Products = products[:3]
-    utils.GenerateTemplate(w, HomeVars, "product_detail")
-  }
+	HomeVars := NewHomePageVars(r)
+	HomeVars.Product = product
+	HomeVars.Products = products[:3]
+	utils.GenerateTemplate(w, HomeVars, "product_detail", "modal")
+}

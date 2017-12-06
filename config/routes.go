@@ -169,6 +169,18 @@ var routes = Routes{
 		"/about",
 		handlers.AboutUs,
 	},
+	Route{
+		"ShowCart",
+		"GET",
+		"/cart",
+		handlers.ShowCart,
+	},
+	Route{
+		"Checkout",
+		"GET",
+		"/checkout",
+		handlers.Checkout,
+	},
 }
 
 //NewRouter configures a new router to the API

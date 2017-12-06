@@ -5,11 +5,17 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+const	PENDING_STATUS 	= "Pending"
+const APPROVED_STATUS = "Approved"
+const CANCELED_STATUS = "Canceled"
+
 type Order struct {
 	gorm.Model
 	UserID     		uint 			      `schema:"user_id"`
 	TotalMoney 		float64			    `schema:"total_money"`
-	Status     		bool			      `schema:"status"`
+	Status     		string			    `schema:"status"`
+	PaymentID			uint						`schema:"payment_id"`
+	Payment				Payment					//has one payment method
 	OrderProducts	[]OrderProduct	//has many order products
 	User			    User						//belong to user
 }
@@ -18,6 +24,7 @@ func (order *Order) GetRelationship() map[string]interface{}{
 	relationship := map[string]interface{} {
 		"OrderProducts": &order.OrderProducts,
 		"User": &order.User,
+		"Payment": &order.Payment,
 	}
 	return relationship
 }
@@ -33,7 +40,7 @@ func GetOrdersByUser(id int) (orders []Order, err error) {
 }
 
 func CreateOrder(order Order) (orderID uint, err error) {
-	err = database.Tx.Create(&order).Error;
+	err = database.DBCon.Create(&order).Error;
 	if orderID == 0 && err == nil {
 		orderID = order.ID
 	}
