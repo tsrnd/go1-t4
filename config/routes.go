@@ -164,6 +164,12 @@ var routes = Routes{
 		handlers.ContactUs,
 	},
 	Route{
+		"AboutUs",
+		"GET",
+		"/about",
+		handlers.AboutUs,
+	},
+	Route{
 		"ShowCart",
 		"GET",
 		"/cart",

@@ -133,3 +133,7 @@ func GetAuthName(r *http.Request) string {
 func ContactUs(w http.ResponseWriter, r *http.Request) {
 	utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
 }
+
+func AboutUs(w http.ResponseWriter, r *http.Request) {
+	utils.GenerateTemplate(w, NewHomePageVars(r), "about")
+}
