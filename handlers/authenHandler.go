@@ -11,7 +11,6 @@ import (
 )
 
 type HomePageVars struct {
-<<<<<<< HEAD
 	Name          string
 	Message       string
 	RegisterInfo  RegisterInfo
@@ -23,7 +22,6 @@ type HomePageVars struct {
 	Paginator     utils.Paginator
 	User          models.User
 	Product       models.Product
-
 }
 
 /**
