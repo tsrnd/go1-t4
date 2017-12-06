@@ -28,6 +28,11 @@ func StoreOrder(w http.ResponseWriter, r *http.Request) {
     return
   }
   order.UserID = userRequest.ID
+  order.Status = models.PENDING_STATUS
+  order.PaymentID, err = utils.ConvertStrToUint(r.PostFormValue("payment_id")); if err != nil {
+    fmt.Fprintln(w, err)
+    return
+  }
   order.TotalMoney, err = strconv.ParseFloat(r.FormValue("total_money"), 64); if err != nil {
     fmt.Fprintln(w, err)
     return
