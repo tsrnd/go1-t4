@@ -196,5 +196,5 @@ func DestroyProduct(w http.ResponseWriter, r *http.Request) {
     HomeVars := NewHomePageVars(r)
     HomeVars.Product = product
     HomeVars.Products = products[:3]
-    utils.GenerateTemplate(w, HomeVars, "product_detail")
+    utils.GenerateTemplate(w, HomeVars, "product_detail", "modal")
   }

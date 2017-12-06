@@ -44,10 +44,10 @@ var routes = Routes{
 		handlers.RegisterHandler,
 	},
 	Route{
-		"AddUser",
+		"UserProfile",
 		"GET",
-		"/user/add",
-		handlers.AddUser,
+		"/userProfile",
+		handlers.UserProfile,
 	},
 	Route{
 		"CreateUser",
@@ -68,16 +68,16 @@ var routes = Routes{
 		handlers.DeleteUser,
 	},
 	Route{
-		"AddOrder",
+		"CreateOrder",
 		"GET",
 		"/order/add",
-		handlers.AddOrder,
+		handlers.CreateOrder,
 	},
 	Route{
-		"CreateOrder",
+		"StoreOrder",
 		"POST",
 		"/order",
-		handlers.AddOrder,
+		handlers.StoreOrder,
 	},
 	Route{
 		"EditOrder",
@@ -156,6 +156,24 @@ var routes = Routes{
 		"GET",
 		"/group/{id}",
 		handlers.ShowProductGroup,
+	},
+	Route{
+		"ContactUs",
+		"GET",
+		"/contact",
+		handlers.ContactUs,
+	},
+	Route{
+		"ShowCart",
+		"GET",
+		"/cart",
+		handlers.ShowCart,
+	},
+	Route{
+		"Checkout",
+		"GET",
+		"/checkout",
+		handlers.Checkout,
 	},
 }
 

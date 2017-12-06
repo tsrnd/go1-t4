@@ -18,6 +18,7 @@ type HomePageVars struct {
 	ProductGroup []models.ProductGroup
 	Products     []models.Product
 	Paginator    utils.Paginator
+	User         models.User
 	Product      models.Product
 }
 
@@ -33,7 +34,14 @@ func NewHomePageVars(r *http.Request) HomePageVars {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
+	products, err := models.GetProducts()
+	if err != nil {
+		fmt.Fprintln(w, err)
+	}
+	fmt.Println(products)
+
 	HomeVars := NewHomePageVars(r)
+	HomeVars.Products = products[len(products)-4:]
 	HomeVars.PageTitle = "Home Page"
 	utils.GenerateTemplate(w, HomeVars, "index")
 }
@@ -65,7 +73,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 				http.Redirect(w, r, "/adminIndex", http.StatusSeeOther)
 			} else {
 				setSession(info.UserName, w)
-				http.Redirect(w, r, "/index", http.StatusSeeOther)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
 			}
 		} else {
 			mess := "Sorry, this does not match our records. Check your spelling and try again."
@@ -120,4 +128,8 @@ func GetAuthName(r *http.Request) string {
 		name = cookieData.(objx.Map)["name"].(string)
 	}
 	return name
+}
+
+func ContactUs(w http.ResponseWriter, r *http.Request) {
+	utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
 }
