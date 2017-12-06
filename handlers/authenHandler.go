@@ -20,6 +20,7 @@ type HomePageVars struct {
 	Paginator    utils.Paginator
 	User         models.User
 	Product      models.Product
+	Payments		 []models.Payment
 }
 
 /**
@@ -37,6 +38,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	products, err := models.GetProducts()
 	if err != nil {
 		fmt.Fprintln(w, err)
+		return
 	}
 	fmt.Println(products)
 

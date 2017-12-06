@@ -6,7 +6,6 @@ import (
   "net/http"
   "github.com/goweb4/models"
   "github.com/gorilla/mux"
-  
   "strconv"
 )
 
@@ -42,7 +41,10 @@ func StoreOrder(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, err)
     return
   }
-  fmt.Fprintln(w, "Order succeed")
+
+  Homvars := NewHomePageVars(r)
+  Homvars.Message = "Order succeed"
+  utils.GenerateTemplate(w, Homvars, "checkout")
 }
 
 /**
@@ -82,13 +84,19 @@ func UpdateOrder(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Need to be implement");
 }
 
-/**
+ /**
   * User update order's infor
   */
-  func Checkout(w http.ResponseWriter, r *http.Request) {
-    if GetAuthName(r) == "" {
-      http.Redirect(w, r, "/login", 302)      
-    }
-    utils.GenerateTemplate(w, NewHomePageVars(r), "checkout")
-    // fmt.Fprintln(w, "Need to be implement");
+func Checkout(w http.ResponseWriter, r *http.Request) {
+  if GetAuthName(r) == "" {
+    http.Redirect(w, r, "/login", 302)      
   }
+  Data := NewHomePageVars(r)
+  payments, err := models.GetPayments()
+  if err != nil {
+    fmt.Fprintln(w, err)
+  }
+  Data.Payments = payments
+  utils.GenerateTemplate(w, Data, "checkout")
+}
+
