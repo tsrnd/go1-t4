@@ -163,6 +163,12 @@ var routes = Routes{
 		"/contact",
 		handlers.ContactUs,
 	},
+	Route{
+		"AboutUs",
+		"GET",
+		"/about",
+		handlers.AboutUs,
+	},
 }
 
 //NewRouter configures a new router to the API
