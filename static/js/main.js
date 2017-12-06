@@ -72,6 +72,7 @@ function showCart(){
   var products = getCart()
   if (products == null){
     $('#js-show-cart').html('<h4>Your cart is empty<h4>')
+    $('#checkout').attr("disabled","disabled")
   } else {
     products.forEach(function(item){
       rs += '<tr>'
@@ -131,7 +132,7 @@ function showCheckout(){
   var Total = 0
   var products = getCart()
   if (products == null){
-    $('#js-list-product').html('<h4>Your cart is empty<h4>')
+    $('#js-list-product').html('<h4>Your cart is empty please add to cart <a href="/">Click here</a><h4>')
   } else {
     products.forEach(function(item){
   
@@ -155,7 +156,11 @@ function showCheckout(){
 }
 function showModalMessage(){
   if ($('#js-message').html() == 'Order succeed'){
+    $('#success-modal').modal('show')
     localStorage.removeItem('cart')
   }
-  showNumberInCart()
+  $('#js-btn-close').on('click', function(){
+    $('#success-modal').modal('hide')
+    showNumberInCart()
+  })
 }
