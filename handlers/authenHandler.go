@@ -20,7 +20,7 @@ type HomePageVars struct {
 	Paginator    utils.Paginator
 	User         models.User
 	Product      models.Product
-	Payments		 []models.Payment
+	Payments			 []models.Payment
 }
 
 /**
