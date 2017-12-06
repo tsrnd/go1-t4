@@ -37,10 +37,9 @@ func NewHomePageVars(r *http.Request) HomePageVars {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	products := models.GetProducts()
 
 	HomeVars := NewHomePageVars(r)
-	HomeVars.LatesProducts = products[len(products)-4:]
+	HomeVars.LatesProducts = models.GetLatestProduct()
 	HomeVars.BestSeller = models.GetTrendProducts()
 	HomeVars.PageTitle = "Home Page"
 	utils.GenerateTemplate(w, HomeVars, "index")

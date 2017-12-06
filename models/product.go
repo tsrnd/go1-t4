@@ -88,3 +88,11 @@ func GetTrendProducts() (listProduct []Product) {
 	}
 	return listProduct
 }
+
+func GetLatestProduct() (products []Product) {
+	err := database.DBCon.Last(&products).Limit(4).Find(&products).Error
+	if err != nil {
+		return products
+	}
+	return products
+}

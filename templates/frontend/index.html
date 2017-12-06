@@ -38,7 +38,7 @@
                               <span class="sale_tag"></span>                        
                               <a href="/detail/{{ $product.ID }}"><img alt="" src="/{{ if $product.Images }}{{ (index $product.Images 0).URL }}{{ else }}static/css/themes/images/ladies/6.jpg {{ end }}"></a><br/>
                               <a href="/detail/{{ $product.ID }}" class="title">{{ $product.Name }}</a><br/>
-                              <a href="#" class="category">{{ $product.Size }}</a>
+                              <a href="#" class="category">SIZE: {{ $product.Size }}</a>
                               <p class="price">{{ $product.Price }}$</p>
                             </div>
                           </li>
@@ -68,7 +68,7 @@
                               <span class="sale_tag"></span>                        
                               <a href="/detail/{{ $product.ID }}"><img alt="" src="/{{ if $product.Images }}{{ (index $product.Images 0).URL }}{{ else }}static/css/themes/images/ladies/6.jpg {{ end }}"></a><br/>
                               <a href="/detail/{{ $product.ID }}" class="title">{{ $product.Name }}</a><br/>
-                              <a href="#" class="category">{{ $product.Size }}</a>
+                              <a href="#" class="category">SIZE: {{ $product.Size }}</a>
                               <p class="price">{{ $product.Price }}$</p>
                             </div>
                           </li>
