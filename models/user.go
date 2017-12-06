@@ -20,6 +20,9 @@ type User struct {
 	Orders	 []Order	//has many order
 }
 
+const ADMIN_ROLE	= "admin"
+const USER_ROLE		= "normal_user"
+
 func (user *User) GetRelationship() map[string]interface{}{
 	relationship := map[string]interface{} {
 		"Orders": &user.Orders,
