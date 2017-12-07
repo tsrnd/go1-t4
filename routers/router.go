@@ -28,6 +28,13 @@ var routes = Routes{
 			"get:GetAll",
 		},
 	},
+	Route{
+		"/product_groups",
+		&controllers.ProductGroupsController{},
+		[]string{
+			"get:GetAll",
+		},
+	},
 }
 
 func init() {
