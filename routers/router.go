@@ -30,6 +30,13 @@ var routes = Routes{
 			"get:TestAdmin",
 		},
 	},
+	Route{
+		"/products",
+		&controllers.ProductsController{},
+		[]string{
+			"get:GetAll",
+		},
+	},
 }
 
 var FilterUser = func(ctx *ctx.Context) {
