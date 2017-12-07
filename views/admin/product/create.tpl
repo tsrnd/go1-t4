@@ -30,6 +30,7 @@
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <form enctype="multipart/form-data" class="col-md-12" method="POST" action="/product">
+              {{.xsrfdata}}
               <div class="form-group col-md-12">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Name.." >

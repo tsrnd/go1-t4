@@ -7,6 +7,7 @@
     <div class="span5">         
       <h4 class="title"><span class="text"><strong>Login</strong> Form</span></h4>
       <form action="/loginHandler" method="post">
+        {{.xsrfdata}}
         <fieldset>
           <div class="control-group">
             <label class="control-label">Username</label>
@@ -35,6 +36,7 @@
     <div class="span7">         
       <h4 class="title"><span class="text"><strong>Register</strong> Form</span></h4>
       <form action="/registerHandler" method="post" class="form-stacked">
+        {{.xsrfdata}}
         <fieldset>
           <div class="control-group">
             {{ if .RegisterInfo.Errors.Name }}
