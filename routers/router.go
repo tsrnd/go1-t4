@@ -21,6 +21,13 @@ var routes = Routes{
 			"get:Get",
 		},
 	},
+	Route{
+		"/user",
+		&controllers.UsersController{},
+		[]string{
+			"get:GetAll",
+		},
+	},
 }
 
 func init() {
