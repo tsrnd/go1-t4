@@ -42,6 +42,13 @@ var routes = Routes{
 			"get:GetAll",
 		},
 	},
+	Route{
+		"/orders",
+		&controllers.OrdersController{},
+		[]string{
+			"get:GetAll",
+		},
+	},
 }
 
 func init() {
