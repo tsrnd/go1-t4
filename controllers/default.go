@@ -16,14 +16,14 @@ func (c *MainController) Get() {
 }
 
 func (this *MainController) Test() {
-	this.InitFrontEndTemplate("frontend/user/login_register.tpl")
+	InitFrontEndTemplate(&this.Controller, "frontend/user/login_register.tpl")
 }
 
 func (this *MainController) TestAdmin() {
-	this.InitAdminTemplate("admin/product/create.tpl")
+	InitAdminTemplate(&this.Controller, "admin/product/create.tpl")
 }
 
-func (this *MainController) InitFrontEndTemplate(TplName string, ) {
+func InitFrontEndTemplate(this *beego.Controller, TplName string) {
 	this.Layout = "frontend/master.tpl"
 	this.TplName = TplName
 	this.LayoutSections = make(map[string]string)
@@ -33,7 +33,7 @@ func (this *MainController) InitFrontEndTemplate(TplName string, ) {
 	this.Data["xsrfdata"] = template.HTML(this.XSRFFormHTML())
 }
 
-func (this *MainController) InitAdminTemplate(TplName string, ) {
+func InitAdminTemplate(this *beego.Controller, TplName string) {
 	this.Layout = "admin/master.tpl"
 	this.TplName = TplName
 	this.LayoutSections = make(map[string]string)
