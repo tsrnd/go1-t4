@@ -22,29 +22,8 @@ var routes = Routes{
 		},
 	},
 	Route{
-		"/user",
-		&controllers.UsersController{},
-		[]string{
-			"get:GetAll",
-		},
-	},
-	Route{
-		"/product_groups",
-		&controllers.ProductGroupsController{},
-		[]string{
-			"get:GetAll",
-		},
-	},
-	Route{
 		"/products",
 		&controllers.ProductsController{},
-		[]string{
-			"get:GetAll",
-		},
-	},
-	Route{
-		"/orders",
-		&controllers.OrdersController{},
 		[]string{
 			"get:GetAll",
 		},
