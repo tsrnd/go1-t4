@@ -6,3 +6,5 @@ debug
 main
 uploads/
 debug.test
+routers/commentsRouter_controllers.go
+lastupdate.tmp

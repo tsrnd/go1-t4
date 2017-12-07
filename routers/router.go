@@ -55,15 +55,15 @@ func init() {
 		beego.InsertFilter("/checkout", beego.BeforeRouter, FilterUser)
 		beego.InsertFilter("/profile", beego.BeforeRouter, FilterUser)
 	}
-	// beego.Include(
-	// 	&controllers.UserController{},
-	// 	&controllers.ProductsController{},
-	// 	&controllers.OrderProductsController{},
-	// 	&controllers.OrdersController{},
-	// 	&controllers.MainController{},
-	// 	&controllers.PaymentsController{},
-	// 	&controllers.ProductGroupsController{},
-	// )
+	beego.Include(
+		&controllers.UserController{},
+		&controllers.ProductsController{},
+		&controllers.OrderProductsController{},
+		&controllers.OrdersController{},
+		&controllers.MainController{},
+		&controllers.PaymentsController{},
+		&controllers.ProductGroupsController{},
+	)
 	for _, route := range routes {
 		beego.Router(route.URL, route.Handler, route.mappingMethod...)
 	}

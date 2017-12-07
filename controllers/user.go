@@ -16,5 +16,5 @@ func (c *UserController) URLMapping() {
 
 // @router /users/:id [get]
 func (c *UserController) Show() {
-
+	
 }
