@@ -18,7 +18,14 @@ var routes = Routes{
 		"/",
 		&controllers.MainController{},
 		[]string{
-			"get:Get",
+			"get:Test",
+		},
+	},
+	Route{
+		"/product/add",
+		&controllers.MainController{},
+		[]string{
+			"get:TestAdmin",
 		},
 	},
 	Route{
