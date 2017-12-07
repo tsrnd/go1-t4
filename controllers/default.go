@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"html/template"
 	"github.com/astaxie/beego"
 )
 
@@ -29,6 +30,7 @@ func (this *MainController) InitFrontEndTemplate(TplName string, ) {
 	this.LayoutSections["Header"] = "frontend/layouts/header.tpl"
 	this.LayoutSections["Footer"] = "frontend/layouts/footer.tpl"
 	this.LayoutSections["Modal"] = "frontend/layouts/modal.tpl"
+	this.Data["xsrfdata"] = template.HTML(this.XSRFFormHTML())
 }
 
 func (this *MainController) InitAdminTemplate(TplName string, ) {
@@ -38,4 +40,5 @@ func (this *MainController) InitAdminTemplate(TplName string, ) {
 	this.LayoutSections["Header"] = "admin/layouts/header.tpl"
 	this.LayoutSections["Footer"] = "admin/layouts/footer.tpl"
 	this.LayoutSections["Aside"] = "admin/layouts/aside.tpl"
+	this.Data["xsrfdata"] = template.HTML(this.XSRFFormHTML())
 }

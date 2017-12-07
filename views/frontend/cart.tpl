@@ -18,6 +18,7 @@
             </tr>
           </thead>
           <form action="/order" method="POST" id="js-form-sbm" enctype="multipart/form-data">
+            {{.xsrfdata}}
             <tbody id="js-show-cart">
              
             </tbody>

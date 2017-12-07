@@ -19,6 +19,7 @@
                 <h4>Returning Customer</h4>
                 <p>Customer infomation </p>
                   <form method="post" action="/order" id="js-form-sbm">
+                    {{.xsrfdata}}
                     <fieldset>
                       <div class="control-group">
                         <label class="control-label"><strong>Username</strong></label>

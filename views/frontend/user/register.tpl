@@ -1,6 +1,7 @@
 <div class="span7">         
   <h4 class="title"><span class="text"><strong>Register</strong> Form</span></h4>
   <form action="/registerHandler" method="post" class="form-stacked">
+    {{.xsrfdata}}
     <fieldset>
       <div class="control-group">
         {{ if .RegisterInfo.Errors.Name }}
