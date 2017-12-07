@@ -26,6 +26,7 @@ func init() {
 }
 
 func main() {
+	beego.SetStaticPath("/static","static")
 	o := orm.NewOrm()
 	o.Using("default") // Using default, can use other database
 

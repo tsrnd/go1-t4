@@ -18,7 +18,7 @@ var routes = Routes{
 		"/",
 		&controllers.MainController{},
 		[]string{
-			"get:Get",
+			"get:Test",
 		},
 	},
 }
