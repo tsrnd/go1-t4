@@ -21,6 +21,13 @@ var routes = Routes{
 			"get:Test",
 		},
 	},
+	Route{
+		"/product/add",
+		&controllers.MainController{},
+		[]string{
+			"get:TestAdmin",
+		},
+	},
 }
 
 func init() {

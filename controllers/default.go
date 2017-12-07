@@ -18,6 +18,10 @@ func (this *MainController) Test() {
 	this.InitFrontEndTemplate("frontend/user/login_register.tpl")
 }
 
+func (this *MainController) TestAdmin() {
+	this.InitAdminTemplate("admin/product/create.tpl")
+}
+
 func (this *MainController) InitFrontEndTemplate(TplName string, ) {
 	this.Layout = "frontend/master.tpl"
 	this.TplName = TplName
@@ -25,4 +29,13 @@ func (this *MainController) InitFrontEndTemplate(TplName string, ) {
 	this.LayoutSections["Header"] = "frontend/layouts/header.tpl"
 	this.LayoutSections["Footer"] = "frontend/layouts/footer.tpl"
 	this.LayoutSections["Modal"] = "frontend/layouts/modal.tpl"
+}
+
+func (this *MainController) InitAdminTemplate(TplName string, ) {
+	this.Layout = "admin/master.tpl"
+	this.TplName = TplName
+	this.LayoutSections = make(map[string]string)
+	this.LayoutSections["Header"] = "admin/layouts/header.tpl"
+	this.LayoutSections["Footer"] = "admin/layouts/footer.tpl"
+	this.LayoutSections["Aside"] = "admin/layouts/aside.tpl"
 }
