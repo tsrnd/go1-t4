@@ -9,41 +9,45 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type ProductGroups struct {
-	Id   int64  `orm:"auto"`
-	Name string `orm:"size(128)"`
-	Products []*Products `orm:"reverse(many)"`
+type Products struct {
+	Id      int64  `orm:"auto"`
+	Name    string `orm:"size(128)"`
+	Size    string `orm:"size(128)"`
+	Color   string `orm:"size(128)"`
+	Price   string `orm:"size(128)"`
+	InStock int
+	ProductGroups *ProductGroups `orm:"rel(fk)"`
 }
 
 func init() {
-	orm.RegisterModel(new(ProductGroups))
+	orm.RegisterModel(new(Products))
 }
 
-// AddProductGroups insert a new ProductGroups into database and returns
+// AddProducts insert a new Products into database and returns
 // last inserted Id on success.
-func AddProductGroups(m *ProductGroups) (id int64, err error) {
+func AddProducts(m *Products) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetProductGroupsById retrieves ProductGroups by Id. Returns error if
+// GetProductsById retrieves Products by Id. Returns error if
 // Id doesn't exist
-func GetProductGroupsById(id int64) (v *ProductGroups, err error) {
+func GetProductsById(id int64) (v *Products, err error) {
 	o := orm.NewOrm()
-	v = &ProductGroups{Id: id}
-	if err = o.QueryTable(new(ProductGroups)).Filter("Id", id).RelatedSel().One(v); err == nil {
+	v = &Products{Id: id}
+	if err = o.QueryTable(new(Products)).Filter("Id", id).RelatedSel().One(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllProductGroups retrieves all ProductGroups matches certain condition. Returns empty list if
+// GetAllProducts retrieves all Products matches certain condition. Returns empty list if
 // no records exist
-func GetAllProductGroups(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllProducts(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(ProductGroups))
+	qs := o.QueryTable(new(Products))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -89,7 +93,7 @@ func GetAllProductGroups(query map[string]string, fields []string, sortby []stri
 		}
 	}
 
-	var l []ProductGroups
+	var l []Products
 	qs = qs.OrderBy(sortFields...).RelatedSel()
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -112,11 +116,11 @@ func GetAllProductGroups(query map[string]string, fields []string, sortby []stri
 	return nil, err
 }
 
-// UpdateProductGroups updates ProductGroups by Id and returns error if
+// UpdateProducts updates Products by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateProductGroupsById(m *ProductGroups) (err error) {
+func UpdateProductsById(m *Products) (err error) {
 	o := orm.NewOrm()
-	v := ProductGroups{Id: m.Id}
+	v := Products{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -127,15 +131,15 @@ func UpdateProductGroupsById(m *ProductGroups) (err error) {
 	return
 }
 
-// DeleteProductGroups deletes ProductGroups by Id and returns error if
+// DeleteProducts deletes Products by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteProductGroups(id int64) (err error) {
+func DeleteProducts(id int64) (err error) {
 	o := orm.NewOrm()
-	v := ProductGroups{Id: id}
+	v := Products{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&ProductGroups{Id: id}); err == nil {
+		if num, err = o.Delete(&Products{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
