@@ -23,7 +23,6 @@ func init() {
 
 	orm.RegisterDriver(driverName, orm.DRPostgres)
 	orm.RegisterDataBase("default", driverName, dbInfor, maxIdle, maxConn)
-	orm.RunSyncdb("default", false, true)
 }
 
 func main() {
