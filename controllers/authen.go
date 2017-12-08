@@ -14,6 +14,7 @@ type AuthenController struct {
 // URLMapping ...
 func (c *AuthenController) URLMapping() {
 	c.Mapping("Login", c.Login)
+	c.Mapping("AdminLogin", c.AdminLogin)
 	c.Mapping("LoginHandler", c.LoginHandler)
 	c.Mapping("Logout", c.Logout)
 }
@@ -26,6 +27,16 @@ func (c *AuthenController) Login() {
 		return
 	}
 	c.InitFrontEndTemplate("frontend/user/login.tpl")
+}
+
+// AdminLogin ...
+// @router /admin/login [get]
+func (c *AuthenController) AdminLogin() {
+	if (c.IsLogin()) {
+		c.Redirect(c.URLFor("UserController.Show", ":id", c.GetSession("uid")), http.StatusSeeOther)
+		return
+	}
+	c.TplName = "admin/login.tpl"
 }
 
 // Logout ...

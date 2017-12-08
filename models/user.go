@@ -17,6 +17,8 @@ type User struct {
 	Provider string `orm:"size(128)"`
 }
 
+const ADMIN_ROLE = "admin"
+
 func (u *User) TableName() string {
 	return "users"
 }
