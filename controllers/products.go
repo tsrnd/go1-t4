@@ -4,12 +4,11 @@ import (
 	"github.com/goweb4/models"
 	"strconv"
 
-	"github.com/astaxie/beego"
 )
 
 //  ProductsController operations for Products
 type ProductsController struct {
-	beego.Controller
+	ExtendController
 }
 
 // URLMapping ...
