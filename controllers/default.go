@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/goweb4/models"
 	"html/template"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/session"
@@ -18,14 +19,14 @@ func (c *ExtendController) Get() {
 }
 
 func (this *ExtendController) Test() {
-	InitFrontEndTemplate(&this.Controller, "frontend/user/login_register.tpl")
+	InitFrontEndTemplate(this, "frontend/user/login_register.tpl")
 }
 
 func (this *ExtendController) TestAdmin() {
-	InitAdminTemplate(&this.Controller, "admin/product/create.tpl")
+	InitAdminTemplate(this, "admin/product/create.tpl")
 }
 
-func InitFrontEndTemplate(this *beego.Controller, TplName string) {
+func InitFrontEndTemplate(this *ExtendController, TplName string) {
 	this.Layout = "frontend/master.tpl"
 	this.TplName = TplName
 	this.LayoutSections = make(map[string]string)
@@ -33,9 +34,17 @@ func InitFrontEndTemplate(this *beego.Controller, TplName string) {
 	this.LayoutSections["Footer"] = "frontend/layouts/footer.tpl"
 	this.LayoutSections["Modal"] = "frontend/layouts/modal.tpl"
 	this.Data["xsrfdata"] = template.HTML(this.XSRFFormHTML())
+	if this.IsLogin() {
+		userInfor := models.User{}
+		data, _ := models.GetUserById(this.Session.Get("uid").(int64))
+		err := userInfor.HideColumns(data); if err != nil {
+			return
+		}
+		this.Data["User"] = userInfor
+	}
 }
 
-func InitAdminTemplate(this *beego.Controller, TplName string) {
+func InitAdminTemplate(this *ExtendController, TplName string) {
 	this.Layout = "admin/master.tpl"
 	this.TplName = TplName
 	this.LayoutSections = make(map[string]string)
@@ -47,4 +56,11 @@ func InitAdminTemplate(this *beego.Controller, TplName string) {
 
 func (this *ExtendController) Prepare() {
 	this.Session = this.StartSession()
+}
+
+func (this *ExtendController) IsLogin() (bool) {
+	if this.Session.Get("uid") != nil && this.Session.Get("uid").(int64) > 0 {
+		return true
+	}
+	return false
 }
