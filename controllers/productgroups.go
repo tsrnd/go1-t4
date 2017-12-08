@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
+	
 )
 
 //  ProductGroupsController operations for ProductGroups
 type ProductGroupsController struct {
-	beego.Controller
+	ExtendController
 }
 
 // URLMapping ...

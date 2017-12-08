@@ -18,15 +18,7 @@ func (c *ExtendController) Get() {
 	c.TplName = "index.tpl"
 }
 
-func (this *ExtendController) Test() {
-	InitFrontEndTemplate(this, "frontend/user/login_register.tpl")
-}
-
-func (this *ExtendController) TestAdmin() {
-	InitAdminTemplate(this, "admin/product/create.tpl")
-}
-
-func InitFrontEndTemplate(this *ExtendController, TplName string) {
+func (this *ExtendController) InitFrontEndTemplate(TplName string) {
 	this.Layout = "frontend/master.tpl"
 	this.TplName = TplName
 	this.LayoutSections = make(map[string]string)
@@ -44,7 +36,7 @@ func InitFrontEndTemplate(this *ExtendController, TplName string) {
 	}
 }
 
-func InitAdminTemplate(this *ExtendController, TplName string) {
+func (this *ExtendController) InitAdminTemplate(TplName string) {
 	this.Layout = "admin/master.tpl"
 	this.TplName = TplName
 	this.LayoutSections = make(map[string]string)
