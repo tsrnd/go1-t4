@@ -4,6 +4,7 @@ import (
 	"fmt"
 	_ "github.com/goweb4/routers"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/session"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/lib/pq"
 )
@@ -28,7 +29,15 @@ func init() {
 func main() {
 	beego.SetStaticPath("/static","static")
 	o := orm.NewOrm()
+	orm.Debug = true
 	o.Using("default") // Using default, can use other database
+
+	sessionconf := &session.ManagerConfig{
+		CookieName: "begoosessionID",
+		Gclifetime: 3600,
+	}
+	beego.GlobalSessions, _ = session.NewManager("memory", sessionconf)
+	go beego.GlobalSessions.GC()
 
 	beego.Run()
 }

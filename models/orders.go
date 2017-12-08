@@ -10,7 +10,7 @@ type Orders struct {
 	Status     string `orm:"size(128)"`
 	OrderDate  string `orm:"size(128)"`
 	Payment    *Payments `orm:"rel(fk)"`
-	User       *Users `orm:"rel(fk)"`
+	User       *User `orm:"rel(fk)"`
 }
 
 func init() {

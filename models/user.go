@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type Users struct {
+type User struct {
 	Id       int64  `orm:"auto"`
 	UserName string `orm:"size(128)"`
 	Email    string `orm:"size(128)"`
@@ -16,25 +16,36 @@ type Users struct {
 	Provider string `orm:"size(128)"`
 }
 
-func init() {
-	orm.RegisterModel(new(Users))
+func (u *User) TableName() string {
+	return "users"
 }
 
-// AddUsers insert a new Users into database and returns
+func init() {
+	orm.RegisterModel(new(User))
+}
+
+// AddUser insert a new User into database and returns
 // last inserted Id on success.
-func AddUsers(m *Users) (id int64, err error) {
+func AddUser(m *User) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetUsersById retrieves Users by Id. Returns error if
+// GetUserById retrieves User by Id. Returns error if
 // Id doesn't exist
-func GetUsersById(id int64) (v *Users, err error) {
+func GetUserById(id int64) (v *User, err error) {
 	o := orm.NewOrm()
-	v = &Users{Id: id}
-	if err = o.QueryTable(new(Users)).Filter("Id", id).RelatedSel().One(v); err == nil {
+	v = &User{Id: id}
+	if err = o.QueryTable(new(User)).Filter("Id", id).RelatedSel().One(v); err == nil {
 		return v, nil
 	}
 	return nil, err
+}
+
+// Read User by columns
+func (u *User) ReadByUsername() (err error) {
+	o := orm.NewOrm()
+	err = o.Read(u, "UserName")
+	return
 }
