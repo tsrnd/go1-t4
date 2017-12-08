@@ -16,5 +16,5 @@ func (c *UserController) URLMapping() {
 
 // @router /users/:id [get]
 func (c *UserController) Show() {
-	InitFrontEndTemplate(&c.Controller, "frontend/about.tpl")
+	InitFrontEndTemplate(&c.ExtendController, "frontend/about.tpl")
 }

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -8,7 +9,7 @@ type User struct {
 	Id       int64  `orm:"auto"`
 	UserName string `orm:"size(128)"`
 	Email    string `orm:"size(128)"`
-	Password string `orm:"type(longtext)"`
+	Password string `orm:"type(longtext)" json:"-"`
 	Gender   string `orm:"size(128)"`
 	Role     string `orm:"size(128)"`
 	Avatar   string `orm:"size(128)"`
@@ -47,5 +48,11 @@ func GetUserById(id int64) (v *User, err error) {
 func (u *User) ReadByUsername() (err error) {
 	o := orm.NewOrm()
 	err = o.Read(u, "UserName")
+	return
+}
+
+func (u *User) HideColumns(data *User) (err error) {
+	newData, _ := json.Marshal(data)
+	err = json.Unmarshal(newData, &u)
 	return
 }

@@ -29,7 +29,6 @@ func init() {
 func main() {
 	beego.SetStaticPath("/static","static")
 	o := orm.NewOrm()
-	orm.Debug = true
 	o.Using("default") // Using default, can use other database
 
 	sessionconf := &session.ManagerConfig{

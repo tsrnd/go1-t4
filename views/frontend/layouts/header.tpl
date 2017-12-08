@@ -37,14 +37,14 @@
       <div class="span8">
         <div class="account pull-right">
           <ul class="user-menu">				
-            {{if .Name}}
+            {{if .User}}
               <li><a href="/userProfile">My Account</a></li>
             {{end}}
             <li><a href="/cart">Your Cart
                 <sup id="js-cart-count" class="badge" style="background-color: red;margin-left: 1px"></sup></a></li>
             <li><a href="/checkout">Checkout</a></li>	
-            {{if .Name}}				
-              <li><a href="#" data-toggle="collapse" data-target="#demo">{{ .Name }}</a></li>
+            {{if .User}}				
+              <li><a href="#" data-toggle="collapse" data-target="#demo">{{ .User.UserName }}</a></li>
               <li id="demo" class="collapse"> <a href="/logout">Logout</a></li>
             {{else}}
               <li><a href="/login">Login</a></li>

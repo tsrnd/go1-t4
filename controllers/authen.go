@@ -25,7 +25,7 @@ func (c *AuthenController) Login() {
 		c.Redirect(c.URLFor("UserController.Show", ":id", c.GetSession("uid")), http.StatusSeeOther)
 		return
 	}
-	InitFrontEndTemplate(&c.Controller, "frontend/user/login.tpl")
+	InitFrontEndTemplate(&c.ExtendController, "frontend/user/login.tpl")
 }
 
 // Logout ...
@@ -37,7 +37,7 @@ func (c *AuthenController) Logout() {
 	flash := beego.NewFlash()
 	flash.Success("Logged out success")
 	flash.Store(&c.Controller)
-	InitFrontEndTemplate(&c.Controller, "frontend/user/login.tpl")
+	InitFrontEndTemplate(&c.ExtendController, "frontend/user/login.tpl")
 }
 
 // LoginHandler ...
@@ -50,7 +50,7 @@ func (c *AuthenController) LoginHandler() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		InitFrontEndTemplate(&c.Controller, "frontend/user/login.tpl")
+		InitFrontEndTemplate(&c.ExtendController, "frontend/user/login.tpl")
 		return
 	}
 	flash.Success("Login succeed")
@@ -58,13 +58,6 @@ func (c *AuthenController) LoginHandler() {
 	c.SetLogin(user)
 	c.Redirect(c.URLFor("UserController.Show", ":id", user.Id), http.StatusSeeOther)
 	c.Redirect("/users", http.StatusSeeOther)
-}
-
-func (c *AuthenController) IsLogin() (bool) {
-	if c.Session.Get("uid") != nil && c.Session.Get("uid").(int64) > 0 {
-		return true
-	}
-	return false
 }
 
 func (c *AuthenController) SetLogin(user *models.User) {
