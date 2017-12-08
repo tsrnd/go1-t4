@@ -2,6 +2,7 @@
   <div class="span5">         
     <h4 class="title"><span class="text"><strong>Login</strong> Form</span></h4>
     {{.flash.error}}
+    {{.flash.success}}
     <form action="/login" method="post">
       {{.xsrfdata}}
       <fieldset>
