@@ -16,6 +16,7 @@ func (c *ProductsController) URLMapping() {
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
 	c.Mapping("Delete", c.Delete)
+	c.Mapping("Create", c.Create)
 }
 
 // GetOne ...
@@ -52,4 +53,10 @@ func (c *ProductsController) Delete() {
 		c.Data["json"] = err.Error()
 	}
 	c.ServeJSON()
+}
+
+// Create ...
+// @router /admin/products/create [get]
+func (c *ProductsController) Create() {
+	c.InitAdminTemplate("admin/product/create.tpl")
 }
