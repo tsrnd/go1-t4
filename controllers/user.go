@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
+
 )
 
 //  UsersController operations for Users
 type UserController struct {
-	beego.Controller
+	ExtendController
 }
 
 // URLMapping ...
@@ -16,5 +16,5 @@ func (c *UserController) URLMapping() {
 
 // @router /users/:id [get]
 func (c *UserController) Show() {
-	
+	InitFrontEndTemplate(&c.Controller, "frontend/about.tpl")
 }

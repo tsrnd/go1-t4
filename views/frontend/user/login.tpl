@@ -1,7 +1,8 @@
 <div class="row">
   <div class="span5">         
     <h4 class="title"><span class="text"><strong>Login</strong> Form</span></h4>
-    <form action="/loginHandler" method="post">
+    {{.flash.error}}
+    <form action="/login" method="post">
       {{.xsrfdata}}
       <fieldset>
         <div class="control-group">
@@ -24,6 +25,3 @@
       </fieldset>
     </form>       
   </div>
-  {{if .Message}}
-  <p class="text-danger">{{.Message}}</p>
-  {{end}}

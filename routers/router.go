@@ -17,20 +17,6 @@ type Routes = []Route
 
 var routes = Routes{
 	Route{
-		"/",
-		&controllers.MainController{},
-		[]string{
-			"get:Test",
-		},
-	},
-	Route{
-		"/product/add",
-		&controllers.MainController{},
-		[]string{
-			"get:TestAdmin",
-		},
-	},
-	Route{
 		"/products",
 		&controllers.ProductsController{},
 		[]string{
@@ -60,9 +46,10 @@ func init() {
 		&controllers.ProductsController{},
 		&controllers.OrderProductsController{},
 		&controllers.OrdersController{},
-		&controllers.MainController{},
+		&controllers.ExtendController{},
 		&controllers.PaymentsController{},
 		&controllers.ProductGroupsController{},
+		&controllers.AuthenController{},
 	)
 	for _, route := range routes {
 		beego.Router(route.URL, route.Handler, route.mappingMethod...)
