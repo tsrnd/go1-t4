@@ -15,15 +15,28 @@ type AuthenController struct {
 func (c *AuthenController) URLMapping() {
 	c.Mapping("Login", c.Login)
 	c.Mapping("LoginHandler", c.LoginHandler)
+	c.Mapping("Logout", c.Logout)
 }
 
 // Login ...
 // @router /login [get]
 func (c *AuthenController) Login() {
 	if (c.IsLogin()) {
-		c.Ctx.Redirect(302, c.URLFor("UserController.Show"))
+		c.Redirect(c.URLFor("UserController.Show", ":id", c.GetSession("uid")), http.StatusSeeOther)
 		return
 	}
+	InitFrontEndTemplate(&c.Controller, "frontend/user/login.tpl")
+}
+
+// Logout ...
+// @router /logout [get]
+func (c *AuthenController) Logout() {
+	if c.IsLogin() {
+		c.DestroySession()
+	}
+	flash := beego.NewFlash()
+	flash.Success("Logged out success")
+	flash.Store(&c.Controller)
 	InitFrontEndTemplate(&c.Controller, "frontend/user/login.tpl")
 }
 
