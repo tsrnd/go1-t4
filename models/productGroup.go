@@ -6,10 +6,10 @@ type ProductGroup struct {
 	Products []Product //has many products
 }
 
-// func GetProductGroups() (productGroups []ProductGroup, err error) {
-// 	err = database.DBCon.Find(&productGroups).Error
-// 	return productGroups, err
-// }
+func GetProductGroups() (productGroups []ProductGroup, err error) {
+	// err = database.DBCon.Find(&productGroups).Error
+	return productGroups, err
+}
 
 // func GetProductsByGroupID(id uint) (products []Product, err error) {
 // 	err = database.DBCon.Where("group_id = ?", id).Find(&products).Error

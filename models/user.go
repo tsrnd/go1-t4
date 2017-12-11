@@ -42,10 +42,12 @@ func GetUserByUserName(name string) (user User, err error) {
 	return user, err
 }
 
-// func CreateUser(user User) (err error) {
-// 	err = database.DBCon.Create(&user).Error
-// 	return err
-// }
+func CreateUser(user User) (err error) {
+	err = database.DBCon.
+		QueryRow("INSERT INTO users (user_name, email, password, phone, address, created_at) VALUES($1,$2,$3,$4,$5,$6) returning id;",
+			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.CreatedAt).Scan(&user.ID)
+	return err
+}
 
 // func UpdateUser(user *User) (errUpdate error) {
 // 	errUpdate = database.DBCon.Save(&user).Error
