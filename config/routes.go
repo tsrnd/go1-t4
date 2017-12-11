@@ -31,18 +31,18 @@ var routes = Routes{
 		"/adminIndex",
 		handlers.IndexAdmin,
 	},
-	// Route{
-	// 	"Register",
-	// 	"GET",
-	// 	"/register",
-	// 	handlers.Register,
-	// },
-	// Route{
-	// 	"Register",
-	// 	"POST",
-	// 	"/registerHandler",
-	// 	handlers.RegisterHandler,
-	// },
+	Route{
+		"Register",
+		"GET",
+		"/register",
+		handlers.Register,
+	},
+	Route{
+		"Register",
+		"POST",
+		"/registerHandler",
+		handlers.RegisterHandler,
+	},
 	// Route{
 	// 	"UserProfile",
 	// 	"GET",
@@ -103,18 +103,18 @@ var routes = Routes{
 		"/loginHandler",
 		handlers.LoginHandler,
 	},
-	// Route{
-	// 	"LogoutHandler",
-	// 	"GET",
-	// 	"/logout",
-	// 	handlers.LogoutHandler,
-	// },
-	// Route{
-	// 	"CreateProduct",
-	// 	"GET",
-	// 	"/product/add",
-	// 	handlers.CreateProduct,
-	// },
+	Route{
+		"LogoutHandler",
+		"GET",
+		"/logout",
+		handlers.LogoutHandler,
+	},
+	Route{
+		"CreateProduct",
+		"GET",
+		"/product/add",
+		handlers.CreateProduct,
+	},
 	// Route{
 	// 	"StoreProduct",
 	// 	"POST",
