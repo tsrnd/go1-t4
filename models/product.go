@@ -1,23 +1,26 @@
 package models
 
 import (
+	"github.com/golang/protobuf/ptypes/timestamp"
 	"fmt"
 
 	"github.com/goweb4/database"
-	"github.com/jinzhu/gorm"
 )
 
 type Product struct {
-	gorm.Model
-	Size          string         `schema:"size"`
-	Color         string         `schema:"color"`
-	Price         float64        `schema:"price"`
-	Name          string         `schema:"name"`
-	InStock       uint           `schema:"in_stock"`
-	GroupID       uint           `schema:"group_id"`
-	ProductGroup  ProductGroup   `gorm:"ForeignKey:GroupId"` //belong To Product Group
-	OrderProducts []OrderProduct //has many order products
-	Images        []Image        //has many image
+	ID						uint
+	Size          string         			`schema:"size"`
+	Color         string         			`schema:"color"`
+	Price         float64        			`schema:"price"`
+	Name          string         			`schema:"name"`
+	InStock       uint           			`schema:"in_stock"`
+	GroupID       uint           			`schema:"group_id"`
+	CreatedAt			timestamp.Timestamp	`schema:"created_at"`
+	UpdatedAt			timestamp.Timestamp	`schema:"updated_at"`
+	DeletedAt			timestamp.Timestamp	`schema:"deleted_at"`
+	ProductGroup  *ProductGroup   		//belong To Product Group
+	OrderProducts []OrderProduct 			//has many order products
+	Images        []Image        			//has many image
 }
 
 func (product *Product) GetRelationship() map[string]interface{} {
