@@ -5,19 +5,14 @@ import (
 	"os"
 	"log"
 	_ "github.com/lib/pq"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
+	"database/sql"
 )
 
-type DB struct{
-	*gorm.DB
-}
-
 var dbinfo string
-var DBCon *DB
-var Tx	  *gorm.DB
+var DBCon *sql.DB
 
+//Get data sources from env
 func init() {
 	err := godotenv.Load()
 
@@ -32,11 +27,8 @@ func init() {
 	dbinfo = fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", host, user, password, dbName)
 }
 
-func DBConnection() (*DB, error) {
-	Db, err := gorm.Open("postgres", dbinfo)
-	if err != nil {
-		return nil, err
-	}
-
-	return &DB{Db}, nil
+//Setup struct for connection to the database
+func DBConnection() (*sql.DB, error) {
+	Db, err := sql.Open("postgres", dbinfo)
+	return Db, err
 }
