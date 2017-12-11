@@ -30,7 +30,7 @@ type HomePageVars struct {
  */
 func NewHomePageVars(r *http.Request) HomePageVars {
 	var homePageVars HomePageVars
-	homePageVars.ProductGroup = GetProductGroups()
+	homePageVars.ProductGroup = models.GetProductGroups()
 	homePageVars.Name = GetAuthName(r)
 
 	return homePageVars
@@ -105,13 +105,6 @@ func clearSession(response http.ResponseWriter) {
 		MaxAge:  -1,
 		Expires: time.Unix(1, 0),
 	})
-}
-
-/**
- * Get product_group for header
- */
-func GetProductGroups() []models.ProductGroup {
-	return models.GetProductGroups()
 }
 
 func GetAuthName(r *http.Request) string {
