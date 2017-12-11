@@ -71,11 +71,7 @@ func IndexProduct(w http.ResponseWriter) {
  * Show form create new product
  */
 func CreateProduct(w http.ResponseWriter, r *http.Request) {
-	productGroups, errGet := models.GetProductGroups()
-	if errGet != nil {
-		http.Error(w, errGet.Error(), http.StatusInternalServerError)
-		return
-	}
+	productGroups := models.GetProductGroups()
 	utils.GenerateTemplateAdmin(w, productGroups, "add_product")
 }
 

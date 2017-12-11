@@ -111,16 +111,7 @@ func clearSession(response http.ResponseWriter) {
  * Get product_group for header
  */
 func GetProductGroups() []models.ProductGroup {
-	// productGroups, err := models.GetProductGroups()
-	// if err != nil {
-	// 	fmt.Println("err")
-	// }
-	productGroup := models.ProductGroup{}
-	productGroup.Name = "group1"
-	productGroup.Products = []models.Product{models.Product{Name: "A"}}
-	productGroups := []models.ProductGroup{productGroup}
-
-	return productGroups
+	return models.GetProductGroups()
 }
 
 func GetAuthName(r *http.Request) string {
@@ -133,10 +124,10 @@ func GetAuthName(r *http.Request) string {
 	return name
 }
 
-// func ContactUs(w http.ResponseWriter, r *http.Request) {
-// 	utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
-// }
+func ContactUs(w http.ResponseWriter, r *http.Request) {
+	utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
+}
 
-// func AboutUs(w http.ResponseWriter, r *http.Request) {
-// 	utils.GenerateTemplate(w, NewHomePageVars(r), "about")
-// }
+func AboutUs(w http.ResponseWriter, r *http.Request) {
+	utils.GenerateTemplate(w, NewHomePageVars(r), "about")
+}

@@ -157,18 +157,18 @@ var routes = Routes{
 	// 	"/group/{id}",
 	// 	handlers.ShowProductGroup,
 	// },
-	// Route{
-	// 	"ContactUs",
-	// 	"GET",
-	// 	"/contact",
-	// 	handlers.ContactUs,
-	// },
-	// Route{
-	// 	"AboutUs",
-	// 	"GET",
-	// 	"/about",
-	// 	handlers.AboutUs,
-	// },
+	Route{
+		"ContactUs",
+		"GET",
+		"/contact",
+		handlers.ContactUs,
+	},
+	Route{
+		"AboutUs",
+		"GET",
+		"/about",
+		handlers.AboutUs,
+	},
 	// Route{
 	// 	"ShowCart",
 	// 	"GET",
