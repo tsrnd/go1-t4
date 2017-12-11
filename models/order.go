@@ -5,6 +5,7 @@ const APPROVED_STATUS = "Approved"
 const CANCELED_STATUS = "Canceled"
 
 type Order struct {
+	Model
 	UserID        uint           `schema:"user_id"`
 	TotalMoney    float64        `schema:"total_money"`
 	Status        string         `schema:"status"`
@@ -12,15 +13,6 @@ type Order struct {
 	Payment       Payment        //has one payment method
 	OrderProducts []OrderProduct //has many order products
 	User          User           //belong to user
-}
-
-func (order *Order) GetRelationship() map[string]interface{} {
-	relationship := map[string]interface{}{
-		"OrderProducts": &order.OrderProducts,
-		"User":          &order.User,
-		"Payment":       &order.Payment,
-	}
-	return relationship
 }
 
 // func GetOrder(id int) (order Order, err error) {

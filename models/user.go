@@ -1,6 +1,7 @@
 package models
 
 type User struct {
+	Model
 	ProId    string  `schema:"pro_id"`
 	UserName string  `schema:"username"`
 	Password string  `schema:"password"`
@@ -16,13 +17,6 @@ type User struct {
 
 const ADMIN_ROLE = "admin"
 const USER_ROLE = "normal_user"
-
-func (user *User) GetRelationship() map[string]interface{} {
-	relationship := map[string]interface{}{
-		"Orders": &user.Orders,
-	}
-	return relationship
-}
 
 // func GetUser(userInfo User) (user User) {
 // 	database.DBCon.Where(&userInfo).First(&user)

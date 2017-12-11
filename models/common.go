@@ -1,10 +1,12 @@
 package models
 
-// type Model interface {
-// 	GetRelationship() map[string]interface{}
-// }
+import (
+	"github.com/golang/protobuf/ptypes/timestamp"
+)
 
-// func GetRelatedData(model Model, relationshipName string) {
-// 	data := model.GetRelationship()
-// 	database.DBCon.Model(model).Association(relationshipName).Find(data[relationshipName])
-// }
+type Model struct {
+	ID				uint								`schema:"id"`
+	CreatedAt	timestamp.Timestamp	`schema:"created_at"`
+	UpdatedAt timestamp.Timestamp `schema:"updated_at"`
+	DeletedAt timestamp.Timestamp `schema:"deleted_at"`
+}
