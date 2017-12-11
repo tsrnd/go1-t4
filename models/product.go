@@ -21,13 +21,13 @@ type Product struct {
 // 	return relationship
 // }
 
-// func GetProducts() (products []Product) {
-// 	err := database.DBCon.Find(&products).Error
-// 	if err != nil {
-// 		return products
-// 	}
-// 	return products
-// }
+func GetProducts() (products []Product) {
+	// err := database.DBCon.Find(&products).Error
+	// if err != nil {
+	// 	return products
+	// }
+	return products
+}
 
 // func GetProduct(id uint) (product Product, err error) {
 // 	err = database.DBCon.Where("id = ?", id).Find(&product).Error
@@ -57,26 +57,34 @@ type Product struct {
 // 	}
 // 	return proId, err
 // }
-// func GetTrendProducts() (listProduct []Product) {
+func GetTrendProducts() (listProduct []Product) {
 
-// 	rows, err := database.DBCon.Table("order_products").
-// 		Select("product_id, sum(quantity) as total").
-// 		Group("product_id").
-// 		Order("total desc").
-// 		Limit(4).
-// 		Rows()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
-// 	for rows.Next() {
-// 		var id, quantity uint
-// 		product := Product{}
-// 		if err := rows.Scan(&id, &quantity); err != nil {
-// 			fmt.Println(err)
-// 		}
-// 		database.DBCon.Where("id = ?", id).First(&product)
-// 		listProduct = append(listProduct, product)
-// 	}
-// 	return listProduct
-// }
+	// rows, err := database.DBCon.Table("order_products").
+	// 	Select("product_id, sum(quantity) as total").
+	// 	Group("product_id").
+	// 	Order("total desc").
+	// 	Limit(4).
+	// 	Rows()
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
+	// for rows.Next() {
+	// 	var id, quantity uint
+	// 	product := Product{}
+	// 	if err := rows.Scan(&id, &quantity); err != nil {
+	// 		fmt.Println(err)
+	// 	}
+	// 	database.DBCon.Where("id = ?", id).First(&product)
+	// 	listProduct = append(listProduct, product)
+	// }
+	return listProduct
+}
+
+func GetLatestProduct() (products []Product) {
+	// err := database.DBCon.Last(&products).Limit(4).Find(&products).Error
+	// if err != nil {
+	// 	return products
+	// }
+	return products
+}

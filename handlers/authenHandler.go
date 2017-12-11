@@ -1,8 +1,11 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/goweb4/models"
 	"github.com/goweb4/utils"
+	"github.com/stretchr/objx"
 )
 
 type HomePageVars struct {
@@ -23,23 +26,22 @@ type HomePageVars struct {
 /**
  * HomePageVars constructor
  */
-// func NewHomePageVars(r *http.Request) HomePageVars {
-// 	var homePageVars HomePageVars
-// 	homePageVars.ProductGroup = GetProductGroups()
-// 	homePageVars.Name = GetAuthName(r)
+func NewHomePageVars(r *http.Request) HomePageVars {
+	var homePageVars HomePageVars
+	homePageVars.ProductGroup = GetProductGroups()
+	homePageVars.Name = GetAuthName(r)
 
-// 	return homePageVars
-// }
+	return homePageVars
+}
 
-// func Index(w http.ResponseWriter, r *http.Request) {
-// 	products := models.GetProducts()
+func Index(w http.ResponseWriter, r *http.Request) {
 
-// 	HomeVars := NewHomePageVars(r)
-// 	HomeVars.LatesProducts = products[len(products)-4:]
-// 	HomeVars.BestSeller = models.GetTrendProducts()
-// 	HomeVars.PageTitle = "Home Page"
-// 	utils.GenerateTemplate(w, HomeVars, "index")
-// }
+	HomeVars := NewHomePageVars(r)
+	HomeVars.LatesProducts = models.GetLatestProduct()
+	HomeVars.BestSeller = models.GetTrendProducts()
+	HomeVars.PageTitle = "Home Page"
+	utils.GenerateTemplate(w, HomeVars, "index")
+}
 
 // func IndexAdmin(w http.ResponseWriter, r *http.Request) {
 // 	http.Redirect(w, r, "/product/add", http.StatusSeeOther)
@@ -103,27 +105,31 @@ type HomePageVars struct {
 // 	})
 // }
 
-// /**
-//  * Get product_group for header
-//  */
-// func GetProductGroups() []models.ProductGroup {
-// 	productGroups, err := models.GetProductGroups()
-// 	if err != nil {
-// 		fmt.Println("err")
-// 	}
+/**
+ * Get product_group for header
+ */
+func GetProductGroups() []models.ProductGroup {
+	// productGroups, err := models.GetProductGroups()
+	// if err != nil {
+	// 	fmt.Println("err")
+	// }
+	productGroup := models.ProductGroup{}
+	productGroup.Name = "group1"
+	productGroup.Products = []models.Product{models.Product{Name: "A"}}
+	productGroups := []models.ProductGroup{productGroup}
 
-// 	return productGroups
-// }
+	return productGroups
+}
 
-// func GetAuthName(r *http.Request) string {
-// 	name := ""
-// 	if authCookie, err := r.Cookie("auth"); err == nil {
-// 		var cookieData interface{}
-// 		cookieData = objx.MustFromBase64(authCookie.Value)
-// 		name = cookieData.(objx.Map)["name"].(string)
-// 	}
-// 	return name
-// }
+func GetAuthName(r *http.Request) string {
+	name := ""
+	if authCookie, err := r.Cookie("auth"); err == nil {
+		var cookieData interface{}
+		cookieData = objx.MustFromBase64(authCookie.Value)
+		name = cookieData.(objx.Map)["name"].(string)
+	}
+	return name
+}
 
 // func ContactUs(w http.ResponseWriter, r *http.Request) {
 // 	utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
