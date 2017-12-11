@@ -1,12 +1,13 @@
 package database
 
 import (
-	"fmt"
-	"os"
-	"log"
-	_ "github.com/lib/pq"
-	"github.com/joho/godotenv"
 	"database/sql"
+	"fmt"
+	"log"
+	"os"
+
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 var dbinfo string
@@ -17,7 +18,7 @@ func init() {
 	err := godotenv.Load()
 
 	if err != nil {
-	  log.Fatal("Error loading .env file")
+		log.Fatal("Error loading .env file")
 	}
 
 	host := os.Getenv("DB_HOST")
