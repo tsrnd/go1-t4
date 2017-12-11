@@ -1,5 +1,11 @@
 package models
 
+import (
+	"fmt"
+
+	"github.com/goweb4/database"
+)
+
 type User struct {
 	Model
 	ProId    string  `schema:"pro_id"`
@@ -28,10 +34,13 @@ const USER_ROLE = "normal_user"
 // 	return user, err
 // }
 
-// func GetUserByUserName(name string) (user User, err error) {
-// 	err = database.DBCon.Where("user_name = ?", name).Find(&user).Error
-// 	return user, err
-// }
+func GetUserByUserName(name string) (user User, err error) {
+	err = database.DBCon.QueryRow("SELECT password, email, role FROM users where user_name = $1", name).Scan(&user.Password, &user.Email, &user.Role)
+	if err != nil {
+		fmt.Println("get user by name has an error: ", err) // proper error handling instead of panic in your app
+	}
+	return user, err
+}
 
 // func CreateUser(user User) (err error) {
 // 	err = database.DBCon.Create(&user).Error

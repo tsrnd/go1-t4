@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/goweb4/handlers"
 )
 
 // Route defines a route
@@ -24,12 +25,12 @@ var routes = Routes{
 		"/",
 		handlers.Index,
 	},
-	// Route{
-	// 	"AdminIndex",
-	// 	"GET",
-	// 	"/adminIndex",
-	// 	handlers.IndexAdmin,
-	// },
+	Route{
+		"AdminIndex",
+		"GET",
+		"/adminIndex",
+		handlers.IndexAdmin,
+	},
 	// Route{
 	// 	"Register",
 	// 	"GET",
@@ -90,18 +91,18 @@ var routes = Routes{
 	// 	"/order/{id}",
 	// 	handlers.UpdateOrder,
 	// },
-	// Route{
-	// 	"Login",
-	// 	"GET",
-	// 	"/login",
-	// 	handlers.Login,
-	// },
-	// Route{
-	// 	"LoginHandler",
-	// 	"POST",
-	// 	"/loginHandler",
-	// 	handlers.LoginHandler,
-	// },
+	Route{
+		"Login",
+		"GET",
+		"/login",
+		handlers.Login,
+	},
+	Route{
+		"LoginHandler",
+		"POST",
+		"/loginHandler",
+		handlers.LoginHandler,
+	},
 	// Route{
 	// 	"LogoutHandler",
 	// 	"GET",

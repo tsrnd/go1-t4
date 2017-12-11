@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/goweb4/models"
 	"github.com/goweb4/utils"
@@ -43,67 +45,67 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	utils.GenerateTemplate(w, HomeVars, "index")
 }
 
-// func IndexAdmin(w http.ResponseWriter, r *http.Request) {
-// 	http.Redirect(w, r, "/product/add", http.StatusSeeOther)
-// }
+func IndexAdmin(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/product/add", http.StatusSeeOther)
+}
 
-// func Login(w http.ResponseWriter, r *http.Request) {
-// 	HomeVars := NewHomePageVars(r)
-// 	if _, err := r.Cookie("auth"); err != nil {
-// 		HomeVars.Message = utils.ShowMessage(w, r, "login")
-// 		HomeVars.PageTitle = "Login"
-// 		utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
-// 	} else if utils.IsAdminRole(HomeVars.Name) {
-// 		http.Redirect(w, r, "/adminIndex", 302)
-// 	}
-// }
+func Login(w http.ResponseWriter, r *http.Request) {
+	HomeVars := NewHomePageVars(r)
+	if _, err := r.Cookie("auth"); err != nil {
+		HomeVars.Message = utils.ShowMessage(w, r, "login")
+		HomeVars.PageTitle = "Login"
+		utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+	} else if utils.IsAdminRole(HomeVars.Name) {
+		http.Redirect(w, r, "/adminIndex", 302)
+	}
+}
 
-// func LoginHandler(w http.ResponseWriter, r *http.Request) {
-// 	var info models.User
-// 	err := utils.MapFormValues(&info, r)
-// 	if err != nil {
-// 		fmt.Println("cannot decode login info: ", err)
-// 	} else {
-// 		if utils.CheckCredential(info) {
-// 			if utils.IsAdminRole(info.UserName) {
-// 				setSession(info.UserName, w)
-// 				http.Redirect(w, r, "/adminIndex", http.StatusSeeOther)
-// 			} else {
-// 				setSession(info.UserName, w)
-// 				http.Redirect(w, r, "/", http.StatusSeeOther)
-// 			}
-// 		} else {
-// 			mess := "Sorry, this does not match our records. Check your spelling and try again."
-// 			utils.SetMessage(w, mess, "login")
-// 			http.Redirect(w, r, "/login", http.StatusSeeOther)
-// 		}
-// 	}
-// }
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	var info models.User
+	err := utils.MapFormValues(&info, r)
+	if err != nil {
+		fmt.Println("cannot decode login info: ", err)
+	} else {
+		if utils.CheckCredential(info) {
+			if utils.IsAdminRole(info.UserName) {
+				setSession(info.UserName, w)
+				http.Redirect(w, r, "/adminIndex", http.StatusSeeOther)
+			} else {
+				setSession(info.UserName, w)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+			}
+		} else {
+			mess := "Sorry, this does not match our records. Check your spelling and try again."
+			utils.SetMessage(w, mess, "login")
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+		}
+	}
+}
 
-// func LogoutHandler(w http.ResponseWriter, r *http.Request) {
-// 	clearSession(w)
-// 	http.Redirect(w, r, "/login", 302)
-// }
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	clearSession(w)
+	http.Redirect(w, r, "/login", 302)
+}
 
-// func setSession(userName string, response http.ResponseWriter) {
-// 	authCookieValue := objx.New(map[string]interface{}{
-// 		"name": userName,
-// 	}).MustBase64()
-// 	expiration := time.Now().Add(365 * 24 * time.Hour)
-// 	http.SetCookie(response, &http.Cookie{
-// 		Name:    "auth",
-// 		Expires: expiration,
-// 		Value:   authCookieValue})
-// }
+func setSession(userName string, response http.ResponseWriter) {
+	authCookieValue := objx.New(map[string]interface{}{
+		"name": userName,
+	}).MustBase64()
+	expiration := time.Now().Add(365 * 24 * time.Hour)
+	http.SetCookie(response, &http.Cookie{
+		Name:    "auth",
+		Expires: expiration,
+		Value:   authCookieValue})
+}
 
-// func clearSession(response http.ResponseWriter) {
-// 	http.SetCookie(response, &http.Cookie{
-// 		Name:    "auth",
-// 		Value:   "",
-// 		MaxAge:  -1,
-// 		Expires: time.Unix(1, 0),
-// 	})
-// }
+func clearSession(response http.ResponseWriter) {
+	http.SetCookie(response, &http.Cookie{
+		Name:    "auth",
+		Value:   "",
+		MaxAge:  -1,
+		Expires: time.Unix(1, 0),
+	})
+}
 
 /**
  * Get product_group for header
