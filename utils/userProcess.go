@@ -6,13 +6,13 @@ import (
 )
 
 func CheckCredential(info models.User) bool {
-	user, err := models.GetUserByUserName(info.UserName)
-	if err != nil {
-		return false
-	}
-	if CheckPasswordHash(info.Password, user.Password) {
-		return true
-	}
+	// user, err := models.GetUserByUserName(info.UserName)
+	// if err != nil {
+	// 	return false
+	// }
+	// if CheckPasswordHash(info.Password, user.Password) {
+	// 	return true
+	// }
 	return false
 }
 
@@ -27,20 +27,20 @@ func CheckPasswordHash(password, hash string) bool {
 }
 
 func CheckUserExist(name string) bool {
-	_, err := models.GetUserByUserName(name)
-	if err != nil {
-		return false
-	}
+	// _, err := models.GetUserByUserName(name)
+	// if err != nil {
+	// 	return false
+	// }
 	return true
 }
 
 func IsAdminRole(userName string) bool {
-	user, err := models.GetUserByUserName(userName)
-	if err != nil {
-		return false
-	}
-	if user.Role == "admin" {
-		return true
-	}
+	// user, err := models.GetUserByUserName(userName)
+	// if err != nil {
+	// 	return false
+	// }
+	// if user.Role == "admin" {
+	// 	return true
+	// }
 	return false
 }
