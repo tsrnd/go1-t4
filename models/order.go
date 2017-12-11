@@ -10,9 +10,9 @@ type Order struct {
 	TotalMoney    float64        `schema:"total_money"`
 	Status        string         `schema:"status"`
 	PaymentID     uint           `schema:"payment_id"`
-	Payment       Payment        //has one payment method
+	Payment       *Payment       //has one payment method
 	OrderProducts []OrderProduct //has many order products
-	User          User           //belong to user
+	User          *User          //belong to user
 }
 
 // func GetOrder(id int) (order Order, err error) {
