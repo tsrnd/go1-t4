@@ -1,16 +1,10 @@
 package models
 
 type ProductGroup struct {
+	Model
 	Name     string    `schema:"name"`
 	Products []Product //has many products
 }
-
-// func (productGroup *ProductGroup) GetRelationship() map[string]interface{}{
-// 	relationship := map[string]interface{} {
-// 		"Products": &productGroup.Products,
-// 	}
-// 	return relationship
-// }
 
 // func GetProductGroups() (productGroups []ProductGroup, err error) {
 // 	err = database.DBCon.Find(&productGroups).Error

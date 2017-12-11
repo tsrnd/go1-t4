@@ -1,9 +1,11 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	
+)
 
 type Payment struct {
-	gorm.Model
+	Model
 	Method string
 }
 

@@ -1,25 +1,21 @@
 package models
 
-type Product struct {
-	Size          string         `schema:"size"`
-	Color         string         `schema:"color"`
-	Price         float64        `schema:"price"`
-	Name          string         `schema:"name"`
-	InStock       uint           `schema:"in_stock"`
-	GroupID       uint           `schema:"group_id"`
-	ProductGroup  ProductGroup   `gorm:"ForeignKey:GroupId"` //belong To Product Group
-	OrderProducts []OrderProduct //has many order products
-	Images        []Image        //has many image
-}
+import (
+	
+)
 
-// func (product *Product) GetRelationship() map[string]interface{} {
-// 	relationship := map[string]interface{}{
-// 		"Images":        &product.Images,
-// 		"ProductGroup":  &product.ProductGroup,
-// 		"OrderProducts": &product.OrderProducts,
-// 	}
-// 	return relationship
-// }
+type Product struct {
+	Model
+	Size          string         			`schema:"size"`
+	Color         string         			`schema:"color"`
+	Price         float64        			`schema:"price"`
+	Name          string         			`schema:"name"`
+	InStock       uint           			`schema:"in_stock"`
+	GroupID       uint           			`schema:"group_id"`
+	ProductGroup  *ProductGroup   		//belong To Product Group
+	OrderProducts []OrderProduct 			//has many order products
+	Images        []Image        			//has many image
+}
 
 // func GetProducts() (products []Product) {
 // 	err := database.DBCon.Find(&products).Error
