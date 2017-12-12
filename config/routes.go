@@ -43,30 +43,30 @@ var routes = Routes{
 		"/registerHandler",
 		handlers.RegisterHandler,
 	},
-	// Route{
-	// 	"UserProfile",
-	// 	"GET",
-	// 	"/userProfile",
-	// 	handlers.UserProfile,
-	// },
+	Route{
+		"UserProfile",
+		"GET",
+		"/userProfile",
+		handlers.UserProfile,
+	},
 	// Route{
 	// 	"CreateUser",
 	// 	"POST",
 	// 	"/user",
 	// 	handlers.AddUser,
 	// },
-	// Route{
-	// 	"UpdateUser",
-	// 	"PUT",
-	// 	"/user/{id}",
-	// 	handlers.UpdateUser,
-	// },
-	// Route{
-	// 	"DeleteUser",
-	// 	"DELETE",
-	// 	"/{id}",
-	// 	handlers.DeleteUser,
-	// },
+	Route{
+		"UpdateUser",
+		"PUT",
+		"/user/{id}",
+		handlers.UpdateUser,
+	},
+	Route{
+		"DeleteUser",
+		"DELETE",
+		"/{id}",
+		handlers.DeleteUser,
+	},
 	// Route{
 	// 	"CreateOrder",
 	// 	"GET",
