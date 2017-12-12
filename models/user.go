@@ -38,7 +38,7 @@ func GetUserById(id uint) (user User, err error) {
 }
 
 func GetUserByUserName(name string) (user User, err error) {
-	err = database.DBCon.QueryRow("SELECT password, username, email, phone, address, role FROM users where username = $1", name).Scan(&user.Password, &user.UserName, &user.Email, &user.Phone, &user.Address, &user.Role)
+	err = database.DBCon.QueryRow("SELECT password, user_name, email, phone, address, role FROM users where user_name = $1", name).Scan(&user.Password, &user.UserName, &user.Email, &user.Phone, &user.Address, &user.Role)
 	if err != nil {
 		fmt.Println("get user by name has an error: ", err)
 	}
