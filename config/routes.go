@@ -2,9 +2,8 @@ package config
 
 import (
 	"net/http"
-
-	"github.com/gorilla/mux"
 	"github.com/goweb4/handlers"
+	"github.com/gorilla/mux"
 )
 
 // Route defines a route

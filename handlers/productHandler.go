@@ -3,15 +3,12 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-
-	"github.com/goweb4/models"
-	"github.com/goweb4/utils"
 )
 
 /**
  * Index Product
  */
-func IndexProduct(w http.ResponseWriter) {
+func IndexProduct(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Need to be implement")
 }
 
@@ -67,13 +64,17 @@ func IndexProduct(w http.ResponseWriter) {
 // 	utils.GenerateTemplate(w, HomeVars, "product")
 // }
 
-/**
- * Show form create new product
- */
-func CreateProduct(w http.ResponseWriter, r *http.Request) {
-	productGroups := models.GetProductGroups()
-	utils.GenerateTemplateAdmin(w, productGroups, "add_product")
-}
+// /**
+//  * Show form create new product
+//  */
+// func CreateProduct(w http.ResponseWriter, r *http.Request) {
+// 	productGroups, errGet := models.GetProductGroups()
+// 	if errGet != nil {
+// 		http.Error(w, errGet.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
+// 	utils.GenerateTemplateAdmin(w, productGroups, "add_product")
+// }
 
 // /**
 //  * Admin create new product

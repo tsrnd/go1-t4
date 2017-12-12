@@ -35,7 +35,7 @@ const USER_ROLE = "normal_user"
 // }
 
 func GetUserByUserName(name string) (user User, err error) {
-	err = database.DBCon.QueryRow("SELECT password, email, role FROM users where user_name = $1", name).Scan(&user.Password, &user.Email, &user.Role)
+	err = database.DBCon.Db.QueryRow("SELECT password, email, role FROM users where user_name = $1", name).Scan(&user.Password, &user.Email, &user.Role)
 	if err != nil {
 		fmt.Println("get user by name has an error: ", err)
 	}
@@ -43,7 +43,7 @@ func GetUserByUserName(name string) (user User, err error) {
 }
 
 func CreateUser(user User) (err error) {
-	err = database.DBCon.
+	err = database.DBCon.Db.
 		QueryRow("INSERT INTO users (user_name, email, password, phone, address, created_at, role) VALUES($1,$2,$3,$4,$5,$6,$7) returning id;",
 			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.CreatedAt, "user").Scan(&user.ID)
 	return err
