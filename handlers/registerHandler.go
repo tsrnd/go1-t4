@@ -45,7 +45,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		if err2 != nil {
 			fmt.Println("Error occur when creating user")
 		} else {
-			mess := "register user successful"
+			mess := "Register user successful"
 			utils.SetMessage(w, mess, "register")
 		}
 	}

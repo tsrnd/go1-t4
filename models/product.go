@@ -1,5 +1,9 @@
 package models
 
+import (
+	"github.com/goweb4/database"
+)
+
 type Product struct {
 	Model
 	Size          string         `schema:"size"`
@@ -13,22 +17,44 @@ type Product struct {
 	Images        []Image        //has many image
 }
 
-// func (product *Product) GetRelationship() map[string]interface{} {
-// 	relationship := map[string]interface{}{
-// 		"Images":        &product.Images,
-// 		"ProductGroup":  &product.ProductGroup,
-// 		"OrderProducts": &product.OrderProducts,
+func (product *Product) GetSchema() ([]interface{}) {
+	return []interface{} {
+		&product.ID,
+		&product.Size,
+		&product.Color,
+		&product.Price,
+		&product.InStock,
+		&product.GroupID,
+		&product.CreatedAt,
+		&product.UpdatedAt,
+		&product.DeletedAt,
+		&product.Name,
+	}
+}
+
+func (product *Product) TableName() (string) {
+	return "products"
+}
+
+func (product *Product) Test() {
+	database.DBCon.Where("id = ?", 11).Find(product)
+}
+
+// func GetProducts() (products []Product) {
+// 	err := database.DBCon.Find(&products).Error
+// 	if err != nil {
+// 		return products
 // 	}
 // 	return relationship
 // }
 
-func GetProducts() (products []Product) {
+// func GetProducts() (products []Product) {
 	// err := database.DBCon.Find(&products).Error
 	// if err != nil {
 	// 	return products
 	// }
-	return products
-}
+	// return products
+// }
 
 // func GetProduct(id uint) (product Product, err error) {
 // 	err = database.DBCon.Where("id = ?", id).Find(&product).Error

@@ -8,7 +8,7 @@ type Payment struct {
 }
 
 func GetPayments() (payments []Payment, err error) {
-	rows, err := database.DBCon.Query("SELECT method FROM payments")
+	rows, err := database.DBCon.Db.Query("SELECT method FROM payments")
 	if err != nil {
 		return
 	}

@@ -30,7 +30,7 @@ const USER_ROLE = "normal_user"
 // }
 
 func GetUserById(id uint) (user User, err error) {
-	err = database.DBCon.QueryRow("SELECT password, email, role FROM users where id = $1", id).Scan(&user.Password, &user.Email, &user.Role)
+	err = database.DBCon.Db.QueryRow("SELECT password, email, role FROM users where id = $1", id).Scan(&user.Password, &user.Email, &user.Role)
 	if err != nil {
 		fmt.Println("get user by id has an error: ", err)
 	}
@@ -38,7 +38,7 @@ func GetUserById(id uint) (user User, err error) {
 }
 
 func GetUserByUserName(name string) (user User, err error) {
-	err = database.DBCon.QueryRow("SELECT password, user_name, email, phone, address, role FROM users where user_name = $1", name).Scan(&user.Password, &user.UserName, &user.Email, &user.Phone, &user.Address, &user.Role)
+	err = database.DBCon.Db.QueryRow("SELECT password, user_name, email, phone, address, role FROM users where user_name = $1", name).Scan(&user.Password, &user.UserName, &user.Email, &user.Phone, &user.Address, &user.Role)
 	if err != nil {
 		fmt.Println("get user by name has an error: ", err)
 	}
@@ -46,16 +46,16 @@ func GetUserByUserName(name string) (user User, err error) {
 }
 
 func CreateUser(user User) (err error) {
-	err = database.DBCon.
-		QueryRow("INSERT INTO users (user_name, email, password, phone, address, created_at) VALUES($1,$2,$3,$4,$5,$6) returning id;",
-			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.CreatedAt).Scan(&user.ID)
+	err = database.DBCon.Db.
+		QueryRow("INSERT INTO users (user_name, email, password, phone, address, created_at, role) VALUES($1,$2,$3,$4,$5,$6,$7) returning id;",
+			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.CreatedAt, "user").Scan(&user.ID)
 	return err
 }
 
 func UpdateUser(user *User) (errUpdate error) {
-	if errUpdate == nil {
-		errUpdate = database.DBCon.QueryRow("UPDATE users SET user_name=$1, email=$2, password=$3, phone=$4, address=$5, created_at=$6 WHERE id = $1").Scan(&user)
-	}
+	errUpdate = database.DBCon.Db.
+		QueryRow("UPDATE users SET user_name=$1, email=$2, password=$3, phone=$4, address=$5, created_at=$6 WHERE id = $7",
+			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.CreatedAt, "user").Scan(&user.ID)
 	return errUpdate
 }
 
@@ -63,7 +63,8 @@ func DeleteUser(id uint) (err error) {
 	user := User{}
 	user, err = GetUserById(id)
 	if err == nil {
-		err = database.DBCon.QueryRow("DELETE FROM users WHERE id = $1", id).Scan(&user)
+		err = database.DBCon.Db.
+			QueryRow("DELETE FROM users WHERE id = $1", id).Scan(&user)
 	}
 	return err
 }

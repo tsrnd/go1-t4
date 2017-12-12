@@ -14,7 +14,7 @@ type Image struct {
 const IMG_BASE_URL = "uploads/images"
 
 func StoreImage(image *Image) (errCreateImage error) {
-	errCreateImage = database.DBCon.
+	errCreateImage = database.DBCon.Db.
 		QueryRow("INSERT INTO images (name, created_at) VALUES($1,$2) returning id;", image.Name, time.Now()).Scan(&image.ID)
-	return errCreateImage
+	return
 }
