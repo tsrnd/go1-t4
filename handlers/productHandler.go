@@ -1,8 +1,12 @@
 package handlers
 
 import (
+	"github.com/goweb4/utils"
+	"strconv"
+	"github.com/goweb4/models"
 	"fmt"
 	"net/http"
+	"github.com/gorilla/mux"
 )
 
 /**
@@ -15,25 +19,22 @@ func IndexProduct(w http.ResponseWriter, r *http.Request) {
 /**
  * Show product
  */
-// func ShowProduct(w http.ResponseWriter, r *http.Request) {
-// 	var productModel models.Model
-// 	vars := mux.Vars(r)
-// 	id, _ := strconv.ParseUint(vars["id"], 10, 32)
-// 	product, err := models.GetProduct(uint(id))
-// 	if err != nil {
-// 		fmt.Fprintln(w, err)
-// 		return
-// 	}
-// 	productModel = &product
+func ShowProduct(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.ParseUint(vars["id"], 10, 32)
+	product, err := models.GetProduct(uint(id))
+	if err != nil {
+		fmt.Fprintln(w, err)
+		return
+	}
+	// models.GetRelatedData(productModel, "Images")
+	// models.GetRelatedData(productModel, "ProductGroup")
+	data := map[string]interface{}{
+		"Product": product,
+	}
 
-// 	models.GetRelatedData(productModel, "Images")
-// 	models.GetRelatedData(productModel, "ProductGroup")
-// 	data := map[string]interface{}{
-// 		"Product": product,
-// 	}
-
-// 	utils.GenerateTemplateAdmin(w, data, "show_product")
-// }
+	utils.GenerateTemplateAdmin(w, data, "show_product")
+}
 
 // /**
 //  * Show product by group
@@ -67,14 +68,14 @@ func IndexProduct(w http.ResponseWriter, r *http.Request) {
 // /**
 //  * Show form create new product
 //  */
-// func CreateProduct(w http.ResponseWriter, r *http.Request) {
+func CreateProduct(w http.ResponseWriter, r *http.Request) {
 // 	productGroups, errGet := models.GetProductGroups()
 // 	if errGet != nil {
 // 		http.Error(w, errGet.Error(), http.StatusInternalServerError)
 // 		return
 // 	}
 // 	utils.GenerateTemplateAdmin(w, productGroups, "add_product")
-// }
+}
 
 // /**
 //  * Admin create new product

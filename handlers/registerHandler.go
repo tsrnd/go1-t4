@@ -89,6 +89,6 @@ func SetUser(userInfo RegisterInfo) (user models.User) {
 	user.Address = userInfo.Address
 	user.Phone = userInfo.Phone
 	user.Email = userInfo.Email
-	user.CreatedAt = time.Now()
+	user.CreatedAt = utils.PtrTimeNow(time.Now())
 	return user
 }
