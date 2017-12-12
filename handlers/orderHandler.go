@@ -22,7 +22,7 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 func StoreOrder(w http.ResponseWriter, r *http.Request) {
   r.ParseForm()
   order := models.Order{}
-  userRequest, err := models.GetUserByUserName("namnn"); if err != nil {
+  userRequest, err := models.GetUserByUserName(GetAuthName(r)); if err != nil {
     fmt.Fprintln(w, err);
     return
 	}
