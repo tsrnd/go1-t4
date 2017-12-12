@@ -10,12 +10,12 @@ import (
 
 func main() {
 	var errConnection error
-	database.DBCon, errConnection = database.DBConnection()
+	database.DBCon.Db, errConnection = database.DBConnection()
 	if errConnection != nil {
 		log.Fatal(errConnection)
 		panic(errConnection)
 	}
-	defer database.DBCon.Close()
+	defer database.DBCon.Db.Close()
 	router := config.NewRouter()
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

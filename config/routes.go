@@ -2,9 +2,8 @@ package config
 
 import (
 	"net/http"
-
-	"github.com/gorilla/mux"
 	"github.com/goweb4/handlers"
+	"github.com/gorilla/mux"
 )
 
 // Route defines a route
@@ -109,12 +108,12 @@ var routes = Routes{
 		"/logout",
 		handlers.LogoutHandler,
 	},
-	Route{
-		"CreateProduct",
-		"GET",
-		"/product/add",
-		handlers.CreateProduct,
-	},
+	// Route{
+	// 	"CreateProduct",
+	// 	"GET",
+	// 	"/product/add",
+	// 	handlers.CreateProduct,
+	// },
 	// Route{
 	// 	"StoreProduct",
 	// 	"POST",

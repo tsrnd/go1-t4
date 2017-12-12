@@ -11,7 +11,7 @@ type ProductGroup struct {
 }
 
 func GetProductGroups() (productGroups []ProductGroup) {
-	rows, err := database.DBCon.Query("SELECT name FROM product_groups")
+	rows, err := database.DBCon.Db.Query("SELECT name FROM product_groups")
 	if err != nil {
 		return
 	}

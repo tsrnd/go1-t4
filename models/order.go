@@ -24,7 +24,7 @@ type Order struct {
 // CreateOrder using for create Order and checkou Product
 func CreateOrder(order Order) (orderID uint, err error) {
 	// begin transaction 
-	trans, err := database.DBCon.Begin()
+	trans, err := database.DBCon.Db.Begin()
 	if err != nil {
 		// return if error, can not begin transaction
 		fmt.Println(err)
@@ -74,7 +74,7 @@ func CheckoutAfterCreate(orderProduct *OrderProduct) (err error) {
 	var product Product
 	// get field 'in stock' in product 
 	query := "SELECT id, in_stock FROM products WHERE id = $1"
-	err = database.DBCon.QueryRow(query, orderProduct.ProductID).Scan(&product.ID, &product.InStock)
+	err = database.DBCon.Db.QueryRow(query, orderProduct.ProductID).Scan(&product.ID, &product.InStock)
 	if int(orderProduct.Quantity) > int(product.InStock) {
 		// return if not enough 
 		err = errors.New("Instock is not enough")
@@ -82,7 +82,7 @@ func CheckoutAfterCreate(orderProduct *OrderProduct) (err error) {
 	}
 	// Update field 'in stock' of product
 	query = `UPDATE products SET in_stock=$1 WHERE id = $2`
-	_, err = database.DBCon.Exec(query, product.InStock - orderProduct.Quantity, product.ID)  
+	_, err = database.DBCon.Db.Exec(query, product.InStock - orderProduct.Quantity, product.ID)  
 	if err != nil {  
 		// return if update fail
 		fmt.Println(err)

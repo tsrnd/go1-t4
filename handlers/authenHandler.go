@@ -65,20 +65,20 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	err := utils.MapFormValues(&info, r)
 	if err != nil {
 		fmt.Println("cannot decode login info: ", err)
-	} else {
-		if utils.CheckCredential(info) {
-			if utils.IsAdminRole(info.UserName) {
-				setSession(info.UserName, w)
-				http.Redirect(w, r, "/adminIndex", http.StatusSeeOther)
-			} else {
-				setSession(info.UserName, w)
-				http.Redirect(w, r, "/", http.StatusSeeOther)
-			}
+		return
+	}
+	if utils.CheckCredential(info) {
+		if utils.IsAdminRole(info.UserName) {
+			setSession(info.UserName, w)
+			http.Redirect(w, r, "/adminIndex", http.StatusSeeOther)
 		} else {
-			mess := "Sorry, this does not match our records. Check your spelling and try again."
-			utils.SetMessage(w, mess, "login")
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			setSession(info.UserName, w)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
+	} else {
+		mess := "Sorry, this does not match our records. Check your spelling and try again."
+		utils.SetMessage(w, mess, "login")
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 }
 
