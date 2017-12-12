@@ -35,7 +35,7 @@ const USER_ROLE = "normal_user"
 // }
 
 func GetUserByUserName(name string) (user User, err error) {
-	err = database.DBCon.QueryRow("SELECT password, email, role FROM users where user_name = $1", name).Scan(&user.Password, &user.Email, &user.Role)
+	err = database.DBCon.QueryRow("SELECT id, password, email, role FROM users where user_name = $1", name).Scan(&user.ID, &user.Password, &user.Email, &user.Role)
 	if err != nil {
 		fmt.Println("get user by name has an error: ", err)
 	}

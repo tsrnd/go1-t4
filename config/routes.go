@@ -73,12 +73,12 @@ var routes = Routes{
 	// 	"/order/add",
 	// 	handlers.CreateOrder,
 	// },
-	// Route{
-	// 	"StoreOrder",
-	// 	"POST",
-	// 	"/order",
-	// 	handlers.StoreOrder,
-	// },
+	Route{
+		"StoreOrder",
+		"POST",
+		"/order",
+		handlers.StoreOrder,
+	},
 	// Route{
 	// 	"EditOrder",
 	// 	"GET",
