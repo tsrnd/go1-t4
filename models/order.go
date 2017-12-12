@@ -1,6 +1,7 @@
 package models
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/goweb4/database"	
 	"errors"
@@ -57,12 +58,10 @@ func CreateOrder(order Order) (orderID uint, err error) {
 			trans.Rollback() // return and rollback if errors when insert
 			fmt.Println(err)
 			return 
-		} else {
-			err = CheckoutAfterCreate(&v); if err != nil {
-				fmt.Println(err)
-				trans.Rollback()// return and rollback if errors when checkout product table
-				return
-			}
+		}
+		err = UpdateStock(&v, trans); if err != nil {
+			fmt.Println(err)
+			return
 		}
 	}
 	// Finish transaction
@@ -70,7 +69,7 @@ func CreateOrder(order Order) (orderID uint, err error) {
 	return orderID, err
 }
 
-func CheckoutAfterCreate(orderProduct *OrderProduct) (err error) {
+func UpdateStock(orderProduct *OrderProduct, trans *sql.Tx) (err error) {
 	var product Product
 	// get field 'in stock' in product 
 	query := "SELECT id, in_stock FROM products WHERE id = $1"
@@ -81,11 +80,16 @@ func CheckoutAfterCreate(orderProduct *OrderProduct) (err error) {
 		return err
 	}
 	// Update field 'in stock' of product
-	query = `UPDATE products SET in_stock=$1 WHERE id = $2`
-	_, err = database.DBCon.Db.Exec(query, product.InStock - orderProduct.Quantity, product.ID)  
-	if err != nil {  
-		// return if update fail
+	updateStock, err := trans.Prepare(`UPDATE products SET in_stock=$1 WHERE id = $2`)
+	if err != nil {
 		fmt.Println(err)
+		return
+	}
+	_, err = updateStock.Exec(product.InStock - orderProduct.Quantity, product.ID)  
+	if err != nil {  
+		// return and rollback when update fail
+		fmt.Println(err)
+		trans.Rollback()
 		return err
 	}
 
