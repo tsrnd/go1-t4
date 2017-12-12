@@ -2,7 +2,7 @@ package config
 
 import (
 	"net/http"
-
+	"github.com/goweb4/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -18,12 +18,12 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
-// Route{
-// 	"Index",
-// 	"GET",
-// 	"/",
-// 	handlers.Index,
-// },
+Route{
+	"Index",
+	"GET",
+	"/",
+	handlers.IndexProduct,
+},
 // Route{
 // 	"AdminIndex",
 // 	"GET",

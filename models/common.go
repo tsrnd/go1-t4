@@ -1,12 +1,19 @@
 package models
 
 import (
-	"github.com/golang/protobuf/ptypes/timestamp"
+	// "fmt"
+	// "github.com/fatih/structs"
+	"time"
 )
 
 type Model struct {
-	ID				uint								`schema:"id"`
-	CreatedAt	timestamp.Timestamp	`schema:"created_at"`
-	UpdatedAt timestamp.Timestamp `schema:"updated_at"`
-	DeletedAt timestamp.Timestamp `schema:"deleted_at"`
+	ID				uint			`schema:"id"`
+	CreatedAt	time.Time	`schema:"created_at"`
+	UpdatedAt time.Time `schema:"updated_at"`
+	DeletedAt time.Time `schema:"deleted_at"`
+}
+
+type ModelExtend interface {
+	TableName()		string
+	GetSchema()		map[string]interface{}
 }

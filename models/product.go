@@ -1,7 +1,7 @@
 package models
 
 import (
-	
+	"github.com/goweb4/database"
 )
 
 type Product struct {
@@ -15,6 +15,29 @@ type Product struct {
 	ProductGroup  *ProductGroup   		//belong To Product Group
 	OrderProducts []OrderProduct 			//has many order products
 	Images        []Image        			//has many image
+}
+
+func (product *Product) GetSchema() ([]interface{}) {
+	return []interface{} {
+		&product.ID,
+		&product.Size,
+		&product.Color,
+		&product.Price,
+		&product.InStock,
+		&product.GroupID,
+		&product.CreatedAt,
+		&product.UpdatedAt,
+		&product.DeletedAt,
+		&product.Name,
+	}
+}
+
+func (product *Product) TableName() (string) {
+	return "products"
+}
+
+func (product *Product) Test() {
+	database.DBCon.Where("id = ?", 11).Find(product)
 }
 
 // func GetProducts() (products []Product) {

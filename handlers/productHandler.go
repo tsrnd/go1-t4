@@ -8,7 +8,7 @@ import (
 /**
  * Index Product
  */
-func IndexProduct(w http.ResponseWriter) {
+func IndexProduct(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Need to be implement")
 }
 
