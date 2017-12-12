@@ -138,12 +138,12 @@ var routes = Routes{
 	// 	"/product/{id}",
 	// 	handlers.DestroyProduct,
 	// },
-	// Route{
-	// 	"ShowProduct",
-	// 	"GET",
-	// 	"/product/{id}",
-	// 	handlers.ShowProduct,
-	// },
+	Route{
+		"ShowProduct",
+		"GET",
+		"/product/{id}",
+		handlers.ShowProduct,
+	},
 	// Route{
 	// 	"DetailProduct",
 	// 	"GET",
