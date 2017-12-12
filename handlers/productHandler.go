@@ -27,13 +27,11 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, err)
 		return
 	}
-
 	// models.GetRelatedData(productModel, "Images")
 	// models.GetRelatedData(productModel, "ProductGroup")
 	data := map[string]interface{}{
 		"Product": product,
 	}
-	fmt.Println(data)
 
 	utils.GenerateTemplateAdmin(w, data, "show_product")
 }
