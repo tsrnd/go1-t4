@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/goweb4/database"
 )
 
@@ -29,16 +27,13 @@ const USER_ROLE = "normal_user"
 // 	return user
 // }
 
-// func GetUserById(id uint) (user User, err error) {
-// 	err = database.DBCon.Where("id = ?", id).Find(&user).Error
-// 	return user, err
-// }
+func GetUserById(id uint) (user User, err error) {
+	err = database.DBCon.Db.QueryRow("SELECT password, email, role FROM users where id = $1", id).Scan(&user.Password, &user.Email, &user.Role)
+	return user, err
+}
 
 func GetUserByUserName(name string) (user User, err error) {
-	err = database.DBCon.Db.QueryRow("SELECT id, password, email, role FROM users where user_name = $1", name).Scan(&user.ID, &user.Password, &user.Email, &user.Role)
-	if err != nil {
-		fmt.Println("get user by name has an error: ", err)
-	}
+	err = database.DBCon.Db.QueryRow("SELECT password, user_name, email, phone, address, role FROM users where user_name = $1", name).Scan(&user.Password, &user.UserName, &user.Email, &user.Phone, &user.Address, &user.Role)
 	return user, err
 }
 
@@ -49,16 +44,19 @@ func CreateUser(user User) (err error) {
 	return err
 }
 
-// func UpdateUser(user *User) (errUpdate error) {
-// 	errUpdate = database.DBCon.Save(&user).Error
-// 	return errUpdate
-// }
+func UpdateUser(user *User) (errUpdate error) {
+	_, errUpdate = database.DBCon.Db.
+		Exec("UPDATE users SET user_name=$1, email=$2, password=$3, phone=$4, address=$5, updated_at=$6, role=$7 WHERE id = $8",
+			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.UpdatedAt, user.Role, user.ID)
+	return
+}
 
-// func DeleteUser(id uint) (err error) {
-// 	user := User{}
-// 	user, err = GetUserById(id)
-// 	if err == nil {
-// 		err = database.DBCon.Delete(&user).Error
-// 	}
-// 	return err
-// }
+func DeleteUser(id uint) (err error) {
+	_, err = GetUserById(id)
+	if err != nil {
+		return
+	}
+	_, err = database.DBCon.Db.
+		Exec("DELETE FROM users WHERE id = $1", id)
+	return err
+}

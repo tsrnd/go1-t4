@@ -32,7 +32,7 @@ func (product *Product) GetSchema() (map[string]interface{}) {
 	}
 }
 
-func (product *Product) TableName() (string) {
+func (product *Product) TableName() string {
 	return "products"
 }
 
@@ -45,11 +45,11 @@ func (product *Product) TableName() (string) {
 // }
 
 // func GetProducts() (products []Product) {
-	// err := database.DBCon.Find(&products).Error
-	// if err != nil {
-	// 	return products
-	// }
-	// return products
+// err := database.DBCon.Find(&products).Error
+// if err != nil {
+// 	return products
+// }
+// return products
 // }
 
 func GetProduct(id uint) (product Product, err error) {
@@ -103,10 +103,18 @@ func GetTrendProducts() (listProduct []Product) {
 	return listProduct
 }
 
-func GetLatestProduct() (products []Product) {
-	// err := database.DBCon.Last(&products).Limit(4).Find(&products).Error
-	// if err != nil {
-	// 	return products
-	// }
+func GetLatestProduct(limit int) (products []Product) {
+	rows, err := database.DBCon.Db.Query("SELECT id, size, name, price from products ORDER BY id DESC limit $1", limit)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		product := Product{}
+		err = rows.Scan(&product.ID, &product.Size, &product.Name, &product.Price)
+		if err != nil {
+			return
+		}
+		products = append(products, product)
+	}
 	return products
 }
