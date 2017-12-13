@@ -127,12 +127,12 @@ var routes = Routes{
 		"/admin/product/{id:[0-9]+}",
 		middleware.FilterAdmin(handlers.ShowProduct),
 	},
-	// Route{
-	// 	"DetailProduct",
-	// 	"GET",
-	// 	"/detail/{id}",
-	// 	handlers.DetailProduct,
-	// },
+	Route{
+		"DetailProduct",
+		"GET",
+		"/detail/{id}",
+		handlers.DetailProduct,
+	},
 	Route{
 		"ShowProductGroup",
 		"GET",
@@ -151,18 +151,18 @@ var routes = Routes{
 		"/about",
 		handlers.AboutUs,
 	},
-	// Route{
-	// 	"ShowCart",
-	// 	"GET",
-	// 	"/cart",
-	// 	handlers.ShowCart,
-	// },
-	// Route{
-	// 	"Checkout",
-	// 	"GET",
-	// 	"/checkout",
-	// 	handlers.Checkout,
-	// },
+	Route{
+		"ShowCart",
+		"GET",
+		"/cart",
+		handlers.ShowCart,
+	},
+	Route{
+		"Checkout",
+		"GET",
+		"/checkout",
+		handlers.Checkout,
+	},
 }
 
 //NewRouter configures a new router to the API

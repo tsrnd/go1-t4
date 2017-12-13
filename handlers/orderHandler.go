@@ -25,7 +25,8 @@ func StoreOrder(w http.ResponseWriter, r *http.Request) {
   userRequest, err := models.GetUserByUserName(GetAuthName(r)); if err != nil {
     fmt.Fprintln(w, err);
     return
-	}
+  }
+  fmt.Println(userRequest.ID)
   order.UserID = userRequest.ID		
 	order.Status = models.PENDING_STATUS
 
@@ -38,16 +39,14 @@ func StoreOrder(w http.ResponseWriter, r *http.Request) {
     return
   }
 	DoStuff(r, &order)
-	// fmt.Fprintln(w, order)
   _, err = models.CreateOrder(order); if err != nil {
     fmt.Fprintln(w, err)
     return
-	}
-	
-  fmt.Fprintln(w, "order succeed")
-  // Homvars := NewHomePageVars(r)
-  // Homvars.Message = "Order succeed"
-  // utils.GenerateTemplate(w, Homvars, "checkout")
+  }
+  
+  Homvars := NewHomePageVars(r)
+  Homvars.Message = "Order succeed"
+  utils.GenerateTemplate(w, Homvars, "checkout")
 }
 
 /**
@@ -90,15 +89,16 @@ func DoStuff(r *http.Request, order *models.Order) (err error){
 //  /**
 //   * User update order's infor
 //   */
-// func Checkout(w http.ResponseWriter, r *http.Request) {
-//   if GetAuthName(r) == "" {
-//     http.Redirect(w, r, "/login", 302)
-//   }
-//   Data := NewHomePageVars(r)
-//   payments, err := models.GetPayments()
-//   if err != nil {
-//     fmt.Fprintln(w, err)
-//   }
-//   Data.Payments = payments
-//   utils.GenerateTemplate(w, Data, "checkout")
-// }
+func Checkout(w http.ResponseWriter, r *http.Request) {
+  if GetAuthName(r) == "" {
+    http.Redirect(w, r, "/login", 302)
+  }
+  Data := NewHomePageVars(r)
+  payments, err := models.GetPayments()
+  if err != nil {
+    fmt.Fprintln(w, err)
+    return
+  }
+  Data.Payments = payments
+  utils.GenerateTemplate(w, Data, "checkout")
+}
