@@ -150,12 +150,12 @@ var routes = Routes{
 	// 	"/detail/{id}",
 	// 	handlers.DetailProduct,
 	// },
-	// Route{
-	// 	"ShowProductGroup",
-	// 	"GET",
-	// 	"/group/{id}",
-	// 	handlers.ShowProductGroup,
-	// },
+	Route{
+		"ShowProductGroup",
+		"GET",
+		"/group/{id}",
+		handlers.ShowProductGroup,
+	},
 	Route{
 		"ContactUs",
 		"GET",
