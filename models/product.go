@@ -58,7 +58,7 @@ func (product *Product) Test() {
 
 func GetProduct(id uint) (product Product, err error) {
 	err = database.DBCon.Where("id = ?", id).Find(&product)
-	// database.DBCon.Model(&product).Association("Images").Find(&product.Images)
+	
 	return product, err
 }
 
