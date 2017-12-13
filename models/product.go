@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/goweb4/database"
 )
 
@@ -83,27 +85,21 @@ func GetProduct(id uint) (product Product, err error) {
 // 	}
 // 	return proId, err
 // }
-func GetTrendProducts() (listProduct []Product) {
-
-	// rows, err := database.DBCon.Table("order_products").
-	// 	Select("product_id, sum(quantity) as total").
-	// 	Group("product_id").
-	// 	Order("total desc").
-	// 	Limit(4).
-	// 	Rows()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-	// for rows.Next() {
-	// 	var id, quantity uint
-	// 	product := Product{}
-	// 	if err := rows.Scan(&id, &quantity); err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// 	database.DBCon.Where("id = ?", id).First(&product)
-	// 	listProduct = append(listProduct, product)
-	// }
+func GetTrendProducts(limit int) (listProduct []Product) {
+	rows, err := database.DBCon.Db.Query("SELECT product_id, quantity from order_products ORDER BY quantity DESC limit $1", limit)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		var id, quantity uint
+		product := Product{}
+		if err := rows.Scan(&id, &quantity); err != nil {
+			fmt.Println(err)
+		}
+		database.DBCon.Db.QueryRow("SELECT id, size, name, price from products where id = $1", id).
+			Scan(&product.ID, &product.Size, &product.Name, &product.Price)
+		listProduct = append(listProduct, product)
+	}
 	return listProduct
 }
 
