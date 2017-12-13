@@ -115,6 +115,7 @@ func GetTrendProducts(limit int) (listProduct []Product) {
 		product := Product{}
 		if err := rows.Scan(&id, &quantity); err != nil {
 			fmt.Println(err)
+			return
 		}
 		database.DBCon.Db.QueryRow("SELECT id, size, name, price from products where id = $1", id).
 			Scan(&product.ID, &product.Size, &product.Name, &product.Price)
@@ -128,7 +129,7 @@ func GetLatestProduct(limit int) (products []Product) {
 	if err != nil {
 		return
 	}
-	defer rows.Close()
+
 	for rows.Next() {
 		product := Product{}
 		err = rows.Scan(&product.ID, &product.Size, &product.Name, &product.Price)
