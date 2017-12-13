@@ -15,6 +15,6 @@ const IMG_BASE_URL = "uploads/images"
 
 func StoreImage(image *Image) (errCreateImage error) {
 	errCreateImage = database.DBCon.Db.
-		QueryRow("INSERT INTO images (name, created_at) VALUES($1,$2) returning id;", image.Name, time.Now()).Scan(&image.ID)
+		QueryRow("INSERT INTO images (name, url, created_at, product_id) VALUES($1,$2,$3,$4) returning id;", image.Name, image.URL, time.Now(), image.ProductId).Scan(&image.ID)
 	return
 }
