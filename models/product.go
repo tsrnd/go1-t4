@@ -56,10 +56,6 @@ func (product *Product) TableName() string {
 // }
 
 func GetProduct(id uint) (product Product, err error) {
-	err = database.DBCon.Where("id = ?", id).Find(&product)
-	if err != nil {
-		return
-	}
 	rows, err := database.DBCon.Db.
 		Query("SELECT * FROM images WHERE product_id = $1", product.ID)
 	if err != nil {
