@@ -34,6 +34,7 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	utils.GenerateTemplateAdmin(w, data, "show_product")
+	return
 }
 
 // /**
@@ -74,7 +75,7 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 // 		http.Error(w, errGet.Error(), http.StatusInternalServerError)
 // 		return
 // 	}
-// 	utils.GenerateTemplateAdmin(w, productGroups, "add_product")
+	utils.GenerateTemplateAdmin(w, "", "add_product")
 }
 
 // /**
