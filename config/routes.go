@@ -115,12 +115,12 @@ var routes = Routes{
 		"/product/add",
 		handlers.CreateProduct,
 	},
-	// Route{
-	// 	"StoreProduct",
-	// 	"POST",
-	// 	"/product",
-	// 	handlers.StoreProduct,
-	// },
+	Route{
+		"StoreProduct",
+		"POST",
+		"/product",
+		handlers.StoreProduct,
+	},
 	// Route{
 	// 	"EditProduct",
 	// 	"GET",

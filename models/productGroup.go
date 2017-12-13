@@ -10,21 +10,21 @@ type ProductGroup struct {
 	Products []Product //has many products
 }
 
-func GetProductGroups() (productGroups []ProductGroup) {
-	rows, err := database.DBCon.Db.Query("SELECT name FROM product_groups")
+func GetProductGroups() (productGroups []ProductGroup, err error) {
+	rows, err := database.DBCon.Db.Query("SELECT id, name FROM product_groups")
 	if err != nil {
 		return
 	}
 	for rows.Next() {
 		productGroup := ProductGroup{}
-		err = rows.Scan(&productGroup.Name)
+		err = rows.Scan(&productGroup.ID, &productGroup.Name)
 		if err != nil {
 			return
 		}
 		productGroups = append(productGroups, productGroup)
 	}
 	rows.Close()
-	return productGroups
+	return
 }
 
 // func GetProductsByGroupID(id uint) (products []Product, err error) {

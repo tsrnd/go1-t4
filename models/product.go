@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+	"time"
 	"github.com/goweb4/database"
 )
 
@@ -90,13 +92,16 @@ func GetProduct(id uint) (product Product, err error) {
 // 	return errGet
 // }
 
-// func CreateProduct(product *Product) (proId uint, err error) {
-// 	err = database.DBCon.Create(&product).Error
-// 	if proId = 0; err == nil {
-// 		proId = product.ID
-// 	}
-// 	return proId, err
-// }
+func CreateProduct(product *Product) (proId uint, err error) {
+	fmt.Println(product)
+	err = database.DBCon.Db.
+	QueryRow(
+		"INSERT INTO products (size, color, price, in_stock, group_id, created_at, name) VALUES($1,$2,$3,$4,$5,$6,$7) returning id;",
+		product.Size, product.Color, product.Price, product.InStock,
+	 	product.GroupID, time.Now(), product.Name,).
+	 Scan(&product.ID)
+	return product.ID, err
+}
 func GetTrendProducts() (listProduct []Product) {
 
 	// rows, err := database.DBCon.Table("order_products").
