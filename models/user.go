@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/goweb4/database"
 )
 
@@ -31,17 +29,11 @@ const USER_ROLE = "normal_user"
 
 func GetUserById(id uint) (user User, err error) {
 	err = database.DBCon.Db.QueryRow("SELECT password, email, role FROM users where id = $1", id).Scan(&user.Password, &user.Email, &user.Role)
-	if err != nil {
-		fmt.Println("get user by id has an error: ", err)
-	}
 	return user, err
 }
 
 func GetUserByUserName(name string) (user User, err error) {
 	err = database.DBCon.Db.QueryRow("SELECT password, user_name, email, phone, address, role FROM users where user_name = $1", name).Scan(&user.Password, &user.UserName, &user.Email, &user.Phone, &user.Address, &user.Role)
-	if err != nil {
-		fmt.Println("get user by name has an error: ", err)
-	}
 	return user, err
 }
 
