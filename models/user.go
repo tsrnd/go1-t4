@@ -53,19 +53,18 @@ func CreateUser(user User) (err error) {
 }
 
 func UpdateUser(user *User) (errUpdate error) {
-	errUpdate = database.DBCon.Db.
-		QueryRow("UPDATE users SET user_name=$1, email=$2, password=$3, phone=$4, address=$5, updated_at=$6, role=$7 WHERE id = $8",
-			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.UpdatedAt, user.Role, user.ID).Scan(&user)
-	return errUpdate
+	_, errUpdate = database.DBCon.Db.
+		Exec("UPDATE users SET user_name=$1, email=$2, password=$3, phone=$4, address=$5, updated_at=$6, role=$7 WHERE id = $8",
+			user.UserName, user.Email, user.Password, user.Phone, user.Address, user.UpdatedAt, user.Role, user.ID)
+	return
 }
 
 func DeleteUser(id uint) (err error) {
-	user := User{}
-	user, err = GetUserById(id)
+	_, err = GetUserById(id)
 	if err != nil {
 		return
 	}
-	err = database.DBCon.Db.
-		QueryRow("DELETE FROM users WHERE id = $1", id).Scan(&user)
+	_, err = database.DBCon.Db.
+		Exec("DELETE FROM users WHERE id = $1", id)
 	return err
 }

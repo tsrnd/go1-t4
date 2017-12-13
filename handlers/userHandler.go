@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -37,7 +36,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	errMap := utils.MapFormValues(&user, r)
 	if errMap != nil {
-		log.Fatal(errMap)
 		fmt.Fprintln(w, errMap)
 		return
 	}

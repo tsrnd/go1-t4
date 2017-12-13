@@ -67,12 +67,6 @@ var routes = Routes{
 		"/{id}",
 		handlers.DeleteUser,
 	},
-	Route{
-		"TEST",
-		"PUT",
-		"test",
-		handlers.Test,
-	},
 	// Route{
 	// 	"CreateOrder",
 	// 	"GET",
@@ -115,12 +109,12 @@ var routes = Routes{
 		"/logout",
 		handlers.LogoutHandler,
 	},
-	Route{
-		"CreateProduct",
-		"GET",
-		"/product/add",
-		handlers.CreateProduct,
-	},
+	// Route{
+	// 	"CreateProduct",
+	// 	"GET",
+	// 	"/product/add",
+	// 	handlers.CreateProduct,
+	// },
 	// Route{
 	// 	"StoreProduct",
 	// 	"POST",
