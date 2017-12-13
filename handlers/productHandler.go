@@ -55,8 +55,8 @@ func ShowProductGroup(w http.ResponseWriter, r *http.Request) {
 	products, err := models.GetProductsByGroupID(uint(id))
 	if err != nil {
 		fmt.Fprintln(w, err)
+		return
 	}
-	fmt.Println(products)
 
 	paginator := utils.Paginate(len(products), 12, int(page))
 	HomeVars.Products = products[paginator.Start:paginator.End]
@@ -172,26 +172,30 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
 // 	}
 // }
 
-// /**
-//  * Detail product
-//  */
-// func DetailProduct(w http.ResponseWriter, r *http.Request) {
-// 	vars := mux.Vars(r)
-// 	id, _ := strconv.ParseUint(vars["id"], 10, 32)
-// 	product, err := models.GetProduct(uint(id))
-// 	if err != nil {
-// 		fmt.Fprintln(w, err)
-// 	}
+/**
+ * Detail product
+ */
+func DetailProduct(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.ParseUint(vars["id"], 10, 32)
+	product, err := models.GetProduct(uint(id))
+	if err != nil {
+		fmt.Println(w, err)
+		return
+	}
 
-// 	products, err := models.GetProductsByGroupID(product.GroupID)
-// 	if err != nil {
-// 		fmt.Fprintln(w, err)
-// 	}
-// 	fmt.Println(product)
-// 	fmt.Println(products)
+	products, err := models.GetProductsByGroupID(product.GroupID)
+	if err != nil {
+		fmt.Fprintln(w, err)
+		return
+	}
 
-// 	HomeVars := NewHomePageVars(r)
-// 	HomeVars.Product = product
-// 	HomeVars.Products = products[:3]
-// 	utils.GenerateTemplate(w, HomeVars, "product_detail", "modal")
-// }
+	HomeVars := NewHomePageVars(r)
+	HomeVars.Product = product
+	if len(products) >= 3 {
+		HomeVars.Products = products[:3]
+	} else {
+		HomeVars.Products = products
+	}
+	utils.GenerateTemplate(w, HomeVars, "product_detail", "modal")
+}

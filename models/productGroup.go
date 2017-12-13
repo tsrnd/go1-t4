@@ -52,12 +52,15 @@ func GetProductsByGroupID(id uint) (products []Product, err error) {
 		i := Image{}
 		rows.Scan(&i.URL, &i.ProductId)
 		product := pl[int(i.ProductId)]
-		product.Images = append(pl[int(i.ProductId)].Images, i)
-		pl[int(i.ProductId)] = product
+		if product.ID != 0 {
+			product.Images = append(pl[int(i.ProductId)].Images, i)
+			pl[int(i.ProductId)] = product
+		}
 	}
  	defer rows.Close()
 
 	for _, p := range pl {
+		fmt.Println(p)
 		products = append(products, p)
 	}
 
