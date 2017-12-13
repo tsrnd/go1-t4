@@ -104,3 +104,7 @@ func ConvertStrToUint(value string) (uint, error) {
 	result, err := strconv.ParseUint(value, 10, 32)
 	return uint(result), err
 }
+
+func PtrTimeNow(t time.Time) (time *time.Time) {
+	return &t
+}

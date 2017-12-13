@@ -73,12 +73,12 @@ var routes = Routes{
 	// 	"/order/add",
 	// 	handlers.CreateOrder,
 	// },
-	// Route{
-	// 	"StoreOrder",
-	// 	"POST",
-	// 	"/order",
-	// 	handlers.StoreOrder,
-	// },
+	Route{
+		"StoreOrder",
+		"POST",
+		"/order",
+		handlers.StoreOrder,
+	},
 	// Route{
 	// 	"EditOrder",
 	// 	"GET",
@@ -139,12 +139,12 @@ var routes = Routes{
 	// 	"/product/{id}",
 	// 	handlers.DestroyProduct,
 	// },
-	// Route{
-	// 	"ShowProduct",
-	// 	"GET",
-	// 	"/product/{id}",
-	// 	handlers.ShowProduct,
-	// },
+	Route{
+		"ShowProduct",
+		"GET",
+		"/product/{id}",
+		handlers.ShowProduct,
+	},
 	// Route{
 	// 	"DetailProduct",
 	// 	"GET",
