@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/goweb4/database"
+	"reflect"
 )
 
 type ProductGroup struct {
@@ -25,24 +26,43 @@ func GetProductGroups() (productGroups []ProductGroup) {
 		productGroups = append(productGroups, productGroup)
 	}
 	rows.Close()
-	// fmt.Println(productGroups[1].ID)
 	return productGroups
 }
 
 // Get products by group
 func GetProductsByGroupID(id uint) (products []Product, err error) {
+	prList := make(map[int]*Product)
 	query := `SELECT id, name, size, price, in_stock, color FROM products WHERE group_id = $1`
 	rows, err := database.DBCon.Db.Query(query, id)
 		for rows.Next() {
-			tmp := Product{}
-			err = rows.Scan(&tmp.ID, &tmp.Name, &tmp.Size, &tmp.Price, &tmp.InStock, &tmp.Color)
+			product := &Product{}
+			err = rows.Scan(&product.ID, &product.Name, &product.Size, &product.Price, &product.InStock, &product.Color)
 			if err != nil {
 				return
 			}
-			LoadImages(&tmp)
-			products = append(products, tmp)
+			prList[int(product.ID)] = product
 		}
-		rows.Close()
+	defer rows.Close()
+
+	rows, err = database.DBCon.Db.Query(`SELECT url, product_id FROM images`)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		i := &Image{}
+		rows.Scan(&i.URL, &i.ProductId)
+		// fmt.Println(prList[int(i.ProductId)])
+		prList[int(i.ProductId)].Images = append(prList[int(i.ProductId)].Images, i)
+	}
+ 	defer rows.Close()
+	
+	var pro []Product
+	for _, p := range prList {
+		fmt.Println(reflect.TypeOf(p))
+
+		products = append(products, p)
+	}
+
 	return products, err
 }
 
@@ -55,7 +75,7 @@ func LoadImages(product *Product) {
 		return
 	}
 	for rows.Next() {
-		image := Image{}
+		image := &Image{}
 		err = rows.Scan(&image.URL)
 		if err != nil {
 			fmt.Println(err)

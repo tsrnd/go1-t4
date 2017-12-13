@@ -14,7 +14,7 @@ type Product struct {
 	GroupID       uint           `schema:"group_id"`
 	ProductGroup  *ProductGroup  //belong To Product Group
 	OrderProducts []OrderProduct //has many order products
-	Images        []Image        //has many image
+	Images        []*Image        //has many image
 }
 
 func (product *Product) GetSchema() ([]interface{}) {

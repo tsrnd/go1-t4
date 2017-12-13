@@ -40,23 +40,24 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
  * Show product by group
  */
 func ShowProductGroup(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id, _ := strconv.ParseUint(vars["id"], 10, 32)
-	query := r.URL.Query()
-	page, _ := strconv.ParseInt(query.Get("page"), 10, 32)
+	// vars := mux.Vars(r)
+	// id, _ := strconv.ParseUint(vars["id"], 10, 32)
+	// query := r.URL.Query()
+	// page, _ := strconv.ParseInt(query.Get("page"), 10, 32)
 
-	HomeVars := NewHomePageVars(r)
+	// HomeVars := NewHomePageVars(r)
 
-	products, err := models.GetProductsByGroupID(uint(id))
+	products, err := models.GetProductsByGroupID(3)
 	if err != nil {
 		fmt.Fprintln(w, err)
 	}
+	fmt.Println(products)
 
-	paginator := utils.Paginate(len(products), 12, int(page))
-	HomeVars.Products = products[paginator.Start:paginator.End]
-	HomeVars.Paginator = paginator
+	// paginator := utils.Paginate(len(products), 12, int(page))
+	// HomeVars.Products = products[paginator.Start:paginator.End]
+	// HomeVars.Paginator = paginator
 
-	utils.GenerateTemplate(w, HomeVars, "product")
+	// utils.GenerateTemplate(w, HomeVars, "product")
 }
 
 // /**
