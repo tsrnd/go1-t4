@@ -2,7 +2,11 @@ package models
 
 import (
 	"fmt"
+<<<<<<< HEAD
 
+=======
+	"time"
+>>>>>>> master
 	"github.com/goweb4/database"
 )
 
@@ -19,27 +23,23 @@ type Product struct {
 	Images        []Image        //has many image
 }
 
-func (product *Product) GetSchema() []interface{} {
-	return []interface{}{
-		&product.ID,
-		&product.Size,
-		&product.Color,
-		&product.Price,
-		&product.InStock,
-		&product.GroupID,
-		&product.CreatedAt,
-		&product.UpdatedAt,
-		&product.DeletedAt,
-		&product.Name,
+func (product *Product) GetSchema() (map[string]interface{}) {
+	return map[string]interface{} {
+		"id": &product.ID,
+		"size": &product.Size,
+		"color": &product.Color,
+		"price": &product.Price,
+		"in_stock": &product.InStock,
+		"group_id": &product.GroupID,
+		"created_at": &product.CreatedAt,
+		"updated_at": &product.UpdatedAt,
+		"deleted_at": &product.DeletedAt,
+		"name": &product.Name,
 	}
 }
 
 func (product *Product) TableName() string {
 	return "products"
-}
-
-func (product *Product) Test() {
-	database.DBCon.Where("id = ?", 11).Find(product)
 }
 
 // func GetProducts() (products []Product) {
@@ -60,8 +60,26 @@ func (product *Product) Test() {
 
 func GetProduct(id uint) (product Product, err error) {
 	err = database.DBCon.Where("id = ?", id).Find(&product)
-	// database.DBCon.Model(&product).Association("Images").Find(&product.Images)
-	return product, err
+	if err != nil {
+		return
+	}
+	rows, err := database.DBCon.Db.
+		Query("SELECT * FROM images WHERE product_id = $1", product.ID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+	for rows.Next() {
+		image := Image{Product: &product}
+		err = rows.Scan(
+			&image.ID, &image.Name, &image.URL, &image.CreatedAt, &image.UpdatedAt, &image.DeletedAt, &image.ProductId,
+		)
+		if err != nil {
+			return
+		}
+		product.Images = append(product.Images, image)
+	}
+	return
 }
 
 // func UpdateProduct(product *Product) (errUpdate error) {
@@ -78,13 +96,17 @@ func GetProduct(id uint) (product Product, err error) {
 // 	return errGet
 // }
 
-// func CreateProduct(product *Product) (proId uint, err error) {
-// 	err = database.DBCon.Create(&product).Error
-// 	if proId = 0; err == nil {
-// 		proId = product.ID
-// 	}
-// 	return proId, err
-// }
+func CreateProduct(product *Product) (proId uint, err error) {
+	fmt.Println(product)
+	err = database.DBCon.Db.
+	QueryRow(
+		"INSERT INTO products (size, color, price, in_stock, group_id, created_at, name) VALUES($1,$2,$3,$4,$5,$6,$7) returning id;",
+		product.Size, product.Color, product.Price, product.InStock,
+	 	product.GroupID, time.Now(), product.Name,).
+	 Scan(&product.ID)
+	return product.ID, err
+}
+
 func GetTrendProducts(limit int) (listProduct []Product) {
 	rows, err := database.DBCon.Db.Query("SELECT product_id, quantity from order_products ORDER BY quantity DESC limit $1", limit)
 	if err != nil {

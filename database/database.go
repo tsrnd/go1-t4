@@ -14,17 +14,24 @@ var dbinfo string
 
 type DB struct {
 	Db *sql.DB
-	Condition string
+  Condition string
+	ColsSelect string
+	ColsScan []string
 }
 var DBCon DB
 
 type ModelExtend interface {
 	TableName() string
-	GetSchema() []interface{}
+	GetSchema() map[string]interface{}
 }
 
 func (db *DB) Find(m ModelExtend) (err error) {
 	stmt := "SELECT * FROM " + m.TableName()
+	var ColsScan []interface{}
+	if db.ColsSelect != "" {
+		stmt = strings.Replace(stmt, "*", db.ColsSelect, 1)
+  }
+
 	if db.Condition != "" {
 		stmt += " " +  db.Condition
 	}
@@ -34,25 +41,29 @@ func (db *DB) Find(m ModelExtend) (err error) {
 		return
 	}
 	defer rows.Close()
-	cols, err := rows.Columns()
-	err = ScanInto(rows, cols, m)
+	defer db.ClearAttr()
+	//set pointer to scan values
+	if db.ColsSelect == "" {
+		colsName, err := rows.Columns(); if err != nil {
+			return err
+		}
+		ColsScan = MappingPointer(colsName, m.GetSchema())
+	} else {
+		ColsScan = MappingPointer(db.ColsScan, m.GetSchema())
+	}
+	err = ScanInto(rows, ColsScan)
 	return
 }
 
-func ScanInto(rows *sql.Rows, colsName []string, m ModelExtend) (err error) {
-	for rows.Next() {
-			err = rows.Scan(m.GetSchema()...); if err != nil {
-				return
-			}
+func (db *DB) Select(params ...string) (*DB) {
+	for i, v := range params {
+		if i < len(params) - 1 {
+			db.ColsSelect += v + ", "
+			continue
+		}
+		db.ColsSelect += v
 	}
-	return
-}
-
-func (db *DB) Where(stmt string, cond ...interface{}) (*DB) {
-	for _, v := range cond {
-		stmt = strings.Replace(stmt, "?", fmt.Sprintf("%v", v), 1)
-	}
-	db.Condition = "WHERE " + stmt
+	db.ColsScan = params
 	return db
 }
 

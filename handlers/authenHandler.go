@@ -30,7 +30,7 @@ type HomePageVars struct {
  */
 func NewHomePageVars(r *http.Request) HomePageVars {
 	var homePageVars HomePageVars
-	homePageVars.ProductGroup = models.GetProductGroups()
+	homePageVars.ProductGroup, _ = models.GetProductGroups()
 	homePageVars.Name = GetAuthName(r)
 
 	return homePageVars

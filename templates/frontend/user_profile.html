@@ -13,24 +13,18 @@
       <div class="col-sm-8">
           <ul class="list-group">
               <a href="/userProfile"><img src="/static/css/themes/images/avatar1.png" class="site_avatr" alt=""></a>
-              <li class="list-group-item text-right">
-                <span class="pull-left"><strong class="">UserName:</strong></span> {{ .User.UserName }}
-              </li>
-              <li class="list-group-item text-right">
+              <div class="list-group-item text-right">
+                <span class="pull-left"><strong class="">UserName:</strong></span><b> {{ .User.UserName }} </b>
+              </div>
+              <div class="list-group-item text-right">
                 <span class="pull-left"><strong class="">Email:</strong></span><a href="#"> {{ .User.Email }}</a>
-              </li>
-              <li class="list-group-item text-right">
-                <span class="pull-left"><strong class="">Gender:</strong></span> {{ .User.Gender }}
-              </li>
-              <li class="list-group-item text-right">
+              </div>
+              <div class="list-group-item text-right">
                 <span class="pull-left"><strong class="">Phone Number:</strong></span> {{ .User.Phone }}
-              </li>
-              <li class="list-group-item text-right">
+              </div>
+              <div class="list-group-item text-right">
                 <span class="pull-left"><strong class="">Address:</strong></span> {{ .User.Address }}
-              </li>
-              <li class="list-group-item text-right">
-                <span class="pull-left"><strong class="">Avatar:</strong></span> {{ .User.Avatar }}
-              </li>
+              </div>
           </ul>
         </div>
       </div>
