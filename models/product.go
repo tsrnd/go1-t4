@@ -17,27 +17,23 @@ type Product struct {
 	Images        []Image        //has many image
 }
 
-func (product *Product) GetSchema() []interface{} {
-	return []interface{}{
-		&product.ID,
-		&product.Size,
-		&product.Color,
-		&product.Price,
-		&product.InStock,
-		&product.GroupID,
-		&product.CreatedAt,
-		&product.UpdatedAt,
-		&product.DeletedAt,
-		&product.Name,
+func (product *Product) GetSchema() (map[string]interface{}) {
+	return map[string]interface{} {
+		"id": &product.ID,
+		"size": &product.Size,
+		"color": &product.Color,
+		"price": &product.Price,
+		"in_stock": &product.InStock,
+		"group_id": &product.GroupID,
+		"created_at": &product.CreatedAt,
+		"updated_at": &product.UpdatedAt,
+		"deleted_at": &product.DeletedAt,
+		"name": &product.Name,
 	}
 }
 
 func (product *Product) TableName() string {
 	return "products"
-}
-
-func (product *Product) Test() {
-	database.DBCon.Where("id = ?", 11).Find(product)
 }
 
 // func GetProducts() (products []Product) {

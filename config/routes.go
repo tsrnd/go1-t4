@@ -109,12 +109,12 @@ var routes = Routes{
 		"/logout",
 		handlers.LogoutHandler,
 	},
-	// Route{
-	// 	"CreateProduct",
-	// 	"GET",
-	// 	"/product/add",
-	// 	handlers.CreateProduct,
-	// },
+	Route{
+		"CreateProduct",
+		"GET",
+		"/product/add",
+		handlers.CreateProduct,
+	},
 	// Route{
 	// 	"StoreProduct",
 	// 	"POST",
