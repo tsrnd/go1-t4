@@ -100,7 +100,7 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		fileName, _, err := utils.HandleImage(file, header, id, models.IMG_BASE_URL)
 		if err != nil {
-			http.Redirect(w, r, "/product/add", http.StatusBadRequest)
+			http.Redirect(w, r, "/admin/product/add", http.StatusBadRequest)
 			return
 		}
 		image := models.Image{}
@@ -109,12 +109,12 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
 		image.URL = strings.Join([]string{models.IMG_BASE_URL, fileName + ".jpg"}, "/")
 		err = models.StoreImage(&image)
 		if err != nil {
-			http.Redirect(w, r, "/product/add", http.StatusBadRequest)
+			http.Redirect(w, r, "/admin/product/add", http.StatusBadRequest)
 			return
 		}
 	}
 
-	http.Redirect(w, r, "/product/"+fmt.Sprint(id), http.StatusFound)
+	http.Redirect(w, r, "/admin/product/"+fmt.Sprint(id), http.StatusFound)
 }
 
 // /**

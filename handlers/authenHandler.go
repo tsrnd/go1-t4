@@ -46,7 +46,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func IndexAdmin(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/product/add", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/product/add", http.StatusSeeOther)
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {

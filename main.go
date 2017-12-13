@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-
 	"github.com/goweb4/config"
 	"github.com/goweb4/database"
 )
