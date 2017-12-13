@@ -2,8 +2,9 @@ package config
 
 import (
 	"net/http"
-	"github.com/goweb4/handlers"
+
 	"github.com/gorilla/mux"
+	"github.com/goweb4/handlers"
 )
 
 // Route defines a route
@@ -42,30 +43,30 @@ var routes = Routes{
 		"/registerHandler",
 		handlers.RegisterHandler,
 	},
-	// Route{
-	// 	"UserProfile",
-	// 	"GET",
-	// 	"/userProfile",
-	// 	handlers.UserProfile,
-	// },
+	Route{
+		"UserProfile",
+		"GET",
+		"/userProfile",
+		handlers.UserProfile,
+	},
 	// Route{
 	// 	"CreateUser",
 	// 	"POST",
 	// 	"/user",
 	// 	handlers.AddUser,
 	// },
-	// Route{
-	// 	"UpdateUser",
-	// 	"PUT",
-	// 	"/user/{id}",
-	// 	handlers.UpdateUser,
-	// },
-	// Route{
-	// 	"DeleteUser",
-	// 	"DELETE",
-	// 	"/{id}",
-	// 	handlers.DeleteUser,
-	// },
+	Route{
+		"UpdateUser",
+		"PUT",
+		"/user/{id}",
+		handlers.UpdateUser,
+	},
+	Route{
+		"DeleteUser",
+		"DELETE",
+		"/{id}",
+		handlers.DeleteUser,
+	},
 	// Route{
 	// 	"CreateOrder",
 	// 	"GET",
