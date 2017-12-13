@@ -30,7 +30,7 @@ type HomePageVars struct {
  */
 func NewHomePageVars(r *http.Request) HomePageVars {
 	var homePageVars HomePageVars
-	homePageVars.ProductGroup = models.GetProductGroups()
+	homePageVars.ProductGroup, _ = models.GetProductGroups()
 	homePageVars.Name = GetAuthName(r)
 
 	return homePageVars
@@ -39,8 +39,8 @@ func NewHomePageVars(r *http.Request) HomePageVars {
 func Index(w http.ResponseWriter, r *http.Request) {
 
 	HomeVars := NewHomePageVars(r)
-	HomeVars.LatesProducts = models.GetLatestProduct()
-	HomeVars.BestSeller = models.GetTrendProducts()
+	HomeVars.LatesProducts = models.GetLatestProduct(4)
+	// HomeVars.BestSeller = models.GetTrendProducts()
 	HomeVars.PageTitle = "Home Page"
 	utils.GenerateTemplate(w, HomeVars, "index")
 }
