@@ -2,7 +2,7 @@ package config
 
 import (
 	"net/http"
-
+	"github.com/goweb4/middleware"
 	"github.com/gorilla/mux"
 	"github.com/goweb4/handlers"
 )
@@ -112,38 +112,20 @@ var routes = Routes{
 	Route{
 		"CreateProduct",
 		"GET",
-		"/product/add",
-		handlers.CreateProduct,
+		"/admin/product/add",
+		middleware.FilterAdmin(handlers.CreateProduct),
 	},
 	Route{
 		"StoreProduct",
 		"POST",
-		"/product",
-		handlers.StoreProduct,
+		"/admin/product",
+		middleware.FilterAdmin(handlers.StoreProduct),
 	},
-	// Route{
-	// 	"EditProduct",
-	// 	"GET",
-	// 	"/product/{id}/edit",
-	// 	handlers.EditProduct,
-	// },
-	// Route{
-	// 	"UpdateProduct",
-	// 	"PUT",
-	// 	"/product/{id}",
-	// 	handlers.UpdateProduct,
-	// },
-	// Route{
-	// 	"DeleteProduct",
-	// 	"DELETE",
-	// 	"/product/{id}",
-	// 	handlers.DestroyProduct,
-	// },
 	Route{
-		"ShowProduct",
+		"CreateProduct",
 		"GET",
-		"/product/{id}",
-		handlers.ShowProduct,
+		"/admin/product/{id:[0-9]+}",
+		middleware.FilterAdmin(handlers.ShowProduct),
 	},
 	// Route{
 	// 	"DetailProduct",
