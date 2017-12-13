@@ -2,11 +2,8 @@ package models
 
 import (
 	"fmt"
-<<<<<<< HEAD
-
-=======
 	"time"
->>>>>>> master
+
 	"github.com/goweb4/database"
 )
 
@@ -23,18 +20,18 @@ type Product struct {
 	Images        []Image        //has many image
 }
 
-func (product *Product) GetSchema() (map[string]interface{}) {
-	return map[string]interface{} {
-		"id": &product.ID,
-		"size": &product.Size,
-		"color": &product.Color,
-		"price": &product.Price,
-		"in_stock": &product.InStock,
-		"group_id": &product.GroupID,
+func (product *Product) GetSchema() map[string]interface{} {
+	return map[string]interface{}{
+		"id":         &product.ID,
+		"size":       &product.Size,
+		"color":      &product.Color,
+		"price":      &product.Price,
+		"in_stock":   &product.InStock,
+		"group_id":   &product.GroupID,
 		"created_at": &product.CreatedAt,
 		"updated_at": &product.UpdatedAt,
 		"deleted_at": &product.DeletedAt,
-		"name": &product.Name,
+		"name":       &product.Name,
 	}
 }
 
@@ -99,11 +96,11 @@ func GetProduct(id uint) (product Product, err error) {
 func CreateProduct(product *Product) (proId uint, err error) {
 	fmt.Println(product)
 	err = database.DBCon.Db.
-	QueryRow(
-		"INSERT INTO products (size, color, price, in_stock, group_id, created_at, name) VALUES($1,$2,$3,$4,$5,$6,$7) returning id;",
-		product.Size, product.Color, product.Price, product.InStock,
-	 	product.GroupID, time.Now(), product.Name,).
-	 Scan(&product.ID)
+		QueryRow(
+			"INSERT INTO products (size, color, price, in_stock, group_id, created_at, name) VALUES($1,$2,$3,$4,$5,$6,$7) returning id;",
+			product.Size, product.Color, product.Price, product.InStock,
+			product.GroupID, time.Now(), product.Name).
+		Scan(&product.ID)
 	return product.ID, err
 }
 
@@ -112,6 +109,7 @@ func GetTrendProducts(limit int) (listProduct []Product) {
 	if err != nil {
 		return
 	}
+	defer rows.Close()
 	for rows.Next() {
 		var id, quantity uint
 		product := Product{}
@@ -130,6 +128,7 @@ func GetLatestProduct(limit int) (products []Product) {
 	if err != nil {
 		return
 	}
+	defer rows.Close()
 	for rows.Next() {
 		product := Product{}
 		err = rows.Scan(&product.ID, &product.Size, &product.Name, &product.Price)
