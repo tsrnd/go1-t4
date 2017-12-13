@@ -27,8 +27,11 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, err)
 		return
 	}
-	// models.GetRelatedData(productModel, "Images")
-	// models.GetRelatedData(productModel, "ProductGroup")
+	product.ProductGroup, err = models.GetProductGroupByID(product.GroupID); if err != nil {
+		fmt.Fprintln(w, err)
+		return
+	}
+	
 	data := map[string]interface{}{
 		"Product": product,
 	}

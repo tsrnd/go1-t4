@@ -54,8 +54,26 @@ func (product *Product) TableName() string {
 
 func GetProduct(id uint) (product Product, err error) {
 	err = database.DBCon.Where("id = ?", id).Find(&product)
-	// database.DBCon.Model(&product).Association("Images").Find(&product.Images)
-	return product, err
+	if err != nil {
+		return
+	}
+	rows, err := database.DBCon.Db.
+		Query("SELECT * FROM images WHERE product_id = $1", product.ID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+	for rows.Next() {
+		image := Image{Product: &product}
+		err = rows.Scan(
+			&image.ID, &image.Name, &image.URL, &image.CreatedAt, &image.UpdatedAt, &image.DeletedAt, &image.ProductId,
+		)
+		if err != nil {
+			return
+		}
+		product.Images = append(product.Images, image)
+	}
+	return
 }
 
 // func UpdateProduct(product *Product) (errUpdate error) {

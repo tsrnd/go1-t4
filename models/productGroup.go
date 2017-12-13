@@ -34,3 +34,11 @@ func GetProductGroups() (productGroups []ProductGroup) {
 // 	}
 // 	return products, err
 // }
+
+func GetProductGroupByID(id uint) (*ProductGroup, error) {
+	productGroup := ProductGroup{}
+	err := database.DBCon.Db.
+		QueryRow("SELECT id, name FROM product_groups WHERE id = $1", id).
+		Scan(&productGroup.ID, &productGroup.Name)
+	return &productGroup, err
+}
