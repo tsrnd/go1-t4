@@ -10,15 +10,17 @@ import (
 	"github.com/goweb4/utils"
 )
 
+type UserHandler struct{}
+
 func UserProfile(w http.ResponseWriter, r *http.Request) {
-	user, err := models.GetUserByUserName(GetAuthName(r))
-	HomeVars := NewHomePageVars(r)
-	HomeVars.User = user
-	if err != nil {
-		fmt.Fprintln(w, err)
-	} else {
-		utils.GenerateTemplate(w, HomeVars, "user_profile")
-	}
+	// user, err := models.GetUserByUserName(GetAuthName(r))
+	// HomeVars := NewHomePageVars(r)
+	// HomeVars.User = user
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// } else {
+	// 	utils.GenerateTemplate(w, HomeVars, "user_profile")
+	// }
 }
 
 // func AddUser(w http.ResponseWriter, r *http.Request) {

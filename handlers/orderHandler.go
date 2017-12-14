@@ -1,50 +1,49 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/goweb4/models"
 	"github.com/goweb4/utils"
-
-	"strconv"
 )
+
+type OrderHandler struct{}
 
 /**
  * User create new order
  */
 func StoreOrder(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	order := models.Order{}
-	userRequest, err := models.GetUserByUserName(GetAuthName(r))
-	if err != nil {
-		fmt.Fprintln(w, err)
-		return
-	}
-	fmt.Println(userRequest.ID)
-	order.UserID = userRequest.ID
-	order.Status = models.PENDING_STATUS
+	// r.ParseForm()
+	// order := models.Order{}
+	// userRequest, err := models.GetUserByUserName(GetAuthName(r))
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// 	return
+	// }
+	// fmt.Println(userRequest.ID)
+	// order.UserID = userRequest.ID
+	// order.Status = models.PENDING_STATUS
 
-	order.PaymentID, err = utils.ConvertStrToUint(r.PostFormValue("payment_id"))
-	if err != nil {
-		fmt.Fprintln(w, err)
-		return
-	}
-	order.TotalMoney, err = strconv.ParseFloat(r.FormValue("total_money"), 64)
-	if err != nil {
-		fmt.Fprintln(w, err)
-		return
-	}
-	DoStuff(r, &order)
-	_, err = models.CreateOrder(order)
-	if err != nil {
-		fmt.Fprintln(w, err)
-		return
-	}
+	// order.PaymentID, err = utils.ConvertStrToUint(r.PostFormValue("payment_id"))
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// 	return
+	// }
+	// order.TotalMoney, err = strconv.ParseFloat(r.FormValue("total_money"), 64)
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// 	return
+	// }
+	// DoStuff(r, &order)
+	// _, err = models.CreateOrder(order)
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// 	return
+	// }
 
-	Homvars := NewHomePageVars(r)
-	Homvars.Message = "Order succeed"
-	utils.GenerateTemplate(w, Homvars, "checkout")
+	// Homvars := NewHomePageVars(r)
+	// Homvars.Message = "Order succeed"
+	// utils.GenerateTemplate(w, Homvars, "checkout")
 }
 
 /**
@@ -90,15 +89,15 @@ func DoStuff(r *http.Request, order *models.Order) (err error) {
 //   * User update order's infor
 //   */
 func Checkout(w http.ResponseWriter, r *http.Request) {
-	if GetAuthName(r) == "" {
-		http.Redirect(w, r, "/login", 302)
-	}
-	Data := NewHomePageVars(r)
-	payments, err := models.GetPayments()
-	if err != nil {
-		fmt.Fprintln(w, err)
-		return
-	}
-	Data.Payments = payments
-	utils.GenerateTemplate(w, Data, "checkout")
+	// if GetAuthName(r) == "" {
+	// 	http.Redirect(w, r, "/login", 302)
+	// }
+	// Data := NewHomePageVars(r)
+	// payments, err := models.GetPayments()
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// 	return
+	// }
+	// Data.Payments = payments
+	// utils.GenerateTemplate(w, Data, "checkout")
 }

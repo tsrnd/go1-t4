@@ -11,6 +11,8 @@ import (
 	"github.com/goweb4/utils"
 )
 
+type RegisterHandler struct{}
+
 type RegisterInfo struct {
 	UserName string `schema:"userName"`
 	Email    string `schema:"email"`
@@ -21,13 +23,13 @@ type RegisterInfo struct {
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
-	HomeVars := NewHomePageVars(r)
-	HomeVars.Message = utils.ShowMessage(w, r, "register")
-	HomeVars.PageTitle = "Login"
-	utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+	// HomeVars := NewHomePageVars(r)
+	// HomeVars.Message = utils.ShowMessage(w, r, "register")
+	// HomeVars.PageTitle = "Login"
+	// utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
 }
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+func RegisterHandlerFunc(w http.ResponseWriter, r *http.Request) {
 	var info RegisterInfo
 	var HomeVars HomePageVars
 	err := utils.MapFormValues(&info, r)

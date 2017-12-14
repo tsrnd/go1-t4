@@ -1,14 +1,17 @@
 package handlers
 
 import (
-	"strings"
-	"github.com/goweb4/utils"
-	"strconv"
-	"github.com/goweb4/models"
 	"fmt"
 	"net/http"
+	"strconv"
+	"strings"
+
 	"github.com/gorilla/mux"
+	"github.com/goweb4/models"
+	"github.com/goweb4/utils"
 )
+
+type ProductHandler struct{}
 
 /**
  * Index Product
@@ -28,11 +31,12 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, err)
 		return
 	}
-	product.ProductGroup, err = models.GetProductGroupByID(product.GroupID); if err != nil {
+	product.ProductGroup, err = models.GetProductGroupByID(product.GroupID)
+	if err != nil {
 		fmt.Fprintln(w, err)
 		return
 	}
-	
+
 	data := map[string]interface{}{
 		"Product": product,
 	}
@@ -45,24 +49,24 @@ func ShowProduct(w http.ResponseWriter, r *http.Request) {
  * Show product by group
  */
 func ShowProductGroup(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id, _ := strconv.ParseUint(vars["id"], 10, 32)
-	query := r.URL.Query()
-	page, _ := strconv.ParseInt(query.Get("page"), 10, 32)
+	// vars := mux.Vars(r)
+	// id, _ := strconv.ParseUint(vars["id"], 10, 32)
+	// query := r.URL.Query()
+	// page, _ := strconv.ParseInt(query.Get("page"), 10, 32)
 
-	HomeVars := NewHomePageVars(r)
+	// HomeVars := NewHomePageVars(r)
 
-	products, err := models.GetProductsByGroupID(uint(id))
-	if err != nil {
-		fmt.Fprintln(w, err)
-		return
-	}
+	// products, err := models.GetProductsByGroupID(uint(id))
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// 	return
+	// }
 
-	paginator := utils.Paginate(len(products), 12, int(page))
-	HomeVars.Products = products[paginator.Start:paginator.End]
-	HomeVars.Paginator = paginator
+	// paginator := utils.Paginate(len(products), 12, int(page))
+	// HomeVars.Products = products[paginator.Start:paginator.End]
+	// HomeVars.Paginator = paginator
 
-	utils.GenerateTemplate(w, HomeVars, "product")
+	// utils.GenerateTemplate(w, HomeVars, "product")
 }
 
 // /**
@@ -176,26 +180,26 @@ func StoreProduct(w http.ResponseWriter, r *http.Request) {
  * Detail product
  */
 func DetailProduct(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id, _ := strconv.ParseUint(vars["id"], 10, 32)
-	product, err := models.GetProduct(uint(id))
-	if err != nil {
-		fmt.Println(w, err)
-		return
-	}
+	// vars := mux.Vars(r)
+	// id, _ := strconv.ParseUint(vars["id"], 10, 32)
+	// product, err := models.GetProduct(uint(id))
+	// if err != nil {
+	// 	fmt.Println(w, err)
+	// 	return
+	// }
 
-	products, err := models.GetProductsByGroupID(product.GroupID)
-	if err != nil {
-		fmt.Fprintln(w, err)
-		return
-	}
+	// products, err := models.GetProductsByGroupID(product.GroupID)
+	// if err != nil {
+	// 	fmt.Fprintln(w, err)
+	// 	return
+	// }
 
-	HomeVars := NewHomePageVars(r)
-	HomeVars.Product = product
-	if len(products) >= 3 {
-		HomeVars.Products = products[:3]
-	} else {
-		HomeVars.Products = products
-	}
-	utils.GenerateTemplate(w, HomeVars, "product_detail", "modal")
+	// HomeVars := NewHomePageVars(r)
+	// HomeVars.Product = product
+	// if len(products) >= 3 {
+	// 	HomeVars.Products = products[:3]
+	// } else {
+	// 	HomeVars.Products = products
+	// }
+	// utils.GenerateTemplate(w, HomeVars, "product_detail", "modal")
 }

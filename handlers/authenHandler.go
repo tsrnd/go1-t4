@@ -25,10 +25,19 @@ type HomePageVars struct {
 	Payments      []models.Payment
 }
 
-/**
- * HomePageVars constructor
- */
-func NewHomePageVars(r *http.Request) HomePageVars {
+type Handler struct {
+	Variable Authenticate
+}
+
+type Authenticate interface {
+	NewHomePageVars(*http.Request) HomePageVars
+	ShowMessage(w http.ResponseWriter, r *http.Request) string
+	GenerateTemplate(w http.ResponseWriter, h HomePageVars)
+}
+
+type Vars struct{}
+
+func (v *Vars) NewHomePageVars(r *http.Request) HomePageVars {
 	var homePageVars HomePageVars
 	homePageVars.ProductGroup, _ = models.GetProductGroups()
 	homePageVars.Name = GetAuthName(r)
@@ -36,25 +45,33 @@ func NewHomePageVars(r *http.Request) HomePageVars {
 	return homePageVars
 }
 
+func (v *Vars) ShowMessage(w http.ResponseWriter, r *http.Request) string {
+	return utils.ShowMessage(w, r, "login")
+}
+
+func (v *Vars) GenerateTemplate(w http.ResponseWriter, h HomePageVars) {
+	utils.GenerateTemplate(w, h, "login_register", "login", "register")
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	HomeVars := NewHomePageVars(r)
-	HomeVars.LatesProducts = models.GetLatestProduct(4)
-	HomeVars.BestSeller = models.GetTrendProducts(4)
-	HomeVars.PageTitle = "Home Page"
-	utils.GenerateTemplate(w, HomeVars, "index")
+	// // HomeVars := NewHomePageVars(r)
+	// HomeVars.LatesProducts = models.GetLatestProduct(4)
+	// HomeVars.BestSeller = models.GetTrendProducts(4)
+	// HomeVars.PageTitle = "Home Page"
+	// utils.GenerateTemplate(w, HomeVars, "index")
 }
 
 func IndexAdmin(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin/product/add", http.StatusSeeOther)
 }
 
-func Login(w http.ResponseWriter, r *http.Request) {
-	HomeVars := NewHomePageVars(r)
+func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
+	HomeVars := h.Variable.NewHomePageVars(r)
 	if _, err := r.Cookie("auth"); err != nil {
-		HomeVars.Message = utils.ShowMessage(w, r, "login")
+		HomeVars.Message = h.Variable.ShowMessage(w, r)
 		HomeVars.PageTitle = "Login"
-		utils.GenerateTemplate(w, HomeVars, "login_register", "login", "register")
+		h.Variable.GenerateTemplate(w, HomeVars)
 	} else if utils.IsAdminRole(HomeVars.Name) {
 		http.Redirect(w, r, "/adminIndex", 302)
 	}
@@ -118,9 +135,9 @@ func GetAuthName(r *http.Request) string {
 }
 
 func ContactUs(w http.ResponseWriter, r *http.Request) {
-	utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
+	// utils.GenerateTemplate(w, NewHomePageVars(r), "contact")
 }
 
 func AboutUs(w http.ResponseWriter, r *http.Request) {
-	utils.GenerateTemplate(w, NewHomePageVars(r), "about")
+	// utils.GenerateTemplate(w, NewHomePageVars(r), "about")
 }

@@ -19,6 +19,7 @@ type Route struct {
 //Routes defines the list of routes of our API
 type Routes []Route
 
+var test handlers.Handler
 var routes = Routes{
 	Route{
 		"Index",
@@ -42,7 +43,7 @@ var routes = Routes{
 		"Register",
 		"POST",
 		"/registerHandler",
-		handlers.RegisterHandler,
+		handlers.RegisterHandlerFunc,
 	},
 	Route{
 		"UserProfile",
@@ -72,7 +73,7 @@ var routes = Routes{
 		"Login",
 		"GET",
 		"/login",
-		handlers.Login,
+		test.Login,
 	},
 	Route{
 		"LoginHandler",
