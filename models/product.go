@@ -56,6 +56,17 @@ func (product *Product) TableName() string {
 // }
 
 func GetProduct(id uint) (product Product, err error) {
+	err = database.DBCon.Db.
+		QueryRow("SELECT * FROM products WHERE id = $1", id).
+		Scan(
+			&product.ID, &product.Size,
+			&product.Color, &product.Price,
+			&product.InStock, &product.GroupID,
+			&product.CreatedAt, &product.UpdatedAt, &product.DeletedAt, &product.Name,
+		)
+	if err != nil {
+		return
+	}
 	rows, err := database.DBCon.Db.
 		Query("SELECT * FROM images WHERE product_id = $1", product.ID)
 	if err != nil {
