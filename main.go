@@ -3,18 +3,16 @@ package main
 import (
 	"log"
 	"net/http"
-	"github.com/goweb4/config"
-	"github.com/goweb4/database"
+
+	"github.com/tsrnd/go-clean-arch/config"
 )
 
 func main() {
-	var errConnection error
-	database.DBCon.Db, errConnection = database.DBConnection()
-	if errConnection != nil {
-		log.Fatal(errConnection)
-		panic(errConnection)
+	db := config.DB()
+	cache := config.Cache()
+	router := config.Router(db, cache)
+	port := config.Port()
+	if err := http.ListenAndServe(p, r); err != nil {
+		log.Fatal(err)
 	}
-	defer database.DBCon.Db.Close()
-	router := config.NewRouter()
-	log.Fatal(http.ListenAndServe(":8080", router))
 }
