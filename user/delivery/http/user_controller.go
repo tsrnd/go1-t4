@@ -38,7 +38,7 @@ func (ctrl *UserController) UserRegister(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	decoder := json.NewDecoder(r.Body)
-	var rr requests.UserRegisterRequest
+	var rr UserRegisterRequest
 	err := decoder.Decode(&rr)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -77,7 +77,7 @@ func (ctrl *UserController) UserLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	decoder := json.NewDecoder(r.Body)
-	var lr requests.UserLoginRequest
+	var lr UserLoginRequest
 	err := decoder.Decode(&lr)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)

@@ -22,15 +22,15 @@ func Router(db *sql.DB, c cache.Cache) {
 	r.Use(middleware.URLFormat)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 
-	// addUserRoutes(r, db, c)
+	addUserRoutes(r, db, c)
 	addProductRoutes(r, db, c)
 }
 
-// func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
-// 	repo := userRepo.NewUserRepository(db)
-// 	uc := userCase.NewUserUsecase(repo)
-// 	userDeliver.NewUserController(r, uc, c)
-// }
+func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
+	repo := userRepo.NewUserRepository(db)
+	uc := userCase.NewUserUsecase(repo)
+	userDeliver.NewUserController(r, uc, c)
+}
 
 func addProductRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
 	repo := productRepo.NewProductRepository(db)

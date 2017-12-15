@@ -25,8 +25,8 @@ func NewProductController(r *chi.Router, uc *usecase.ProductUsecase, c *cache.Ca
 		Usecase: uc,
 		Cache:   c,
 	}
-	r.POST("/users", handler.UserRegister)
-	r.POST("/auth", handler.UserLogin)
+	r.POST("/users", handler.Create)
+	r.POST("/auth", handler.Product)
 	return handler
 }
 
@@ -49,7 +49,7 @@ func (ctrl *ProductController) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	decoder := json.NewDecoder(r.Body)
-	var cjr requests.CreateProductRequest
+	var cjr CreateProductRequest
 	err = decoder.Decode(&cjr)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
