@@ -15,18 +15,20 @@ import (
 
 // ProductController type
 type ProductController struct {
-	Usecase *usecase.ProductUsecase
-	Cache   *cache.Cache
+	Usecase usecase.ProductUsecase
+	Cache   cache.Cache
 }
 
 // NewProductController func
-func NewProductController(r *chi.Router, uc *usecase.ProductUsecase, c *cache.Cache) *ProductController {
+func NewProductController(r chi.Router, uc usecase.ProductUsecase, c cache.Cache) *ProductController {
 	handler := &ProductController{
 		Usecase: uc,
 		Cache:   c,
 	}
-	r.POST("/users", handler.UserRegister)
-	r.POST("/auth", handler.UserLogin)
+	r.Post("/products", handler.Product)
+	r.Get("/products", handler.Product)
+	r.Put("/products", handler.Product)
+	r.Post("/products/create", handler.Create)
 	return handler
 }
 
@@ -49,13 +51,13 @@ func (ctrl *ProductController) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	decoder := json.NewDecoder(r.Body)
-	var cjr requests.CreateProductRequest
+	var cjr CreateProductRequest
 	err = decoder.Decode(&cjr)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-	_, err = ctrl.Usecase.CreateProduct(cjr.Title, cjr.Description, userID)
+	_, err = ctrl.Usecase.Create(cjr.Title, cjr.Description, int64(userID))
 	if err != nil {
 		log.Fatalf("Creating a product: %s", err)
 		http.Error(w, "", http.StatusInternalServerError)
@@ -75,7 +77,7 @@ func (ctrl *ProductController) Product(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not Found", http.StatusNotFound)
 		return
 	}
-	product, err := ctrl.Usecase.GetProductByID(ctrl.DB, productID)
+	product, err := ctrl.Usecase.GetByID(int64(productID))
 	if err != nil {
 		http.Error(w, "Not Found", http.StatusNotFound)
 		return
@@ -96,19 +98,19 @@ func (ctrl *ProductController) Product(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	if userID != product.UserID {
+	if int64(userID) != product.UserID {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 	if r.Method == "PUT" {
 		decoder := json.NewDecoder(r.Body)
-		var ujr requests.UpdateProductRequest
+		var ujr UpdateProductRequest
 		err = decoder.Decode(&ujr)
 		if err != nil {
 			http.Error(w, "Invalid request body", http.StatusBadRequest)
 			return
 		}
-		err = ctrl.Usecase.UpdateProduct(ctrl.DB, product.ID, ujr.Title, ujr.Description)
+		_, err = ctrl.Usecase.Update(product.ID, ujr.Title, ujr.Description)
 		if err != nil {
 			log.Fatalf("Updating a product: %s", err)
 			http.Error(w, "", http.StatusInternalServerError)
@@ -116,7 +118,7 @@ func (ctrl *ProductController) Product(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if r.Method == "DELETE" {
-		err = ctrl.Usecase.DeleteProduct(ctrl.DB, product.ID)
+		err = ctrl.Usecase.Delete(int64(product.ID))
 		if err != nil {
 			http.Error(w, "", http.StatusInternalServerError)
 			return
@@ -148,7 +150,7 @@ func (ctrl *ProductController) Feed(w http.ResponseWriter, r *http.Request) {
 			limit = 1
 		}
 	}
-	products, err := ctrl.Usecase.GetProducts(ctrl.DB, offset, limit)
+	products, err := ctrl.Usecase.Fetch(int64(offset), int64(limit))
 	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
 		http.Error(w, "", http.StatusInternalServerError)

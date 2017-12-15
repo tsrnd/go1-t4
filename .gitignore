@@ -85,3 +85,7 @@ $RECYCLE.BIN/
 vendor
 bin
 tmp
+.env
+.vscode/
+debug
+goweb4

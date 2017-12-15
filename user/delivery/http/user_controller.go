@@ -1,6 +1,7 @@
 package http
 
 import (
+	"github.com/goweb4/services/cache"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -16,18 +17,18 @@ import (
 
 // UserController type
 type UserController struct {
-  Usecase *usecase.UserUsecase,
-  Cache *cache.Cache,
+  Usecase *usecase.UserUsecase
+  Cache *cache.Cache
 }
 
 // NewUserController func
-func NewUserController(r *chi.Router, uc *usecase.UserUsecase, c *caching.Cache) *UserController {
+func NewUserController(r chi.Router, uc *usecase.UserUsecase, c *cache.Cache) *UserController {
 	handler := &UserController{
 		Usecase: uc,
 		Cache:   c,
 	}
-	r.POST("/users", handler.UserRegister)
-	r.POST("/auth", handler.UserLogin)
+	r.Post("/users", handler.UserRegister)
+	r.Post("/auth", handler.UserLogin)
 	return handler
 }
 

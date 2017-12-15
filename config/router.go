@@ -9,11 +9,14 @@ import (
 	productDeliver "github.com/goweb4/product/delivery/http"
 	productRepo "github.com/goweb4/product/repository/psql"
 	productCase "github.com/goweb4/product/usecase"
+	// userDeliver "github.com/goweb4/user/delivery/http"
+	// userRepo "github.com/goweb4/user/repository/psql"
+	// userCase "github.com/goweb4/user/usecase"
 	"github.com/goweb4/services/cache"
 )
 
 // Router func
-func Router(db *sql.DB, c cache.Cache) {
+func Router(db *sql.DB, c cache.Cache) (chi.Router) {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
@@ -24,6 +27,7 @@ func Router(db *sql.DB, c cache.Cache) {
 
 	// addUserRoutes(r, db, c)
 	addProductRoutes(r, db, c)
+	return r
 }
 
 // func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
