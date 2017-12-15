@@ -67,7 +67,7 @@ func (m *userRepository) GetPrivateDetailsByEmail(email string) (*model.PrivateU
 	return &u, err
 }
 
-func (m *userRepository) Create(email, name, password string) (int64, error) {
+func (m *userRepository) Create(email, name, password string) (int, error) {
 	const query = `
     insert into users (
       email,
@@ -84,7 +84,7 @@ func (m *userRepository) Create(email, name, password string) (int64, error) {
   `
 	salt := crypto.GenerateSalt()
 	hashedPassword := crypto.HashPassword(password, salt)
-	var id int64
+	var id int
 	err := m.DB.QueryRow(query, email, name, hashedPassword, salt).Scan(&id)
 	return id, err
 }

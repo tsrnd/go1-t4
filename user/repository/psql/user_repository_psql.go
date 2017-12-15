@@ -3,15 +3,16 @@ package psql
 import (
 	"database/sql"
 
-	"github.com/tsrnd/go-clean-arch/services/crypto"
-	model "github.com/tsrnd/go-clean-arch/user"
+	"github.com/goweb4/services/crypto"
+  model "github.com/goweb4/user"
+  repo  "github.com/goweb4/user/repository"
 )
 
 type userRepository struct {
 	DB *sql.DB
 }
 
-func (m *userRepository) GetByID(id int64) (*model.User, error) {
+func (m *userRepository) GetByID(id int) (*model.User, error) {
 	const query = `
     select
       id,
@@ -43,7 +44,7 @@ func (m *userRepository) GetByEmail(email string) (*model.User, error) {
 	return &user, err
 }
 
-func (m *userRepository) GetPrivateUserDetailsByEmail(email string) (*model.PrivateUserDetails, error) {
+func (m *userRepository) GetPrivateDetailsByEmail(email string) (*model.PrivateUserDetails, error) {
 	const query = `
     select
       id,
@@ -59,7 +60,7 @@ func (m *userRepository) GetPrivateUserDetailsByEmail(email string) (*model.Priv
 	return &u, err
 }
 
-func (m *userRepository) Create(email, name, password string) (int64, error) {
+func (m *userRepository) Create(email, name, password string) (int, error) {
 	const query = `
     insert into users (
       email,
@@ -76,7 +77,12 @@ func (m *userRepository) Create(email, name, password string) (int64, error) {
   `
 	salt := crypto.GenerateSalt()
 	hashedPassword := crypto.HashPassword(password, salt)
-	var id int64
+	var id int
 	err := m.DB.QueryRow(query, email, name, hashedPassword, salt).Scan(&id)
 	return id, err
+}
+
+// NewUserRepository func
+func NewUserRepository(DB *sql.DB) repo.UserRepository {
+	return &userRepository{DB}
 }

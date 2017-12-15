@@ -17,12 +17,12 @@ import (
 
 // UserController type
 type UserController struct {
-  Usecase *usecase.UserUsecase
-  Cache *cache.Cache
+  Usecase usecase.UserUsecase
+  Cache cache.Cache
 }
 
 // NewUserController func
-func NewUserController(r chi.Router, uc *usecase.UserUsecase, c *cache.Cache) *UserController {
+func NewUserController(r chi.Router, uc usecase.UserUsecase, c cache.Cache) *UserController {
 	handler := &UserController{
 		Usecase: uc,
 		Cache:   c,
@@ -45,7 +45,7 @@ func (ctrl *UserController) UserRegister(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-	id, err := repositories.CreateUser(ctrl.DB, rr.Email, rr.Name, rr.Password)
+	id, err := ctrl.Usecase.Create(rr.Email, rr.Name, rr.Password)
 	if err != nil {
 		log.Fatalf("Add user to database error: %s", err)
 		http.Error(w, "", http.StatusInternalServerError)
@@ -106,7 +106,7 @@ func (ctrl *UserController) UserLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	oneMonth := time.Duration(60*60*24*30) * time.Second
-	err = ctrl.Cache.Set(fmt.Sprintf("token_%s", token), strconv.Itoa(user.ID), oneMonth)
+	err = ctrl.Cache.Set(fmt.Sprintf("token_%s", token), strconv.Itoa(int(user.ID)), oneMonth)
 	if err != nil {
 		log.Fatalf("Create User Error: %s", err)
 		http.Error(w, "", http.StatusInternalServerError)
