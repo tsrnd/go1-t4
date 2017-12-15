@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/go-chi/chi"
-	"github.com/tsrnd/go-clean-arch/services/crypto"
-	"github.com/tsrnd/go-clean-arch/user/usecase"
+	"github.com/goweb4/services/crypto"
+	"github.com/goweb4/user/usecase"
 )
 
 // UserController type

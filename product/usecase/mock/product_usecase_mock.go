@@ -5,9 +5,10 @@
 package mock_usecase
 
 import (
-	gomock "github.com/golang/mock/gomock"
-	product "github.com/tsrnd/go-clean-arch/product"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
+	product "github.com/goweb4/product"
 )
 
 // MockProductUsecase is a mock of ProductUsecase interface

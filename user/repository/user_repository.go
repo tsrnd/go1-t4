@@ -3,8 +3,8 @@ package repository
 import (
 	"database/sql"
 
-	"github.com/tsrnd/go-clean-arch/services/crypto"
-	model "github.com/tsrnd/go-clean-arch/user"
+	"github.com/goweb4/services/crypto"
+	model "github.com/goweb4/user"
 )
 
 // UserRepository interface
@@ -51,7 +51,7 @@ func (m *userRepository) GetByEmail(email string) (*model.User, error) {
 	return &user, err
 }
 
-func (m *userRepository) GetPrivateUserDetailsByEmail(email string) (*model.PrivateUserDetails, error) {
+func (m *userRepository) GetPrivateDetailsByEmail(email string) (*model.PrivateUserDetails, error) {
 	const query = `
     select
       id,

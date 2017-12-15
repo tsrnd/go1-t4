@@ -3,8 +3,8 @@ package psql
 import (
 	"database/sql"
 
-	model "github.com/tsrnd/go-clean-arch/product"
-	repo "github.com/tsrnd/go-clean-arch/product/repository"
+	model "github.com/goweb4/product"
+	repo "github.com/goweb4/product/repository"
 )
 
 type productRepository struct {

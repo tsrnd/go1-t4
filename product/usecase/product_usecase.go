@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	model "github.com/tsrnd/go-clean-arch/product"
-	repos "github.com/tsrnd/go-clean-arch/product/repository"
+	model "github.com/goweb4/product"
+	repos "github.com/goweb4/product/repository"
 )
 
 // ProductUsecase interface

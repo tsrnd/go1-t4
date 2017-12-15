@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	db "github.com/tsrnd/go-clean-arch/services/database/sql"
+	db "github.com/goweb4/services/database/sql"
 )
 
 // DB func

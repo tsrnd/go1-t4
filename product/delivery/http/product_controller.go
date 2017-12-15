@@ -9,14 +9,14 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi"
-	"github.com/tsrnd/go-clean-arch/product/usecase"
-	"github.com/tsrnd/go-clean-arch/services/cache"
+	"github.com/goweb4/product/usecase"
+	"github.com/goweb4/services/cache"
 )
 
 // ProductController type
 type ProductController struct {
-  Usecase *usecase.ProductUsecase,
-  Cache *cache.Cache,
+	Usecase *usecase.ProductUsecase
+	Cache   *cache.Cache
 }
 
 // NewProductController func

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	model "github.com/tsrnd/go-clean-arch/product"
+	model "github.com/goweb4/product"
 )
 
 // ProductRepository interface

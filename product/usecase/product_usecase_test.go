@@ -8,7 +8,7 @@ import (
 	"github/monstar-lab/fr-circle-api/usecase"
 
 	"github.com/bxcodec/faker"
-	"github.com/tsrnd/go-clean-arch/mocks"
+	"github.com/goweb4/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

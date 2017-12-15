@@ -5,9 +5,10 @@
 package mock_repository
 
 import (
-	gomock "github.com/golang/mock/gomock"
-	product "github.com/tsrnd/go-clean-arch/product"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
+	product "github.com/goweb4/product"
 )
 
 // MockProductRepository is a mock of ProductRepository interface

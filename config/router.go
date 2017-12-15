@@ -6,11 +6,10 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
-	productRepo "github.com/tsrnd/go-clean-arch/product/repository"
-	productCase "github.com/tsrnd/go-clean-arch/product/usecase"
-	"github.com/tsrnd/go-clean-arch/services/cache"
-	userRepo "github.com/tsrnd/go-clean-arch/user/repository"
-	userCase "github.com/tsrnd/go-clean-arch/user/usecase"
+	productDeliver "github.com/goweb4/product/delivery/http"
+	productRepo "github.com/goweb4/product/repository/psql"
+	productCase "github.com/goweb4/product/usecase"
+	"github.com/goweb4/services/cache"
 )
 
 // Router func
@@ -23,18 +22,18 @@ func Router(db *sql.DB, c cache.Cache) {
 	r.Use(middleware.URLFormat)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 
-	addUserRoutes(r, db, c)
+	// addUserRoutes(r, db, c)
 	addProductRoutes(r, db, c)
 }
 
-func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
-	repo := userRepo.NewUserRepository(db)
-	uc := userCase.NewUserUsecase(repo)
-	userDeliver.NewUserController(r, uc, c)
-}
+// func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
+// 	repo := userRepo.NewUserRepository(db)
+// 	uc := userCase.NewUserUsecase(repo)
+// 	userDeliver.NewUserController(r, uc, c)
+// }
 
 func addProductRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
-	repo := productRepo.NewUserRepository(db)
-	uc := productCase.NewUserUsecase(repo)
+	repo := productRepo.NewProductRepository(db)
+	uc := productCase.NewProductUsecase(repo)
 	productDeliver.NewProductController(r, uc, c)
 }

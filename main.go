@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/tsrnd/go-clean-arch/config"
+	"github.com/goweb4/config"
 )
 
 func main() {
@@ -12,7 +12,7 @@ func main() {
 	cache := config.Cache()
 	router := config.Router(db, cache)
 	port := config.Port()
-	if err := http.ListenAndServe(p, r); err != nil {
+	if err := http.ListenAndServe(port, router); err != nil {
 		log.Fatal(err)
 	}
 }

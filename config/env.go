@@ -9,7 +9,7 @@ import (
 func Port() string {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "8000"
 	}
 	return fmt.Sprintf(":%s", port)
 }
