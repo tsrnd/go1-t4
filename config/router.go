@@ -9,6 +9,11 @@ import (
 	productDeliver "github.com/goweb4/product/delivery/http"
 	productRepo "github.com/goweb4/product/repository/psql"
 	productCase "github.com/goweb4/product/usecase"
+
+	birdDeliver "github.com/goweb4/bird/delivery/http"
+	birdRepo "github.com/goweb4/bird/repository/psql"
+	birdCase "github.com/goweb4/bird/usecase"
+
 	userDeliver "github.com/goweb4/user/delivery/http"
 	userRepo "github.com/goweb4/user/repository/psql"
 	userCase "github.com/goweb4/user/usecase"
@@ -28,6 +33,12 @@ func Router(db *sql.DB, c cache.Cache) (chi.Router) {
 	addUserRoutes(r, db, c)
 	addProductRoutes(r, db, c)
 	return r
+}
+
+func addBirdRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
+	repo := birdRepo.NewBirdRepository(db)
+	uc := userCase.NewBirdUsecase(repo)
+	userDeliver.NewBirdController(r, uc, c)
 }
 
 func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
