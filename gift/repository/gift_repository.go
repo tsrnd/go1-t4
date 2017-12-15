@@ -9,6 +9,6 @@ type GiftRepository interface {
 	Update(id, productID int64, message string) (error)
 	Delete(id int64) (error)
 	GetByID(id int64) (*model.Gift, error)
-	GetByFromUserID(id int64) (*model.Gift, error)
+	GetByFromUserID(id int64) ([]*model.Gift, error)
 	Fetch(offset, limit int64) ([]*model.Gift, error)
 }
