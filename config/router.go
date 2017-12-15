@@ -32,13 +32,14 @@ func Router(db *sql.DB, c cache.Cache) (chi.Router) {
 
 	addUserRoutes(r, db, c)
 	addProductRoutes(r, db, c)
+	addBirdRoutes(r, db, c)
 	return r
 }
 
 func addBirdRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
 	repo := birdRepo.NewBirdRepository(db)
-	uc := userCase.NewBirdUsecase(repo)
-	userDeliver.NewBirdController(r, uc, c)
+	uc := birdCase.NewBirdUsecase(repo)
+	birdDeliver.NewBirdController(r, uc, c)
 }
 
 func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
