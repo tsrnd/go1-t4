@@ -1,12 +1,12 @@
 package http
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"fmt"
-	"log"
+	// "log"
 	"net/http"
-	"path"
-	"strconv"
+	// "path"
+	// "strconv"
 	"github.com/go-chi/chi"
 	"github.com/goweb4/bird/usecase"
 	"github.com/goweb4/services/cache"
@@ -23,7 +23,7 @@ func NewBirdController(r chi.Router, uc usecase.BirdUsecase, c cache.Cache) *Bir
 		Usecase: uc,
 		Cache:   c,
 	}
-	r.Get("/bird", handler.Product)
+	r.Get("/bird", handler.Create)
 	return handler
 }
 

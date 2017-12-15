@@ -15,17 +15,14 @@ type birdUsecase struct {
 }
 
 func (uc *birdUsecase) Create(title, description string, userID int64) (*model.Bird, error) {
-	exist, _ := uc.GetByTitle(title)
-	if exist != nil {
-		return nil, model.ConflictError
-	}
+	// exist, _ := uc.GetByTitle(title)
+	// if exist != nil {
+	// 	return nil, model.ConflictError
+	// }
 
-	id, err := uc.repo.Create(title, description, userID)
-	if err != nil {
-		return nil, err
-	}
-
-	return uc.GetByID(id)
+	
+	return nil, nil
+	// return uc.GetByID(id)
 }
 
 // NewProductUsecase func

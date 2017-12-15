@@ -3,7 +3,7 @@ package psql
 import (
 	"database/sql"
 
-	// model "github.com/goweb4/bird"
+	model "github.com/goweb4/bird"
 	repo "github.com/goweb4/bird/repository"
 )
 
@@ -28,7 +28,7 @@ func (m *birdRepository) Create(title, description string, userID int64) (int64,
 	return id, err
 }
 
-func (m *productRepository) GetByID(id int64) (*model.Product, error) {
+func (m *birdRepository) GetByID(id int64) (*model.Bird, error) {
 	const query = `
 		select
 			id,
@@ -40,9 +40,9 @@ func (m *productRepository) GetByID(id int64) (*model.Product, error) {
 		where
 			id = $1
 	`
-	var product model.Product
-	err := m.DB.QueryRow(query, id).Scan(&product.ID, &product.Title, &product.Description, &product.UserID)
-	return &product, err
+	var bird model.Bird
+	err := m.DB.QueryRow(query, id).Scan(&bird.ID, &bird.Title, &bird.Description, &bird.UserID)
+	return &bird, err
 }
 
 func (m *birdRepository) GetByTitle(title string) (*model.Bird, error) {
