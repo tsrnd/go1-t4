@@ -28,7 +28,7 @@ func (m *bookRepository) Create(name, content string, userID int64) (int64, erro
 	return id, err
 }
 
-func (m *bookRepository) GetByID(id int64) (*model.book, error) {
+func (m *bookRepository) GetByID(id int64) (*model.Book, error) {
 	const query = `
 		select
 			id,
@@ -58,7 +58,7 @@ func (m *bookRepository) GetByName(name string) (*model.Book, error) {
 			name = $1
 	`
 	var book model.Book
-	err := m.DB.QueryRow(query, name).Scan(&book.ID, &book.Nam, &book.Content, &book.UserID)
+	err := m.DB.QueryRow(query, name).Scan(&book.ID, &book.Name, &book.Content, &book.UserID)
 	return &book, err
 }
 
@@ -99,7 +99,7 @@ func (m *bookRepository) Fetch(offset, limit int64) ([]*model.Book, error) {
 	}
 	for rows.Next() {
 		var book model.Book
-		err = rows.Scan(&book.ID, &book.Nam, &book.Content, &book.UserID)
+		err = rows.Scan(&book.ID, &book.Name, &book.Content, &book.UserID)
 		if err != nil {
 			return nil, err
 		}

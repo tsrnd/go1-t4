@@ -14,14 +14,18 @@ import (
 	birdRepo "github.com/goweb4/bird/repository/psql"
 	birdCase "github.com/goweb4/bird/usecase"
 
+	bookDeliver "github.com/goweb4/book/delivery/http"
+	bookRepo "github.com/goweb4/book/repository/psql"
+	bookCase "github.com/goweb4/book/usecase"
+
+	"github.com/goweb4/services/cache"
 	userDeliver "github.com/goweb4/user/delivery/http"
 	userRepo "github.com/goweb4/user/repository/psql"
 	userCase "github.com/goweb4/user/usecase"
-	"github.com/goweb4/services/cache"
 )
 
 // Router func
-func Router(db *sql.DB, c cache.Cache) (chi.Router) {
+func Router(db *sql.DB, c cache.Cache) chi.Router {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
@@ -33,6 +37,8 @@ func Router(db *sql.DB, c cache.Cache) (chi.Router) {
 	addUserRoutes(r, db, c)
 	addProductRoutes(r, db, c)
 	addBirdRoutes(r, db, c)
+	addBookRoutes(r, db, c)
+
 	return r
 }
 
@@ -40,6 +46,12 @@ func addBirdRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
 	repo := birdRepo.NewBirdRepository(db)
 	uc := birdCase.NewBirdUsecase(repo)
 	birdDeliver.NewBirdController(r, uc, c)
+}
+
+func addBookRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
+	repo := bookRepo.NewBookRepository(db)
+	uc := bookCase.NewBookUsecase(repo)
+	bookDeliver.NewBookController(r, uc, c)
 }
 
 func addUserRoutes(r *chi.Mux, db *sql.DB, c cache.Cache) {
