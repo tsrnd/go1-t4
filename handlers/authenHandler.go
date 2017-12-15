@@ -37,7 +37,7 @@ type Authenticate interface {
 
 type Vars struct{}
 
-func (v *Vars) NewHomePageVars(r *http.Request) HomePageVars {
+func (v Vars) NewHomePageVars(r *http.Request) HomePageVars {
 	var homePageVars HomePageVars
 	homePageVars.ProductGroup, _ = models.GetProductGroups()
 	homePageVars.Name = GetAuthName(r)
@@ -45,11 +45,11 @@ func (v *Vars) NewHomePageVars(r *http.Request) HomePageVars {
 	return homePageVars
 }
 
-func (v *Vars) ShowMessage(w http.ResponseWriter, r *http.Request) string {
+func (v Vars) ShowMessage(w http.ResponseWriter, r *http.Request) string {
 	return utils.ShowMessage(w, r, "login")
 }
 
-func (v *Vars) GenerateTemplate(w http.ResponseWriter, h HomePageVars) {
+func (v Vars) GenerateTemplate(w http.ResponseWriter, h HomePageVars) {
 	utils.GenerateTemplate(w, h, "login_register", "login", "register")
 }
 
@@ -74,6 +74,8 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		h.Variable.GenerateTemplate(w, HomeVars)
 	} else if utils.IsAdminRole(HomeVars.Name) {
 		http.Redirect(w, r, "/adminIndex", 302)
+	} else {
+		http.Redirect(w, r, "/", 302)
 	}
 }
 

@@ -11,8 +11,6 @@ import (
 	"github.com/goweb4/utils"
 )
 
-type ProductHandler struct{}
-
 /**
  * Index Product
  */

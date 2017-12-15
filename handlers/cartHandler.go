@@ -4,8 +4,6 @@ import (
 	"net/http"
 )
 
-type CartHandler struct{}
-
 /**
  * User create new order
  */

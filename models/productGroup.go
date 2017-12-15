@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+
 	"github.com/goweb4/database"
 )
 
@@ -33,15 +34,15 @@ func GetProductsByGroupID(id uint) (products []Product, err error) {
 	pl := make(map[int]Product)
 	query := `SELECT id, name, size, price, in_stock, color FROM products WHERE group_id = $1`
 	rows, err := database.DBCon.Db.Query(query, id)
-		for rows.Next() {
-			product := Product{}
-			err = rows.Scan(&product.ID, &product.Name, &product.Size, &product.Price, &product.InStock, &product.Color)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			pl[int(product.ID)] = product
+	for rows.Next() {
+		product := Product{}
+		err = rows.Scan(&product.ID, &product.Name, &product.Size, &product.Price, &product.InStock, &product.Color)
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
+		pl[int(product.ID)] = product
+	}
 	defer rows.Close()
 
 	rows, err = database.DBCon.Db.Query(`SELECT url, product_id FROM images`)
@@ -57,7 +58,7 @@ func GetProductsByGroupID(id uint) (products []Product, err error) {
 			pl[int(i.ProductId)] = product
 		}
 	}
- 	defer rows.Close()
+	defer rows.Close()
 
 	for _, p := range pl {
 		fmt.Println(p)

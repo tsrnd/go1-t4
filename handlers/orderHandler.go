@@ -7,8 +7,6 @@ import (
 	"github.com/goweb4/utils"
 )
 
-type OrderHandler struct{}
-
 /**
  * User create new order
  */

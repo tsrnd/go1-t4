@@ -10,8 +10,6 @@ import (
 	"github.com/goweb4/utils"
 )
 
-type UserHandler struct{}
-
 func UserProfile(w http.ResponseWriter, r *http.Request) {
 	// user, err := models.GetUserByUserName(GetAuthName(r))
 	// HomeVars := NewHomePageVars(r)
