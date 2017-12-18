@@ -26,8 +26,8 @@ func NewProductController(r chi.Router, uc usecase.ProductUsecase, c cache.Cache
 		Cache:   c,
 	}
 	r.Post("/products", handler.Product)
-	r.Get("/products", handler.Product)
-	r.Put("/products", handler.Product)
+	r.Get("/products/{id}", handler.Product)
+	r.Put("/products/{id}", handler.Product)
 	r.Post("/products/create", handler.Create)
 	return handler
 }
