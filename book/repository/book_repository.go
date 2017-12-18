@@ -10,6 +10,6 @@ type BookRepository interface {
 	Update(BookID int64, name, content string) error
 	Delete(id int64) error
 	GetByID(id int64) (*model.Book, error)
-	GetByName(name string) (*model.Book, error)
+	GetByName(name string) ([]*model.Book, error)
 	Fetch(offset, limit int64) ([]*model.Book, error)
 }

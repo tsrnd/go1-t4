@@ -9,7 +9,7 @@ import (
 type BookUsecase interface {
 	Create(name, content string, userID int64) (*model.Book, error)
 	GetByID(id int64) (*model.Book, error)
-	GetByName(name string) (*model.Book, error)
+	GetByName(name string) ([]*model.Book, error)
 	Update(bookID int64, name, content string) (*model.Book, error)
 	Delete(id int64) error
 	Fetch(offset, limit int64) ([]*model.Book, error)
@@ -37,8 +37,9 @@ func (uc *bookUsecase) GetByID(id int64) (*model.Book, error) {
 	return uc.repo.GetByID(id)
 }
 
-func (uc *bookUsecase) GetByName(name string) (*model.Book, error) {
-	return uc.repo.GetByName(name)
+func (uc *bookUsecase) GetByName(name string) ([]*model.Book, error) {
+	result, err := uc.repo.GetByName(name)
+	return result, err
 }
 
 func (uc *bookUsecase) Update(bookID int64, name, content string) (*model.Book, error) {
