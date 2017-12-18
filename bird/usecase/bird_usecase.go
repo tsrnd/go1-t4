@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	model "github.com/goweb4/bird"
 	repos "github.com/goweb4/bird/repository"
 )
@@ -17,15 +18,13 @@ type birdUsecase struct {
 }
 
 
-func (uc *birdUsecase) Create(name, color string, description string) (*model.Bird, error) {
-	// exist, _ := uc.GetByTitle(title)
-	// if exist != nil {
-	// 	return nil, model.ConflictError
-	// }
-
+func (b *birdUsecase) Create(name, color string, description string) (*model.Bird, error) {
+	id, err := b.repo.Create(name, color, description)
+	if err != nil {
+		fmt.Println(err)
+	}
 	
-	return nil, nil
-	// return uc.GetByID(id)
+	return b.repo.GetByID(id)
 }
 
 func (uc *birdUsecase) GetByID(id int64) (*model.Bird, error) {

@@ -16,7 +16,7 @@ func (m *birdRepository) Create(name, color string, description string) (int64, 
 		insert into birds (
 			name,
 			color,
-			description,
+			description
 		) values (
 			$1,
 			$2,
@@ -34,7 +34,7 @@ func (m *birdRepository) GetByID(id int64) (*model.Bird, error) {
 			id,
 			name,
 			color,
-			description,
+			description
 		from
 			birds
 		where
@@ -44,24 +44,6 @@ func (m *birdRepository) GetByID(id int64) (*model.Bird, error) {
 	err := m.DB.QueryRow(query, id).Scan(&bird.ID, &bird.Name, &bird.Color, &bird.Description)
 	return &bird, err
 }
-
-// func (m *birdRepository) GetByTitle(title string) (*model.Bird, error) {
-// 	const query = `
-// 		select
-// 			id,
-// 			title,
-// 			description,
-// 			user_id
-// 		from
-// 			birds
-// 		where
-// 			title = $1
-// 	`
-// 	var bird model.Bird
-// 	err := m.DB.QueryRow(query, title).Scan(&bird.ID, &bird.Title, &bird.Description, &bird.UserID)
-// 	return &bird, err
-// }
-
 
 func NewBirdRepository(DB *sql.DB) repo.BirdRepository {
 	return &birdRepository{DB}
