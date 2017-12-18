@@ -1,10 +1,11 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
 	"database/sql"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 
 	db "github.com/goweb4/services/database/sql"
 )
@@ -16,7 +17,7 @@ func DB() *sql.DB {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	
+
 	dbDlct := os.Getenv("DATABASE_DLCT")
 	dbUser := os.Getenv("DATABASE_USER")
 	dbPass := os.Getenv("DATABASE_PASS")
