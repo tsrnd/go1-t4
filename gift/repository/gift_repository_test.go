@@ -17,7 +17,6 @@ func TestGetByFromUserID(t *testing.T) {
 	mockRepo := mockRepos.NewMockGiftRepository(mockCtrl)
 	resultExpect := []*gift.Gift{}
 	mockRepo.EXPECT().GetByFromUserID(int64(1)).Return(resultExpect, nil)
-	result, err := mockRepo.GetByFromUserID(1)
+	_, err := mockRepo.GetByFromUserID(1)
 	assert.NoError(t, err)
-	assert.Equal(t, result, resultExpect)
 }

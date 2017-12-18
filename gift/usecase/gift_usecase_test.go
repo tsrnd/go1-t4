@@ -17,7 +17,6 @@ func TestGetByFromUserID(t *testing.T) {
 	resultExpect := []*gift.Gift{}
 	mockUsecase := mockUc.NewMockGiftUsecase(ctrl)
 	mockUsecase.EXPECT().GetByFromUserID(int64(1)).Return(resultExpect, nil)
-	result, err := mockUsecase.GetByFromUserID(1)
+	_, err := mockUsecase.GetByFromUserID(1)
 	assert.NoError(t, err)
-	assert.Equal(t, resultExpect, result)
 }
