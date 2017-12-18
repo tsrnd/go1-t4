@@ -7,14 +7,17 @@ import (
 
 // ProductUsecase interface
 type BirdUsecase interface {
-	Create(title, description string, userID int64) (*model.Bird, error)
+	Create(name, color string, description string) (*model.Bird, error)
+	GetByID(id int64) (*model.Bird, error)
+	
 }
 
 type birdUsecase struct {
 	repo repos.BirdRepository
 }
 
-func (uc *birdUsecase) Create(title, description string, userID int64) (*model.Bird, error) {
+
+func (uc *birdUsecase) Create(name, color string, description string) (*model.Bird, error) {
 	// exist, _ := uc.GetByTitle(title)
 	// if exist != nil {
 	// 	return nil, model.ConflictError
@@ -23,6 +26,10 @@ func (uc *birdUsecase) Create(title, description string, userID int64) (*model.B
 	
 	return nil, nil
 	// return uc.GetByID(id)
+}
+
+func (uc *birdUsecase) GetByID(id int64) (*model.Bird, error) {
+	return uc.repo.GetByID(id)
 }
 
 // NewProductUsecase func
