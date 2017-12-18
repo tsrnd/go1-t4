@@ -34,18 +34,33 @@ func (c *ClassController) CreateClass(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var classReq ClassCreationRequest
 	err := decoder.Decode(&classReq)
+	fmt.Println("s1: ", classReq)
 	if err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		respondWithError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
+	fmt.Println("useCase: ", c.Usecase)
 	err = c.Usecase.CreateClass(classReq.Name, classReq.StudentNumber)
 	if err != nil {
-		fmt.Println("Error occur when creating class: ", err)
+		fmt.Println("testing error create class: ", err)
+		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
+	respondWithJSON(w, http.StatusCreated, map[string]string{"result": "success"})
 }
 
 func (c *ClassController) DeleteClass(w http.ResponseWriter, r *http.Request) {
 
+}
+
+func respondWithError(w http.ResponseWriter, code int, message string) {
+	respondWithJSON(w, code, map[string]string{"error": message})
+}
+
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	response, _ := json.Marshal(payload)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	w.Write(response)
 }
