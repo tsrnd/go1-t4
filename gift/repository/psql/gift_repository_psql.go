@@ -121,3 +121,7 @@ func (gR *giftRepository) Fetch(offset, limit int64) ([]*model.Gift, error) {
 	}
 	return gifts, err
 }
+
+func NewGiftRepository(db *sql.DB) *giftRepository {
+	return &giftRepository{DB: db}
+}
