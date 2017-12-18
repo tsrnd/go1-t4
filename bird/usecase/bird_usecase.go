@@ -1,28 +1,34 @@
 package usecase
 
 import (
+	"fmt"
 	model "github.com/goweb4/bird"
 	repos "github.com/goweb4/bird/repository"
 )
 
 // ProductUsecase interface
 type BirdUsecase interface {
-	Create(title, description string, userID int64) (*model.Bird, error)
+	Create(name, color string, description string) (*model.Bird, error)
+	GetByID(id int64) (*model.Bird, error)
+	
 }
 
 type birdUsecase struct {
 	repo repos.BirdRepository
 }
 
-func (uc *birdUsecase) Create(title, description string, userID int64) (*model.Bird, error) {
-	// exist, _ := uc.GetByTitle(title)
-	// if exist != nil {
-	// 	return nil, model.ConflictError
-	// }
 
+func (b *birdUsecase) Create(name, color string, description string) (*model.Bird, error) {
+	id, err := b.repo.Create(name, color, description)
+	if err != nil {
+		fmt.Println(err)
+	}
 	
-	return nil, nil
-	// return uc.GetByID(id)
+	return b.repo.GetByID(id)
+}
+
+func (uc *birdUsecase) GetByID(id int64) (*model.Bird, error) {
+	return uc.repo.GetByID(id)
 }
 
 // NewProductUsecase func
