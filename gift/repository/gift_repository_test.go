@@ -7,14 +7,16 @@ import (
 
 	"github.com/golang/mock/gomock"
 
+	"github.com/goweb4/gift"
 	mockRepos "github.com/goweb4/gift/repository/mock"
 )
 
 func TestGetByFromUserID(t *testing.T) {
-	// gifts := []gift.Gift{}
 	mockCtrl := gomock.NewController(t)
 	mockRepo := mockRepos.NewMockGiftRepository(mockCtrl)
-	mockRepo.EXPECT().GetByFromUserID(1).Return(nil, nil)
-	_, err := mockRepo.GetByFromUserID(1)
-	assert.Equal(t, nil, err)
+	resultExpect := []*gift.Gift{}
+	mockRepo.EXPECT().GetByFromUserID(int64(1)).Return(resultExpect, nil)
+	result, err := mockRepo.GetByFromUserID(1)
+	assert.NoError(t, err)
+	assert.Equal(t, result, resultExpect)
 }
