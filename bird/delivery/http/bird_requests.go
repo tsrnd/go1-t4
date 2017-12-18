@@ -1,8 +1,9 @@
 package http
 
 type CreateBirdRequest struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
+	Name          string `json:"name"`	
+	Color       	string `json:"color"`
+	Description 	string `json:"description"`
 }
 
 type UpdateBirdRequest struct {
