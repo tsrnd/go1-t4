@@ -1,30 +1,37 @@
-package http_test
+package http
 
-func TestGetByID(t *testing.T) {
-  var mockBook models.Book
-  err := faker.FakeData(&mockBook)
-  assert.NoError(t, err)
+import (
+	"net/http"
+	"net/http/httptest"
+	_ "strings"
+	"testing"
 
-  mockUCase := new(mocks.BookUsecase)
-  mockID := int(mockBook.ID)
-  mockUCase.On("GetByID", int64(mockID)).Return(&mockBook, nil)
-  e := echo.New()
-  req, err := http.NewRequest(echo.GET, "/book/" +
-              strconv.Itoa(int(mockID)), strings.NewReader(""))
-  assert.NoError(t, err)
+	"github.com/golang/mock/gomock"
 
-  rec := httptest.NewRecorder()
-  c := e.NewContext(req, rec)
-  c.SetPath("book/:id")
-  c.SetParamNames("id")
-  c.SetParamValues(strconv.Itoa(mockID))
+	mockUc "github.com/goweb4/book/usecase/mock"
+	mockCache "github.com/goweb4/services/cache/mock"
+	"github.com/stretchr/testify/assert"
+)
 
-  handler:= bookHttp.BookHandler{
-            AUsecase: mockUCase,
-            Helper: httpHelper.HttpHelper{}
-  }
-  handler.GetByID(c)
+func TestBooks(t *testing.T) {
+	request, err := http.NewRequest("GET", "/books", nil)
+	assert.NoError(t, err)
+	response := httptest.NewRecorder()
 
-  assert.Equal(t, http.StatusOK, rec.Code)
-  mockUCase.AssertCalled(t, "GetByID", int64(mockID))
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	mockUsecase := mockUc.NewMockBookUsecase(mockCtrl)
+	mockUsecase.EXPECT().GetByName(name).Return(nil, nil)
+
+	mockCac := mockCache.NewMockCache(mockCtrl)
+	mockCac.EXPECT().Get("token_").Return("1", nil)
+
+	handler := &BookController{
+		Usecase: mockUsecase,
+		Cache:   mockCac,
+	}
+
+	handler.Books(response, request)
+	assert.Equal(t, http.StatusOK, response.Code)
 }

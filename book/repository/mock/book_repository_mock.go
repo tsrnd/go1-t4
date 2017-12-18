@@ -34,60 +34,10 @@ func (m *MockBookRepository) EXPECT() *MockBookRepositoryMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method
-func (m *MockBookRepository) Create(name, content string, userID int64) (int64, error) {
-	ret := m.ctrl.Call(m, "Create", name, content, userID)
-	ret0, _ := ret[0].(int64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Create indicates an expected call of Create
-func (mr *MockBookRepositoryMockRecorder) Create(name, content, userID interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockBookRepository)(nil).Create), name, content, userID)
-}
-
-// Update mocks base method
-func (m *MockBookRepository) Update(bookID int64, name, content string) error {
-	ret := m.ctrl.Call(m, "Update", bookID, name, content)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Update indicates an expected call of Update
-func (mr *MockBookRepositoryMockRecorder) Update(bookID, name, content interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockBookRepository)(nil).Update), bookID, name, content)
-}
-
-// Delete mocks base method
-func (m *MockBookRepository) Delete(id int64) error {
-	ret := m.ctrl.Call(m, "Delete", id)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Delete indicates an expected call of Delete
-func (mr *MockBookRepositoryMockRecorder) Delete(id interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockBookRepository)(nil).Delete), id)
-}
-
-// GetByID mocks base method
-func (m *MockBookRepository) GetByID(id int64) (*book.Book, error) {
-	ret := m.ctrl.Call(m, "GetByID", id)
-	ret0, _ := ret[0].(*book.Book)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetByID indicates an expected call of GetByID
-func (mr *MockBookRepositoryMockRecorder) GetByID(id interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockBookRepository)(nil).GetByID), id)
-}
-
 // GetByName mocks base method
-func (m *MockBookRepository) GetByName(name string) (*book.Book, error) {
+func (m *MockBookRepository) GetByName(name string) ([]*book.Book, error) {
 	ret := m.ctrl.Call(m, "GetByName", name)
-	ret0, _ := ret[0].(*book.Book)
+	ret0, _ := ret[0].([]*book.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -97,15 +47,65 @@ func (mr *MockBookRepositoryMockRecorder) GetByName(name interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByName", reflect.TypeOf((*MockBookRepository)(nil).GetByName), name)
 }
 
+// Create mocks base method
+// func (m *MockBookRepository) Create(name, content string, userID int64) (int64, error) {
+// 	ret := m.ctrl.Call(m, "Create", name, content, userID)
+// 	ret0, _ := ret[0].(int64)
+// 	ret1, _ := ret[1].(error)
+// 	return ret0, ret1
+// }
+
+// Create indicates an expected call of Create
+// func (mr *MockBookRepositoryMockRecorder) Create(name, content, userID interface{}) *gomock.Call {
+// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockBookRepository)(nil).Create), name, content, userID)
+// }
+
+// Update mocks base method
+// func (m *MockBookRepository) Update(bookID int64, name, content string) error {
+// 	ret := m.ctrl.Call(m, "Update", bookID, name, content)
+// 	ret0, _ := ret[0].(error)
+// 	return ret0
+// }
+
+// Update indicates an expected call of Update
+// func (mr *MockBookRepositoryMockRecorder) Update(bookID, name, content interface{}) *gomock.Call {
+// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockBookRepository)(nil).Update), bookID, name, content)
+// }
+
+// Delete mocks base method
+// func (m *MockBookRepository) Delete(id int64) error {
+// 	ret := m.ctrl.Call(m, "Delete", id)
+// 	ret0, _ := ret[0].(error)
+// 	return ret0
+// }
+
+// Delete indicates an expected call of Delete
+// func (mr *MockBookRepositoryMockRecorder) Delete(id interface{}) *gomock.Call {
+// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockBookRepository)(nil).Delete), id)
+// }
+
+// GetByID mocks base method
+// func (m *MockBookRepository) GetByID(id int64) (*book.Book, error) {
+// 	ret := m.ctrl.Call(m, "GetByID", id)
+// 	ret0, _ := ret[0].(*book.Book)
+// 	ret1, _ := ret[1].(error)
+// 	return ret0, ret1
+// }
+
+// GetByID indicates an expected call of GetByID
+// func (mr *MockBookRepositoryMockRecorder) GetByID(id interface{}) *gomock.Call {
+// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockBookRepository)(nil).GetByID), id)
+// }
+
 // Fetch mocks base method
-func (m *MockBookRepository) Fetch(offset, limit int64) ([]*book.Book, error) {
-	ret := m.ctrl.Call(m, "Fetch", offset, limit)
-	ret0, _ := ret[0].([]*book.Book)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
+// func (m *MockBookRepository) Fetch(offset, limit int64) ([]*book.Book, error) {
+// 	ret := m.ctrl.Call(m, "Fetch", offset, limit)
+// 	ret0, _ := ret[0].([]*book.Book)
+// 	ret1, _ := ret[1].(error)
+// 	return ret0, ret1
+// }
 
 // Fetch indicates an expected call of Fetch
-func (mr *MockBookRepositoryMockRecorder) Fetch(offset, limit interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Fetch", reflect.TypeOf((*MockBookRepository)(nil).Fetch), offset, limit)
-}
+// func (mr *MockBookRepositoryMockRecorder) Fetch(offset, limit interface{}) *gomock.Call {
+// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Fetch", reflect.TypeOf((*MockBookRepository)(nil).Fetch), offset, limit)
+// }

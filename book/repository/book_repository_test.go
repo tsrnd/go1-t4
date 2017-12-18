@@ -3,6 +3,8 @@ package repository
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/goweb4/book"
@@ -14,8 +16,10 @@ func TestGetByName(t *testing.T) {
 	defer mockCtrl.Finish()
 	mockRepo := mockRepos.NewMockBookRepository(mockCtrl)
 	resultExpect := []*book.Book{}
+	name := "vien"
 	mockRepo.EXPECT().GetByName(name).Return(resultExpect, nil)
-	result, err := mockRepo.GetByName("vien")
+	result, err := mockRepo.GetByName(name)
 	assert.NoError(t, err)
 	assert.Equal(t, result, resultExpect)
+
 }
