@@ -18,7 +18,7 @@ func TestBirdCreateSuccess(t *testing.T) {
 	assert.Equal(t, nil, err)
 }
 
-func TestBirdCreateErrors(t *testing.T) {
+func TestGetBirdByID(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
