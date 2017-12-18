@@ -15,7 +15,7 @@ type GiftUsecase interface {
 }
 
 type giftUsecase struct {
-	repo repos.repository
+	repo repos.GiftRepository
 }
 
 func (gU *giftUsecase) Create(fromUserID, toUserID, productID int64, message string) (*model.Gift, error) {
@@ -51,4 +51,8 @@ func (gU *giftUsecase) Fetch(offset, limit int64) ([]*model.Gift, error) {
 		limit = 10
 	}
 	return gU.repo.Fetch(offset, limit)
+}
+
+func NewGiftUsecase(repo repos.GiftRepository) *giftUsecase {
+	return &giftUsecase{repo: repo}
 }
