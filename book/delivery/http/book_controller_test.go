@@ -20,7 +20,7 @@ func TestBooks(t *testing.T) {
 
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
-	name := "vien"
+	name := "name"
 	mockUsecase := mockUc.NewMockBookUsecase(mockCtrl)
 	mockUsecase.EXPECT().GetByName(name).Return(nil, nil)
 

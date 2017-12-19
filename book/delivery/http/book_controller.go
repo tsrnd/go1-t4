@@ -38,8 +38,7 @@ func (g *BookController) Books(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Cannot processing user id", http.StatusBadRequest)
 		return
 	}
-	nameStr := "vien"
-	books, err := g.Usecase.GetByName(string(nameStr))
+	books, err := g.Usecase.GetByName(string("name"))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
 		return
