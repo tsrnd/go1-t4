@@ -15,13 +15,11 @@ import (
 
 type BirdController struct {
 	Usecase usecase.BirdUsecase
-	Cache   cache.Cache
 }
 
 func NewBirdController(r chi.Router, uc usecase.BirdUsecase, c cache.Cache) *BirdController {
 	handler := &BirdController{
 		Usecase: uc,
-		Cache:   c,
 	}
 	r.Get("/bird", handler.Create)
 	r.Post("/bird", handler.Create)

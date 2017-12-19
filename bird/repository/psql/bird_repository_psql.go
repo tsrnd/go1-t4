@@ -25,6 +25,7 @@ func (m *birdRepository) Create(name, color string, description string) (int64, 
 	`
 	var id int64
 	err := m.DB.QueryRow(query, name, color, description).Scan(&id)
+
 	return id, err
 }
 
