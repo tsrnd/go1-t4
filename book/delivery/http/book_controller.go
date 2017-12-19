@@ -2,7 +2,6 @@ package http
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -22,23 +21,24 @@ func NewBookController(r chi.Router, uc uc.BookUsecase, c cache.Cache) *BookCont
 		Usecase: uc,
 		Cache:   c,
 	}
-	r.Get("/books", handler.Books)
+	r.Get("/books/{name}", handler.Books)
 	r.Post("/books", handler.Create)
 	return handler
 }
 func (g *BookController) Books(w http.ResponseWriter, r *http.Request) {
-	token := r.Header.Get("token")
-	userIDStr, err := g.Cache.Get(fmt.Sprintf("token_%s", token))
-	if err != nil {
-		http.Error(w, "Authentication failed", http.StatusBadRequest)
-		return
-	}
-	_, err = strconv.Atoi(userIDStr)
-	if err != nil {
-		http.Error(w, "Cannot processing user id", http.StatusBadRequest)
-		return
-	}
-	books, err := g.Usecase.GetByName(string("name"))
+	// fmt.Println("test: ", chi.URLParam(r, "name"))
+	// token := r.Header.Get("token")
+	// userIDStr, err := g.Cache.Get(fmt.Sprintf("token_%s", token))
+	// if err != nil {
+	// 	http.Error(w, "Authentication failed", http.StatusBadRequest)
+	// 	return
+	// }
+	// _, err = strconv.Atoi(userIDStr)
+	// if err != nil {
+	// 	http.Error(w, "Cannot processing user id", http.StatusBadRequest)
+	// 	return
+	// }
+	books, err := g.Usecase.GetByName(chi.URLParam(r, "name"))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
 		return
