@@ -16,9 +16,8 @@ func TestGetByName(t *testing.T) {
 	defer mockCtrl.Finish()
 	mockRepo := mockRepos.NewMockBookRepository(mockCtrl)
 	resultExpect := []*book.Book{}
-	name := "vien"
-	mockRepo.EXPECT().GetByName(name).Return(resultExpect, nil)
-	result, err := mockRepo.GetByName(name)
+	mockRepo.EXPECT().GetByName("name").Return(resultExpect, nil)
+	result, err := mockRepo.GetByName("name")
 	assert.NoError(t, err)
 	assert.Equal(t, result, resultExpect)
 

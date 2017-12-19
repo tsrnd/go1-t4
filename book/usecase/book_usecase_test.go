@@ -14,8 +14,7 @@ func TestGetByFromUserID(t *testing.T) {
 	defer ctrl.Finish()
 	resultExpect := []*book.Book{}
 	mockUsecase := mockUc.NewMockBookUsecase(ctrl)
-	name := "vien"
-	mockUsecase.EXPECT().GetByName(name).Return(resultExpect, nil)
-	_, err := mockUsecase.GetByName(name)
+	mockUsecase.EXPECT().GetByName("name").Return(resultExpect, nil)
+	_, err := mockUsecase.GetByName("name")
 	assert.NoError(t, err)
 }
