@@ -2,7 +2,6 @@ package delivery
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -34,15 +33,12 @@ func (c *ClassController) CreateClass(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var classReq ClassCreationRequest
 	err := decoder.Decode(&classReq)
-	fmt.Println("s1: ", classReq)
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
-	fmt.Println("useCase: ", c.Usecase)
 	err = c.Usecase.CreateClass(classReq.Name, classReq.StudentNumber)
 	if err != nil {
-		fmt.Println("testing error create class: ", err)
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -63,4 +59,15 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	w.Write(response)
+}
+
+func (c *ClassController) LoginHandler(w http.ResponseWriter, r *http.Request) {
+	decode := json.NewDecoder(r.Body)
+	var loginRequest ClassLoginRequest
+	err := decode.Decode(&loginRequest)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
 }
