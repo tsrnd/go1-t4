@@ -69,5 +69,4 @@ func (c *ClassController) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
-
 }
