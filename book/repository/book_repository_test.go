@@ -8,7 +8,7 @@ import (
 	"github.com/golang/mock/gomock"
 
 	"github.com/goweb4/book"
-	mockRepos "github.com/goweb4/book/repository/mock"
+	mockRepos "github.com/goweb4/book/repository/mocks"
 )
 
 func TestGetByName(t *testing.T) {

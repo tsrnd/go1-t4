@@ -5,11 +5,11 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/goweb4/book"
-	mockUc "github.com/goweb4/book/usecase/mock"
+	mockUc "github.com/goweb4/book/usecase/mocks"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetByFromUserID(t *testing.T) {
+func TestGetByName(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 	resultExpect := []*book.Book{}
