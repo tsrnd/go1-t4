@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"path"
 	"strconv"
 
 	"github.com/go-chi/chi"
@@ -87,8 +86,8 @@ func (gC *GiftController) Show(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Authentication failed", http.StatusBadRequest)
 		return
 	}
-	giftIDStr := path.Base(r.URL.Path)
-	giftID, err := strconv.Atoi(giftIDStr)
+
+	giftID, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
 		http.Error(w, "Wrong in gift id", http.StatusBadRequest)
 		return
