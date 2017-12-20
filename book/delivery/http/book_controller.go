@@ -2,8 +2,10 @@ package http
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"path"
 	"strconv"
 
 	"github.com/go-chi/chi"
@@ -26,7 +28,6 @@ func NewBookController(r chi.Router, uc uc.BookUsecase, c cache.Cache) *BookCont
 	return handler
 }
 func (g *BookController) Books(w http.ResponseWriter, r *http.Request) {
-	// fmt.Println("test: ", chi.URLParam(r, "name"))
 	// token := r.Header.Get("token")
 	// userIDStr, err := g.Cache.Get(fmt.Sprintf("token_%s", token))
 	// if err != nil {
@@ -38,7 +39,10 @@ func (g *BookController) Books(w http.ResponseWriter, r *http.Request) {
 	// 	http.Error(w, "Cannot processing user id", http.StatusBadRequest)
 	// 	return
 	// }
-	books, err := g.Usecase.GetByName(chi.URLParam(r, "name"))
+	// fmt.Println(chi.URLParam(r, "name"))
+	name := path.Base(r.URL.Path)
+	books, err := g.Usecase.GetByName(string(name))
+	fmt.Println(name)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
 		return
