@@ -2,7 +2,6 @@ package http
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"path"
@@ -28,21 +27,8 @@ func NewBookController(r chi.Router, uc uc.BookUsecase, c cache.Cache) *BookCont
 	return handler
 }
 func (g *BookController) Books(w http.ResponseWriter, r *http.Request) {
-	// token := r.Header.Get("token")
-	// userIDStr, err := g.Cache.Get(fmt.Sprintf("token_%s", token))
-	// if err != nil {
-	// 	http.Error(w, "Authentication failed", http.StatusBadRequest)
-	// 	return
-	// }
-	// _, err = strconv.Atoi(userIDStr)
-	// if err != nil {
-	// 	http.Error(w, "Cannot processing user id", http.StatusBadRequest)
-	// 	return
-	// }
-	// fmt.Println(chi.URLParam(r, "name"))
 	name := path.Base(r.URL.Path)
 	books, err := g.Usecase.GetByName(string(name))
-	fmt.Println(name)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
 		return
