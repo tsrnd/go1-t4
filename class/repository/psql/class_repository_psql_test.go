@@ -28,6 +28,7 @@ func CreateDBConnection() *sql.DB {
 	dbHost := os.Getenv("DATABASE_HOST")
 	dbPort := os.Getenv("DATABASE_PORT")
 	dbName := os.Getenv("DATABASE_NAME")
+
 	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable",
 		dbUser, dbPass, dbName, dbHost, dbPort)
 	db, _ := sql.Open(dbDlct, connStr)
