@@ -1,7 +1,6 @@
 package http
 
 import (
-	"github.com/goweb4/services/cache"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/goweb4/services/cache"
+
 	"github.com/go-chi/chi"
 	"github.com/goweb4/services/crypto"
 	"github.com/goweb4/user/usecase"
@@ -17,8 +18,8 @@ import (
 
 // UserController type
 type UserController struct {
-  Usecase usecase.UserUsecase
-  Cache cache.Cache
+	Usecase usecase.UserUsecase
+	Cache   cache.Cache
 }
 
 // NewUserController func

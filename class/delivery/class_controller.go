@@ -60,3 +60,14 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.WriteHeader(code)
 	w.Write(response)
 }
+
+func (c *ClassController) LoginHandler(w http.ResponseWriter, r *http.Request) {
+	decode := json.NewDecoder(r.Body)
+	var loginRequest ClassLoginRequest
+	err := decode.Decode(&loginRequest)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+}
