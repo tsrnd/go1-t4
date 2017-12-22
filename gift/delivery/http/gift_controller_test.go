@@ -7,6 +7,10 @@ import (
 	_ "strings"
 	"testing"
 
+	_ "github.com/go-chi/chi"
+
+	"github.com/goweb4/gift"
+
 	"github.com/golang/mock/gomock"
 
 	mockUc "github.com/goweb4/gift/usecase/mock"
@@ -61,4 +65,26 @@ func TestCreate(t *testing.T) {
 
 	handler.Create(response, request)
 	assert.Equal(t, http.StatusCreated, response.Code)
+}
+
+func TestGetByID(t *testing.T) {
+	request, err := http.NewRequest("GET", "/gifts/2", nil)
+	assert.NoError(t, err)
+	response := httptest.NewRecorder()
+
+	mockCtrl := gomock.NewController(t)
+
+	mockUsecase := mockUc.NewMockGiftUsecase(mockCtrl)
+	mockUsecase.EXPECT().GetByID(int64(2)).Return(&gift.Gift{}, nil).Times(1)
+
+	mockCac := mockCache.NewMockCache(mockCtrl)
+	mockCac.EXPECT().Get("token_").Return("1", nil).Times(1)
+
+	handler := &GiftController{
+		Usecase: mockUsecase,
+		Cache:   mockCac,
+	}
+
+	handler.Show(response, request)
+	assert.Equal(t, http.StatusOK, response.Code)
 }

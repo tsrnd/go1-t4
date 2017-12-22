@@ -24,6 +24,7 @@ func NewGiftController(r chi.Router, uc uc.GiftUsecase, c cache.Cache) *GiftCont
 	}
 	r.Get("/gifts", handler.Gifts)
 	r.Post("/gifts", handler.Create)
+	r.Get("/gifts/{id}", handler.Show)
 	return handler
 }
 
@@ -76,4 +77,28 @@ func (gC *GiftController) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
+}
+
+func (gC *GiftController) Show(w http.ResponseWriter, r *http.Request) {
+	token := r.Header.Get("token")
+	_, err := gC.Cache.Get(fmt.Sprintf("token_%s", token))
+	if err != nil {
+		http.Error(w, "Authentication failed", http.StatusBadRequest)
+		return
+	}
+
+	giftID, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		http.Error(w, "Wrong in gift id", http.StatusBadRequest)
+		return
+	}
+
+	gift, err := gC.Usecase.GetByID(int64(giftID))
+	if err != nil {
+		http.Error(w, "Getting gift", http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(gift)
 }
